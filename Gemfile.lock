@@ -85,6 +85,8 @@ GEM
       racc (~> 1.4)
     nokogiri (1.16.0-x86-mingw32)
       racc (~> 1.4)
+    nokogiri (x86_64-linux)
+      racc (~> 1.4)
     parallel (1.24.0)
     pathutil (0.16.2)
       forwardable-extended (~> 2.6)

@@ -22,9 +22,12 @@ GEM
       http_parser.rb (~> 0)
     ethon (0.16.0)
       ffi (>= 1.15.0)
+    eventmachine (1.2.7)
     eventmachine (1.2.7-x86-mingw32)
+    ffi (1.16.3-x64-mingw-ucrt)
     ffi (1.16.3-x86-mingw32)
     forwardable-extended (2.6.0)
+    google-protobuf (3.25.2-x64-mingw-ucrt)
     google-protobuf (3.25.2-x86-mingw32)
     html-proofer (4.4.3)
       addressable (~> 2.3)
@@ -78,6 +81,8 @@ GEM
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
     mercenary (0.4.0)
+    nokogiri (1.16.0-x64-mingw-ucrt)
+      racc (~> 1.4)
     nokogiri (1.16.0-x86-mingw32)
       racc (~> 1.4)
     parallel (1.24.0)
@@ -92,6 +97,8 @@ GEM
     rexml (3.2.6)
     rouge (4.2.0)
     safe_yaml (1.0.5)
+    sass-embedded (1.70.0-x64-mingw-ucrt)
+      google-protobuf (~> 3.25)
     sass-embedded (1.70.0-x86-mingw32)
       google-protobuf (~> 3.25)
     terminal-table (3.0.2)
@@ -109,6 +116,7 @@ GEM
     zeitwerk (2.6.12)
 
 PLATFORMS
+  x64-mingw-ucrt
   x86-mingw32
 
 DEPENDENCIES

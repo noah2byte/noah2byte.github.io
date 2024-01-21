@@ -723,6 +723,7 @@ $btn-mb: 0.5rem;
     height: 7rem;
     overflow: hidden;
     box-shadow: var(--avatar-border-color) 0 0 0 2px;
+    background: url('/assets/img/profile/profile.jpg');
     transform: translateZ(0); /* fixed the zoom in Safari */
 
     img {

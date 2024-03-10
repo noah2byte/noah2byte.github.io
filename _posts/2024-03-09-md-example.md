@@ -15,7 +15,7 @@ mermaid: true
 
 md 파일 작성 예시
 
-## Headings
+<!-- ## Headings
 
 # H1 - heading
 {: .mt-4 .mb-0 }
@@ -184,4 +184,4 @@ The image below will toggle dark/light mode based on theme preference, notice it
 ## Reverse Footnote
 
 [^footnote]: The footnote source
-[^fn-nth-2]: The 2nd footnote source
+[^fn-nth-2]: The 2nd footnote source -->

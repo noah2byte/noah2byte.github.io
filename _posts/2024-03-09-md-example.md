@@ -1,8 +1,8 @@
 ---
-title: 문서 제목
-author: 저자 명
-date: 2024-03-11 24:03:00 +0800
-categories: [example, md file]
+title: md 문서 작성 예시
+author: 노아
+date: 2024-03-09 24:03:00 +0800
+categories: [Example, Md file]
 tags: [md]
 pin: true
 math: true

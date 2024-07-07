@@ -1,15 +1,15 @@
 ---
-title: 리눅스 부트1
+title: 리눅스 부트
 author: 노아
 date: 2024-06-08 21:59:00 +0800
-categories: [Linux, 리눅스 부트1]
+categories: [Linux, 리눅스 부트]
 tags: [리눅스, 부트]
 pin: true
 math: true
 mermaid: true
 
 ---
-리눅스 부트1
+리눅스 부트
 
 # 목차
 

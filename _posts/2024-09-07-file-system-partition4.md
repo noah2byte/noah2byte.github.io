@@ -2,7 +2,7 @@
 title: 파일 시스템과 파티션4
 author: 노아
 date: 2024-09-07 20:07:00 +0800
-categories: [Linux, 파일 시스템과 파티션4]
+categories: [Linux, 파일 시스템과 파티션, 파일 시스템과 파티션4]
 tags: [리눅스, 파일 시스템, 파티션4]
 pin: true
 math: true

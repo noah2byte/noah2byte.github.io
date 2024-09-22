@@ -2,7 +2,7 @@
 title: 파일 시스템과 파티션2
 author: 노아
 date: 2024-07-28 20:47:00 +0800
-categories: [Linux, 파일 시스템과 파티션2]
+categories: [Linux, 파일 시스템과 파티션, 파일 시스템과 파티션2]
 tags: [리눅스, 파일 시스템, 파티션2]
 pin: true
 math: true

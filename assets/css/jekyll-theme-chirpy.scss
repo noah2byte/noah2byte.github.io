@@ -4,3 +4,8 @@
 @import 'main';
 
 /* append your custom style below */
+img {
+  image-rendering: auto;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}

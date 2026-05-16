@@ -3,7 +3,6 @@ title: OSI 7 계층
 author: 노아
 date: 2023-09-10 22:09:00 +0800
 categories: [Network, OSI 7 계층]
-tags: [네트워크, osi, 7계층]
 pin: true
 math: true
 mermaid: true

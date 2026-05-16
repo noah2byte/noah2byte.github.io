@@ -7,7 +7,7 @@ permalink: /about/
 
 > 더 많은 정보를 얻고 싶으시거나 저에 대해 궁금하시면 아래 링크에 접속해주세요~
 
-> [개인 네이버 블로그](https://blog.naver.com/y09255)<br>
+> [개인 네이버 블로그 > IT개발](https://blog.naver.com/y09255)<br>
 [개인 브런치스토리](https://brunch.co.kr/@17ab0b1a2030498)
 {: .prompt-tip }
 

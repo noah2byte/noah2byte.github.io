@@ -140,4 +140,9 @@
   } /* ModeToggle */
 
   const modeToggle = new ModeToggle();
+
+  /* 전역 함수로 노출 — commons.min.js의 flipMode() 호출을 위해 */
+  function flipMode() {
+    modeToggle.flipMode();
+  }
 </script>

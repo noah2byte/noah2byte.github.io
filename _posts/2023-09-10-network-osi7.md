@@ -2,7 +2,7 @@
 title: OSI 7 계층
 author: 노아
 date: 2023-09-10 22:09:00 +0800
-categories: [아키텍쳐, OSI 7 계층]
+categories: [아키텍쳐, 네트워크]
 pin: true
 math: true
 mermaid: true

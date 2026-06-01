@@ -19,17 +19,22 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Install
+      - name: Install Packages
         run: |
-          pip install feedparser requests beautifulsoup4 lxml pyyaml
+          pip install \
+            feedparser \
+            requests \
+            beautifulsoup4 \
+            lxml \
+            pyyaml
 
-      - name: GeekNews
+      - name: Generate GeekNews
         run: python scripts/geeknews.py
 
-      - name: YozmIT
+      - name: Generate YozmIT
         run: python scripts/yozmit.py
 
-      - name: Update Weekly YAML
+      - name: Generate YAML
         run: python scripts/update_weekly_yaml.py
 
       - name: Commit

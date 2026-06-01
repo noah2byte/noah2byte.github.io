@@ -2,7 +2,7 @@ import feedparser
 from pathlib import Path
 from datetime import datetime
 
-RSS_URL = "https://news.hada.io/rss"
+RSS_URL = "https://news.hada.io/rss/news"
 
 today = datetime.now().strftime("%Y-%m-%d")
 

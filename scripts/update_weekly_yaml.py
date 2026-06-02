@@ -6,35 +6,51 @@ weekly = {
     "yozmit": []
 }
 
-for md in sorted(
-    Path("weekly/geeknews").glob("*.md"),
-    reverse=True
-):
-    name = md.stem
+geeknews_dir = Path("weekly/geeknews")
+yozmit_dir = Path("weekly/yozmit")
 
-    weekly["geeknews"].append({
-        "title": f"GeekNews Weekly - {name}",
-        "url": f"/weekly/geeknews/{name}/"
-    })
+if geeknews_dir.exists():
 
-for md in sorted(
-    Path("weekly/yozmit").glob("*.md"),
-    reverse=True
-):
-    name = md.stem
+    for md in sorted(
+        geeknews_dir.glob("*.md"),
+        reverse=True
+    ):
 
-    weekly["yozmit"].append({
-        "title": f"요즘IT Weekly - {name}",
-        "url": f"/weekly/yozmit/{name}/"
-    })
+        name = md.stem
 
-Path("_data").mkdir(exist_ok=True)
+        weekly["geeknews"].append(
+            {
+                "title": f"GeekNews Weekly - {name}",
+                "url": f"/weekly/geeknews/{name}/"
+            }
+        )
+
+if yozmit_dir.exists():
+
+    for md in sorted(
+        yozmit_dir.glob("*.md"),
+        reverse=True
+    ):
+
+        name = md.stem
+
+        weekly["yozmit"].append(
+            {
+                "title": f"요즘IT Weekly - {name}",
+                "url": f"/weekly/yozmit/{name}/"
+            }
+        )
+
+Path("_data").mkdir(
+    exist_ok=True
+)
 
 with open(
     "_data/weekly.yml",
     "w",
     encoding="utf-8"
 ) as f:
+
     yaml.dump(
         weekly,
         f,
@@ -42,4 +58,6 @@ with open(
         sort_keys=False
     )
 
-print("weekly.yml updated")
+print(
+    "_data/weekly.yml updated"
+)

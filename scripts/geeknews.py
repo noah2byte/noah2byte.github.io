@@ -6,10 +6,10 @@ RSS_URL = "https://news.hada.io/rss/news"
 
 today = datetime.now().strftime("%Y-%m-%d")
 
-output_dir = Path("_weekly/geeknews")
+output_dir = Path("_weekly")
 output_dir.mkdir(parents=True, exist_ok=True)
 
-output_file = output_dir / f"{today}.md"
+output_file = output_dir / f"geeknews-{today}.md"
 
 if output_file.exists():
     print(f"{output_file} already exists")

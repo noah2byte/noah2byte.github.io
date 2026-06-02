@@ -8,7 +8,7 @@ SITEMAP_URL = "https://yozm.wishket.com/magazine/sitemap-news.xml"
 today = datetime.now()
 today_str = today.strftime("%Y-%m-%d")
 
-output_dir = Path("weekly/yozmit")
+output_dir = Path("_weekly/yozmit")
 output_dir.mkdir(parents=True, exist_ok=True)
 
 output_file = output_dir / f"{today_str}.md"

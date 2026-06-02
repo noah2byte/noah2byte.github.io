@@ -32,8 +32,8 @@ jobs:
       - name: Generate GeekNews
         run: python scripts/geeknews.py
 
-      - name: Generate YozmIT
-        run: python scripts/yozmit.py
+      # - name: Generate YozmIT
+      #   run: python scripts/yozmit.py
 
       - name: Generate YAML
         run: python scripts/update_weekly_yaml.py

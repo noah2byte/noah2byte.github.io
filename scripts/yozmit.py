@@ -1,12 +1,18 @@
 import requests
 import json
 import time
+import re
 from bs4 import BeautifulSoup
 from pathlib import Path
 from datetime import datetime, timedelta
 from dateutil import parser
+import urllib.robotparser as robotparser
 
+# -----------------------------
+# 설정
+# -----------------------------
 SITEMAP_URL = "https://yozm.wishket.com/magazine/sitemap-news.xml"
+BASE_URL = "https://yozm.wishket.com"
 
 today = datetime.now()
 today_str = today.strftime("%Y-%m-%d")
@@ -18,60 +24,91 @@ output_dir.mkdir(parents=True, exist_ok=True)
 cache_dir.mkdir(parents=True, exist_ok=True)
 
 output_file = output_dir / f"yozmit-{today_str}.md"
-cache_file = cache_dir / "yozmit-latest.json"
+cache_file = cache_dir / "yozmit-cache.json"
 
 headers = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+    "User-Agent": "Mozilla/5.0"
 }
 
 # -----------------------------
-# 1. sitemap fetch (retry)
+# robots.txt (안전)
 # -----------------------------
-def fetch_sitemap():
-    for i in range(3):
-        try:
-            r = requests.get(SITEMAP_URL, timeout=30, headers=headers)
-            if r.status_code == 200:
-                return r
-            print(f"[WARN] retry {i+1} status={r.status_code}")
-            time.sleep(3)
-        except Exception as e:
-            print("[ERROR] request failed", e)
-    return None
+rp = robotparser.RobotFileParser()
+rp.set_url(f"{BASE_URL}/robots.txt")
+
+try:
+    rp.read()
+except:
+    print("[WARN] robots.txt load failed")
+
+
+def allowed(url: str) -> bool:
+    try:
+        return rp.can_fetch(headers["User-Agent"], url)
+    except:
+        return True
 
 
 # -----------------------------
-# 2. cache load/save
+# 핵심: 제목 정제 (regex 버전)
+# -----------------------------
+def clean_title(title: str) -> str:
+    if not title:
+        return "Untitled"
+
+    title = title.strip()
+
+    # " | 요즘IT" 정확히 제거 (공백 포함)
+    title = re.sub(r"\s\|\s요즘IT\s*$", "", title)
+
+    return title.strip()
+
+
+# -----------------------------
+# cache
 # -----------------------------
 def load_cache():
     if cache_file.exists():
-        with open(cache_file, "r", encoding="utf-8") as f:
-            return json.load(f)
+        return json.loads(cache_file.read_text(encoding="utf-8"))
     return []
 
 
 def save_cache(data):
-    with open(cache_file, "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
+    cache_file.write_text(
+        json.dumps(data, ensure_ascii=False, indent=2),
+        encoding="utf-8"
+    )
 
 
 # -----------------------------
-# 3. fetch sitemap
+# sitemap fetch
+# -----------------------------
+def fetch_sitemap():
+    try:
+        r = requests.get(SITEMAP_URL, headers=headers, timeout=30)
+        if r.status_code == 200:
+            return r
+    except Exception as e:
+        print("[ERROR] sitemap request failed:", e)
+    return None
+
+
+# -----------------------------
+# 1. sitemap
 # -----------------------------
 response = fetch_sitemap()
-
 urls = []
 
 # -----------------------------
-# 4. fallback logic
+# 2. fallback
 # -----------------------------
-if not response or response.status_code != 200:
-    print("[ERROR] sitemap failed → using cache")
+if not response:
+    print("[WARN] sitemap failed → cache fallback")
 
     urls = load_cache()
 
     if not urls:
-        print("[FATAL] no cache available → exit")
+        print("[FATAL] no cache data")
         exit(1)
 
 else:
@@ -89,30 +126,33 @@ else:
         if not loc or not lastmod:
             continue
 
+        url = loc.text.strip()
+
+        if not allowed(url):
+            continue
+
         try:
             modified = parser.parse(lastmod.text.strip()).date()
 
             if modified >= week_ago:
-                urls.append(loc.text.strip())
+                urls.append(url)
 
         except:
             continue
 
-    # cache 저장
     save_cache(urls)
 
-
-print(f"[INFO] URLs: {len(urls)}")
+print(f"[INFO] urls: {len(urls)}")
 
 # -----------------------------
-# 5. 안전장치 (빈 파일 방지)
+# 3. 안전 종료
 # -----------------------------
-if len(urls) == 0:
-    print("[WARN] empty result → abort")
+if not urls:
+    print("[WARN] empty result → skip")
     exit(0)
 
 # -----------------------------
-# 6. MD 생성 (원하는 포맷)
+# 4. MD 생성
 # -----------------------------
 with open(output_file, "w", encoding="utf-8") as f:
     f.write("---\n")
@@ -126,23 +166,34 @@ with open(output_file, "w", encoding="utf-8") as f:
 
     for url in urls:
         try:
-            html = requests.get(url, timeout=30, headers=headers)
-            page = BeautifulSoup(html.text, "html.parser")
+            time.sleep(1)
 
+            r = requests.get(url, headers=headers, timeout=30)
+            page = BeautifulSoup(r.text, "html.parser")
+
+            title = None
+
+            # -----------------------------
+            # title 후보 수집
+            # -----------------------------
             meta = page.find("meta", property="og:title")
 
             if meta and meta.get("content"):
-                title = meta["content"].strip()
+                title = meta["content"]
             elif page.title:
                 title = page.title.get_text(strip=True)
             else:
                 title = "Untitled"
 
-            # ⭐ 원하는 Markdown 포맷
-            f.write(f"- [{title}]({url})\n")
+            # -----------------------------
+            # 핵심: 무조건 마지막 1회 정제
+            # -----------------------------
+            title = clean_title(title)
+
             print("[OK]", title)
+            f.write(f"- [{title}]({url})\n")
 
         except Exception as e:
-            print("[ERROR URL]", url, e)
+            print("[ERROR]", url, e)
 
 print(f"[DONE] created: {output_file}")

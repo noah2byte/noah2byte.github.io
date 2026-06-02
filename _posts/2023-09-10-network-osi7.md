@@ -10,6 +10,7 @@ mermaid: true
 ---
 OSI 7 계층
 
+
 네트워크 관련 지식을 정리하기 전에 사전에 개념 정립이 되어있어야 하는 내용이 있다. 바로, OSI 7 계층에 대한 이해이다. 먼저 OSI 7 계층에 대해 알아보자. OSI 7계층은 아래와 같다.
 
 ![Desktop View](/assets/img/network/osi7/osi_7_class.png){: width="972" height="589" }

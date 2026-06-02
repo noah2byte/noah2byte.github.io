@@ -1,2 +1,6 @@
-geeknews: []
-yozmit: []
+geeknews:
+- title: GeekNews Weekly - 2026-06-02
+  url: /weekly/geeknews/2026-06-02/
+yozmit:
+- title: 요즘IT Weekly - 2026-06-02
+  url: /weekly/yozmit/2026-06-02/

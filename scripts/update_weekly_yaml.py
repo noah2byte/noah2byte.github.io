@@ -6,15 +6,11 @@ weekly = {
     "yozmit": []
 }
 
-geeknews_dir = Path("_weekly/geeknews")
-yozmit_dir = Path("_weekly/yozmit")
+weekly_dir = Path("_weekly")
 
 if geeknews_dir.exists():
 
-    for md in sorted(
-        geeknews_dir.glob("*.md"),
-        reverse=True
-    ):
+    for md in weekly_dir.glob("geeknews-*.md"):
 
         name = md.stem
 

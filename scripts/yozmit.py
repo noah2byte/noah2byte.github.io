@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 from pathlib import Path
 from datetime import datetime, timedelta
+from dateutil import parser
 
 SITEMAP_URL = "https://yozm.wishket.com/magazine/sitemap-news.xml"
 
@@ -14,25 +15,30 @@ output_dir.mkdir(parents=True, exist_ok=True)
 output_file = output_dir / f"yozmit-{today_str}.md"
 
 if output_file.exists():
-    print(f"{output_file} already exists")
+    print(f"[SKIP] already exists: {output_file}")
     exit(0)
 
-response = requests.get(
-    SITEMAP_URL,
-    timeout=30,
-    headers={
-        "User-Agent": "Mozilla/5.0"
-    }
-)
+headers = {
+    "User-Agent": "Mozilla/5.0"
+}
 
-soup = BeautifulSoup(response.text, "xml")
+print("[INFO] Fetching sitemap...")
+response = requests.get(SITEMAP_URL, timeout=30, headers=headers)
 
-week_ago = today.date() - timedelta(days=7)
+print("[INFO] status:", response.status_code)
+print("[INFO] content length:", len(response.text))
+
+# 안정적인 XML 파서
+soup = BeautifulSoup(response.content, "lxml-xml")
 
 urls = []
 
-for item in soup.find_all("url"):
+week_ago = today.date() - timedelta(days=7)
 
+items = soup.find_all("url")
+print("[INFO] total urls in sitemap:", len(items))
+
+for item in items:
     loc = item.find("loc")
     lastmod = item.find("lastmod")
 
@@ -40,21 +46,18 @@ for item in soup.find_all("url"):
         continue
 
     try:
-        modified = datetime.strptime(
-            lastmod.text.strip(),
-            "%Y-%m-%d"
-        ).date()
+        modified = parser.parse(lastmod.text.strip()).date()
 
         if modified >= week_ago:
             urls.append(loc.text.strip())
 
     except Exception as e:
-        print(e)
+        print("[PARSE ERROR]", lastmod.text, repr(e))
 
-print(f"Weekly Articles: {len(urls)}")
+print(f"[INFO] Weekly Articles: {len(urls)}")
 
+# MD 생성
 with open(output_file, "w", encoding="utf-8") as f:
-
     f.write("---\n")
     f.write("layout: page\n")
     f.write(f"title: 요즘IT Weekly - {today_str}\n")
@@ -64,48 +67,28 @@ with open(output_file, "w", encoding="utf-8") as f:
     f.write(f"# 요즘IT Weekly - {today_str}\n\n")
     f.write("## Articles\n\n")
 
+    if not urls:
+        f.write("> No articles found this week.\n")
+        print("[WARN] No URLs collected")
+
     for url in urls:
-
         try:
+            html = requests.get(url, timeout=30, headers=headers)
+            page = BeautifulSoup(html.text, "html.parser")
 
-            html = requests.get(
-                url,
-                timeout=30,
-                headers={
-                    "User-Agent": "Mozilla/5.0"
-                }
-            )
+            meta = page.find("meta", property="og:title")
 
-            page = BeautifulSoup(
-                html.text,
-                "html.parser"
-            )
-
-            title_tag = page.find(
-                "meta",
-                property="og:title"
-            )
-
-            if title_tag:
-                title = title_tag.get(
-                    "content",
-                    ""
-                ).strip()
+            if meta and meta.get("content"):
+                title = meta["content"].strip()
+            elif page.title:
+                title = page.title.get_text(strip=True)
             else:
-                title = page.title.get_text(
-                    strip=True
-                )
+                title = "Untitled"
 
-            print(title)
-
-            f.write(
-                f"- [{title}]({url})\n"
-            )
+            f.write(f"- [{title}]({url})\n")
+            print("[OK]", title)
 
         except Exception as e:
-            print(
-                f"ERROR: {url}"
-            )
-            print(e)
+            print("[ERROR URL]", url, repr(e))
 
-print(f"Created {output_file}")
+print(f"[DONE] created: {output_file}")

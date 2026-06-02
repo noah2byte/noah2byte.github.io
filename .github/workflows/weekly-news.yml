@@ -26,7 +26,8 @@ jobs:
             requests \
             beautifulsoup4 \
             lxml \
-            pyyaml
+            pyyaml \
+            python-dateutil
 
       - name: Generate GeekNews
         run: python scripts/geeknews.py

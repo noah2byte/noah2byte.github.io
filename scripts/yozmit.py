@@ -1,56 +1,111 @@
 import requests
 from bs4 import BeautifulSoup
 from pathlib import Path
-from datetime import datetime
+from datetime import datetime, timedelta
 
-SITEMAP_URL = "https://yozm.wishket.com/magazine/sitemap.xml"
+SITEMAP_URL = "https://yozm.wishket.com/magazine/sitemap-news.xml"
 
-today = datetime.now().strftime("%Y-%m-%d")
+today = datetime.now()
+today_str = today.strftime("%Y-%m-%d")
 
 output_dir = Path("weekly/yozmit")
 output_dir.mkdir(parents=True, exist_ok=True)
 
-output_file = output_dir / f"{today}.md"
+output_file = output_dir / f"{today_str}.md"
 
 if output_file.exists():
     print(f"{output_file} already exists")
     exit(0)
 
-xml = requests.get(SITEMAP_URL, timeout=30).text
+response = requests.get(
+    SITEMAP_URL,
+    timeout=30,
+    headers={
+        "User-Agent": "Mozilla/5.0"
+    }
+)
 
-soup = BeautifulSoup(xml, "xml")
+soup = BeautifulSoup(response.text, "xml")
+
+week_ago = today.date() - timedelta(days=7)
 
 urls = []
 
-for loc in soup.find_all("loc"):
-    url = loc.text.strip()
+for item in soup.find_all("url"):
 
-    if "/magazine/detail/" in url:
-        urls.append(url)
+    loc = item.find("loc")
+    lastmod = item.find("lastmod")
 
-urls = urls[-30:]
+    if not loc or not lastmod:
+        continue
+
+    try:
+        modified = datetime.strptime(
+            lastmod.text.strip(),
+            "%Y-%m-%d"
+        ).date()
+
+        if modified >= week_ago:
+            urls.append(loc.text.strip())
+
+    except Exception as e:
+        print(e)
+
+print(f"Weekly Articles: {len(urls)}")
 
 with open(output_file, "w", encoding="utf-8") as f:
+
     f.write("---\n")
     f.write("layout: page\n")
-    f.write(f"title: 요즘IT Weekly - {today}\n")
-    f.write(f"permalink: /weekly/yozmit/{today}/\n")
+    f.write(f"title: 요즘IT Weekly - {today_str}\n")
+    f.write(f"permalink: /weekly/yozmit/{today_str}/\n")
     f.write("---\n\n")
 
-    f.write(f"# 요즘IT Weekly - {today}\n\n")
+    f.write(f"# 요즘IT Weekly - {today_str}\n\n")
     f.write("## Articles\n\n")
 
     for url in urls:
+
         try:
-            html = requests.get(url, timeout=30).text
 
-            page = BeautifulSoup(html, "html.parser")
+            html = requests.get(
+                url,
+                timeout=30,
+                headers={
+                    "User-Agent": "Mozilla/5.0"
+                }
+            )
 
-            title = page.title.text.strip()
+            page = BeautifulSoup(
+                html.text,
+                "html.parser"
+            )
 
-            f.write(f"- [{title}]({url})\n")
+            title_tag = page.find(
+                "meta",
+                property="og:title"
+            )
+
+            if title_tag:
+                title = title_tag.get(
+                    "content",
+                    ""
+                ).strip()
+            else:
+                title = page.title.get_text(
+                    strip=True
+                )
+
+            print(title)
+
+            f.write(
+                f"- [{title}]({url})\n"
+            )
 
         except Exception as e:
+            print(
+                f"ERROR: {url}"
+            )
             print(e)
 
 print(f"Created {output_file}")

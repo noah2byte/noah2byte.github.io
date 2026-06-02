@@ -1,4 +1,4 @@
-import requests
+import requests, re
 from bs4 import BeautifulSoup
 from pathlib import Path
 from datetime import datetime, timedelta
@@ -37,6 +37,15 @@ week_ago = today.date() - timedelta(days=7)
 
 items = soup.find_all("url")
 print("[INFO] total urls in sitemap:", len(items))
+
+def clean_title(title: str) -> str:
+    # 요즘IT 같은 "| 요즘IT" 제거
+    title = re.sub(r"\s*\|\s*요즘IT.*", "", title)
+
+    # 혹시 다른 사이트용 여유 처리
+    title = re.sub(r"\s*\|.*$", "", title)
+
+    return title.strip()
 
 for item in items:
     loc = item.find("loc")
@@ -79,7 +88,7 @@ with open(output_file, "w", encoding="utf-8") as f:
             meta = page.find("meta", property="og:title")
 
             if meta and meta.get("content"):
-                title = meta["content"].strip()
+                title = clean_title(meta["content"].strip())
             elif page.title:
                 title = page.title.get_text(strip=True)
             else:

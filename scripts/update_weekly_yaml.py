@@ -6,8 +6,8 @@ weekly = {
     "yozmit": []
 }
 
-geeknews_dir = Path("weekly/geeknews")
-yozmit_dir = Path("weekly/yozmit")
+geeknews_dir = Path("_weekly/geeknews")
+yozmit_dir = Path("_weekly/yozmit")
 
 if geeknews_dir.exists():
 

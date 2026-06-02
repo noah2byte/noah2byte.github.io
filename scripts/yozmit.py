@@ -1,7 +1,6 @@
 import requests
 import json
 import time
-import re
 from bs4 import BeautifulSoup
 from pathlib import Path
 from datetime import datetime, timedelta
@@ -24,14 +23,14 @@ output_dir.mkdir(parents=True, exist_ok=True)
 cache_dir.mkdir(parents=True, exist_ok=True)
 
 output_file = output_dir / f"yozmit-{today_str}.md"
-cache_file = cache_dir / "yozmit-cache.json"
+cache_file = cache_dir / "links-cache.json"
 
 headers = {
     "User-Agent": "Mozilla/5.0"
 }
 
 # -----------------------------
-# robots.txt (안전)
+# robots.txt
 # -----------------------------
 rp = robotparser.RobotFileParser()
 rp.set_url(f"{BASE_URL}/robots.txt")
@@ -47,21 +46,6 @@ def allowed(url: str) -> bool:
         return rp.can_fetch(headers["User-Agent"], url)
     except:
         return True
-
-
-# -----------------------------
-# 핵심: 제목 정제 (regex 버전)
-# -----------------------------
-def clean_title(title: str) -> str:
-    if not title:
-        return "Untitled"
-
-    title = title.strip()
-
-    # " | 요즘IT" 정확히 제거 (공백 포함)
-    title = re.sub(r"\s\|\s요즘IT\s*$", "", title)
-
-    return title.strip()
 
 
 # -----------------------------
@@ -81,39 +65,57 @@ def save_cache(data):
 
 
 # -----------------------------
-# sitemap fetch
+# sitemap
 # -----------------------------
 def fetch_sitemap():
     try:
         r = requests.get(SITEMAP_URL, headers=headers, timeout=30)
         if r.status_code == 200:
             return r
-    except Exception as e:
-        print("[ERROR] sitemap request failed:", e)
+    except:
+        pass
     return None
 
 
 # -----------------------------
-# 1. sitemap
+# 카테고리 분류
+# -----------------------------
+def classify(url: str, title: str = "") -> str:
+    text = (url + " " + title).lower()
+
+    if any(k in text for k in ["ai", "gpt", "llm", "prompt", "rag", "agent"]):
+        return "AI / LLM"
+
+    if any(k in text for k in ["kubernetes", "docker", "devops", "ci/cd", "terraform"]):
+        return "DevOps / Infra"
+
+    if any(k in text for k in ["api", "server", "backend", "database", "architecture"]):
+        return "Backend / System"
+
+    if any(k in text for k in ["security", "oauth", "auth", "attack"]):
+        return "Security"
+
+    if any(k in text for k in ["ui", "ux", "frontend", "design"]):
+        return "Frontend / UX"
+
+    return "General"
+
+
+# -----------------------------
+# 1. sitemap 수집
 # -----------------------------
 response = fetch_sitemap()
 urls = []
 
-# -----------------------------
-# 2. fallback
-# -----------------------------
 if not response:
     print("[WARN] sitemap failed → cache fallback")
-
     urls = load_cache()
 
     if not urls:
-        print("[FATAL] no cache data")
+        print("[FATAL] no cache")
         exit(1)
 
 else:
-    print("[INFO] sitemap OK")
-
     soup = BeautifulSoup(response.content, "lxml-xml")
     items = soup.find_all("url")
 
@@ -145,55 +147,57 @@ else:
 print(f"[INFO] urls: {len(urls)}")
 
 # -----------------------------
-# 3. 안전 종료
+# 2. 종료 조건
 # -----------------------------
 if not urls:
-    print("[WARN] empty result → skip")
+    print("[WARN] empty result")
     exit(0)
 
 # -----------------------------
-# 4. MD 생성
+# 3. 그룹화
+# -----------------------------
+grouped = {}
+
+for url in urls:
+    time.sleep(0.3)
+
+    category = "General"
+
+    try:
+        r = requests.get(url, headers=headers, timeout=30)
+        page = BeautifulSoup(r.text, "html.parser")
+
+        meta = page.find("meta", property="og:title")
+        title = meta["content"] if meta and meta.get("content") else ""
+
+        category = classify(url, title)
+
+    except:
+        category = "General"
+
+    grouped.setdefault(category, []).append(url)
+
+# -----------------------------
+# 4. MD 생성 (🔥 전부 고정 유지)
 # -----------------------------
 with open(output_file, "w", encoding="utf-8") as f:
+
+    # 🔥 FRONT MATTER 완전 고정
     f.write("---\n")
     f.write("layout: page\n")
     f.write(f"title: 요즘IT Weekly - {today_str}\n")
     f.write(f"permalink: /weekly/yozmit/{today_str}/\n")
     f.write("---\n\n")
 
+    # 🔥 본문 헤더도 고정
     f.write(f"# 요즘IT Weekly - {today_str}\n\n")
     f.write("## Articles\n\n")
 
-    for url in urls:
-        try:
-            time.sleep(1)
-
-            r = requests.get(url, headers=headers, timeout=30)
-            page = BeautifulSoup(r.text, "html.parser")
-
-            title = None
-
-            # -----------------------------
-            # title 후보 수집
-            # -----------------------------
-            meta = page.find("meta", property="og:title")
-
-            if meta and meta.get("content"):
-                title = meta["content"]
-            elif page.title:
-                title = page.title.get_text(strip=True)
-            else:
-                title = "Untitled"
-
-            # -----------------------------
-            # 핵심: 무조건 마지막 1회 정제
-            # -----------------------------
-            title = clean_title(title)
-
-            print("[OK]", title)
-            f.write(f"- [{title}]({url})\n")
-
-        except Exception as e:
-            print("[ERROR]", url, e)
+    # 🔥 내용만 변경됨 (링크 + 카테고리)
+    for category, links in grouped.items():
+        f.write(f"## {category}\n")
+        for link in links:
+            f.write(f"- {link}\n")
+        f.write("\n")
 
 print(f"[DONE] created: {output_file}")

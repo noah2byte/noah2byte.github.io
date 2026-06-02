@@ -8,11 +8,17 @@ weekly = {
 
 weekly_dir = Path("_weekly")
 
-if geeknews_dir.exists():
+if weekly_dir.exists():
 
-    for md in weekly_dir.glob("geeknews-*.md"):
+    for md in sorted(
+        weekly_dir.glob("geeknews-*.md"),
+        reverse=True
+    ):
 
-        name = md.stem
+        name = md.stem.replace(
+            "geeknews-",
+            ""
+        )
 
         weekly["geeknews"].append(
             {
@@ -21,14 +27,15 @@ if geeknews_dir.exists():
             }
         )
 
-if yozmit_dir.exists():
-
     for md in sorted(
-        yozmit_dir.glob("*.md"),
+        weekly_dir.glob("yozmit-*.md"),
         reverse=True
     ):
 
-        name = md.stem
+        name = md.stem.replace(
+            "yozmit-",
+            ""
+        )
 
         weekly["yozmit"].append(
             {

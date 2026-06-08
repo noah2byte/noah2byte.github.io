@@ -47,5 +47,4 @@ jobs:
 
           git commit -m "weekly digest update" || true
 
-          git pull origin main --rebase
-          git push origin main
+          git push

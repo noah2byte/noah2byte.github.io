@@ -47,3 +47,5 @@ permalink: /about/
 - Terraform 기반 IaC 코드 검증 및 실행 테스트 수행
   -> IaC 기반 인프라 설계 및 재현성에 대한 이해도 확보
 - [참조 링크](https://product.kyobobook.co.kr/detail/S000215654012)
+- [참조 원저자 깃허브 저장소](https://github.com/joatmon08/manning-book)
+- [참조 에이콘 출판사 깃허브 저장소](https://github.com/AcornPublishing/infra-code)

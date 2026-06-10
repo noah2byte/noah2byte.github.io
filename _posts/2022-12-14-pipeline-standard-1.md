@@ -30,7 +30,7 @@ mermaid: true
 #### 각자의 방식으로
 
 문제는 그 배포들이 저마다 다른 방식으로 이루어지고 있었다는 점이다.
-![As-Is 배포 구조](./assets/img/kidsnote/asis-deploy-structure.png)
+![As-Is 배포 구조](/assets/img/kidsnote/asis-deploy-structure.png)
 **Frontend**는 Jenkins Freestyle Job이 있었다. 버튼을 누르면 돌아가는 수준이었지만, 그나마 자동화의 형태를 갖추고 있었다.
 
 **Backend**는 달랐다. 일부는 Fabric의 `fabfile`로 배포 스크립트를 관리했고, 일부는 그조차 없었다. 서비스 담당자가 직접 서버에 SSH로 접속해 명령어를 하나씩 입력하는 방식이었다. 배포가 사람의 손과 기억에 종속되어 있었다.

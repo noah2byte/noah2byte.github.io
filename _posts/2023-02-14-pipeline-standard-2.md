@@ -112,19 +112,23 @@ Slack 커스텀 앱을 생성하고 Jenkins에 연결했다. **Slack Block Kit**
 - **빌드 시작 시** → 시작 알림 전송
   - ![Slack 배포 시작 예시](/assets/img/kidsnote/slack-build-start.png)
 
+<br>
  
 - **빌드 진행 시** → 빌드 진행 각 단계 알림 전송
   - ![Slack 배포 진행 예시](/assets/img/kidsnote/slack-build-loading.png)
 
+<br>
 
 - **빌드 완료 시** → 성공/실패 결과, 환경, 브랜치, 빌드 URL 포함
   - ![Slack 배포 완료 예시](/assets/img/kidsnote/slack-build-result-sucess-1.png)
 
+<br>
 
 - **실패 시** → 담당자 멘션과 함께 스레드로 에러 링크 전송
   - ![Slack 배포 실패 예시1](/assets/img/kidsnote/slack-build-result-fail-1.png)
   - ![Slack 배포 실패 예시2](/assets/img/kidsnote/slack-build-result-fail-2.png)
 
+<br>
 
 - **중단 시** → 중단된 빌드 단계 알림 전송
   - ![Slack 배포 중단 예시](/assets/img/kidsnote/slack-build-abort.png)

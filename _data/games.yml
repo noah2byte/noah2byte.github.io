@@ -1,0 +1,14 @@
+# 게임 탭(_tabs/game.md)에 카드로 렌더링되는 게임 목록.
+# 게임을 추가하려면 아래 형식으로 항목만 추가하면 됩니다. (HTML 수정 불필요)
+#
+# - title: 게임 제목
+#   description: 한 줄 설명
+#   url: https://example.com/
+#   category: 카테고리 (예: 미니게임, 퍼즐 ...)
+#   icon: 이모지 하나 (선택, 기본값은 🎮)
+
+- title: 폭탄 전쟁 게임
+  description: 클릭 한 번으로 즐기는 미니 게임
+  url: https://noah2byte.github.io/world-bomb-war-game/
+  category: 미니게임
+  icon: 💣

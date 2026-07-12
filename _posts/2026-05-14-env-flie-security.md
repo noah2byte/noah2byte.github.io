@@ -2,7 +2,7 @@
 title: "배포된 .git 경로로 인증키가 유출된 사건 추적기"
 date: 2026-05-14 14:00:00 +0900
 categories: [운영 이모저모, 보안]
-pin: true
+pin: false
 math: true
 mermaid: true
 ---

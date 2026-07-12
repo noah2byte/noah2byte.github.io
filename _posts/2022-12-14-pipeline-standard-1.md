@@ -3,7 +3,7 @@ title: 키즈노트 CI/CD 파이프라인 진화기(1)
 author: 노아
 date: 2022-12-14 09:37:00 +0800
 categories: [문제 상황 개선 사례, 키즈노트, ci/cd 파이프라인]
-pin: true
+pin: false
 math: true
 mermaid: true
 

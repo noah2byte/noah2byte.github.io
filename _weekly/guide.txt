@@ -1,1 +1,0 @@
-#요즘it megazine, geeknews weekly 데이터 크롤링

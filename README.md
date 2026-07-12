@@ -43,7 +43,7 @@
 ├── _tabs/                 # 사이드바 탭 페이지 (About, 경력, 아키텍처, 게임 등)
 ├── _pages/                # 그 외 개별 페이지 (weekly 목록 등)
 ├── _weekly/                # 자동 생성되는 주간 뉴스 다이제스트 Markdown
-├── _data/                 # YAML 데이터 (저자, 연락처, 다국어 문구, 주간 뉴스 인덱스 등)
+├── _data/                 # YAML 데이터 (저자, 연락처, 다국어 문구, 주간 뉴스 인덱스, 게임 목록 등)
 ├── _layouts/               # 페이지 레이아웃 (post, page, home, category ...)
 ├── _includes/               # 레이아웃에 삽입되는 부분 템플릿 (헤더, 사이드바, 댓글, TOC 등)
 ├── _sass/                  # SCSS 스타일
@@ -111,6 +111,10 @@ python scripts/update_weekly_yaml.py # _data/weekly.yml 갱신
 ### 새 글 작성
 
 `_posts/YYYY-MM-DD-title.md` 형식으로 파일을 추가하고 front matter(`layout: post`, `title`, `categories` 등)를 채웁니다. 사이드바 탭을 추가/수정하려면 `_tabs/*.md`의 front matter(`order`, `icon`, `permalink`)를 참고하세요.
+
+### 게임 탭에 게임 추가
+
+`_tabs/game.md`는 `_data/games.yml`을 순회하며 카드 그리드를 렌더링합니다. 새 게임을 추가하려면 `_tabs/game.md`를 수정할 필요 없이 `_data/games.yml`에 `title`/`description`/`url`/`category`/`icon` 항목만 추가하면 됩니다.
 
 ## 배포 파이프라인
 

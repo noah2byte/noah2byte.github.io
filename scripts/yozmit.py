@@ -86,6 +86,32 @@ def save_cache(data):
 # -----------------------------
 # sitemap 수집
 # -----------------------------
+# [참고] 로컬에서는 항상 200이 오는데 GitHub Actions(CI)에서는 종종 405가 발생한다.
+# UA/헤더를 바꿔도 로컬은 재현되지 않고 CI에서만 발생하는 걸로 봐서,
+# 요청 내용이 아니라 "요청이 오는 IP" 자체가 걸리는 것으로 보인다.
+#
+# - GitHub 호스티드 러너(Ubuntu/Windows)는 Microsoft Azure 데이터센터 IP를 공유해서 쓴다.
+#   (공식 문서: https://docs.github.com/en/actions/reference/runners/github-hosted-runners)
+# - 이 IP 대역은 api.github.com/meta로 공개되어 있고 매주 바뀐다. GitHub 스스로도
+#   "IP가 너무 많고 자주 바뀌니 allowlist 용도로 쓰지 말라"고 안내한다.
+# - Cloudflare/AWS WAF 같은 서비스는 이런 클라우드/데이터센터 출신 IP를 자동으로
+#   걸러내는 IP 평판 기반 룰(예: Amazon IP reputation list, Bot Control)을 기본 제공한다.
+#   실제로 "GitHub Actions 요청이 WAF에 막힌다"는 사례와, 이를 우회하기 위해
+#   러너 IP를 임시로 WAF 허용목록에 등록해주는 GitHub Marketplace 액션들도 여럿 있다.
+#   (예: Cloudflare 커뮤니티 https://community.cloudflare.com/t/415086,
+#        Marketplace "Bypass Cloudflare for Github Action", "waf2-allow-action")
+# - 이 사이트(yozm.wishket.com)는 sitemap 응답 헤더가 Server: AmazonS3라 AWS 인프라 위에
+#   있는 것으로 보이고, robots.txt에도 봇을 전면 차단하는 조항은 없다(Crawl-delay만 명시).
+#
+# 종합하면 "요즘IT가 이 스크립트를 콕 집어 차단한다"기보다는, GitHub Actions IP가
+# 클라우드 IP 평판 룰에 자동으로 걸리는 것일 가능성이 높다는 정황이다. 다만 요즘IT의
+# 실제 WAF 설정을 직접 확인할 방법은 없어 100% 단정할 수는 없다.
+#
+# 그래서 이 스크립트/워크플로는 이 실패를 전제로 방어적으로 설계했다:
+#   - fetch_sitemap() 실패 시 캐시로 폴백, 캐시도 없으면 명시적으로 실패 처리(raise SystemExit)
+#   - main()에서 제목을 하나도 못 가져오면(개별 기사 요청도 막힌 경우) 파일을 쓰지 않고 실패 처리
+#   - weekly-news.yml의 "Generate YozmIT" 스텝은 continue-on-error로 걸어서,
+#     이 스크립트가 실패해도 GeekNews 수집과 커밋/배포는 계속 진행되게 했다.
 def fetch_sitemap():
     try:
         r = requests.get(SITEMAP_URL, headers=headers, timeout=TIMEOUT)

@@ -1,4 +1,5 @@
 import json
+import re
 import time
 from pathlib import Path
 from datetime import datetime, timedelta
@@ -146,6 +147,18 @@ def classify(url: str, title: str) -> str:
     return "General"
 
 
+def clean_title(title: str) -> str:
+    """
+    og:title 끝에 붙는 사이트명 접미사(예: ' | 요즘IT')를 제거하고,
+    남은 '|'는 이스케이프한다.
+    kramdown은 '|'가 포함된 줄을 GFM 테이블로 오인해 [텍스트](링크)
+    구문 자체를 깨뜨리므로(테이블 셀로 분해되어 <a> 태그가 아예 생성되지 않음),
+    반드시 이스케이프해야 링크가 정상 동작한다.
+    """
+    title = re.sub(r"\s*\|\s*요즘IT\s*$", "", title).strip()
+    return title.replace("|", "\\|")
+
+
 def fetch_title(url: str) -> str:
     """og:title만 추출. 본문은 저장하지 않는다 (링크 큐레이션 원칙)."""
     try:
@@ -153,7 +166,7 @@ def fetch_title(url: str) -> str:
         page = BeautifulSoup(r.text, "html.parser")
         meta = page.find("meta", property="og:title")
         if meta and meta.get("content"):
-            return meta["content"].strip()
+            return clean_title(meta["content"])
     except Exception:
         pass
     return ""

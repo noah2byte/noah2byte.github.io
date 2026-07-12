@@ -33,6 +33,7 @@ jobs:
         run: python scripts/geeknews.py
 
       - name: Generate YozmIT
+        continue-on-error: true
         run: python scripts/yozmit.py
 
       - name: Generate YAML

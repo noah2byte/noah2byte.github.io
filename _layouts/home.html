@@ -40,6 +40,10 @@ refactor: true
   {% endfor %}
 {% endif %}
 
+{% include weekly-digest.html %}
+
+<h2 class="section-title">최근 글</h2>
+
 <div id="post-list" class="flex-grow-1 px-xl-1">
   {% for post in posts %}
     <article class="card-wrapper card">
@@ -116,5 +120,3 @@ refactor: true
 {% if paginator.total_pages > 1 %}
   {% include post-paginator.html %}
 {% endif %}
-
-{% include weekly-digest.html %}

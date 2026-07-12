@@ -2,6 +2,36 @@
   Style for Homepage
 */
 
+.section-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--heading-color);
+  margin-bottom: 1rem;
+
+  &:not(:first-child) {
+    margin-top: 2rem;
+  }
+}
+
+.weekly-digest-card {
+  border: 0;
+  background: var(--card-bg);
+  box-shadow: var(--card-shadow);
+  color: var(--text-color);
+
+  h3 {
+    color: var(--heading-color);
+  }
+
+  summary {
+    color: var(--text-color);
+  }
+
+  a {
+    color: var(--link-color);
+  }
+}
+
 #post-list {
   margin-top: 2rem;
 

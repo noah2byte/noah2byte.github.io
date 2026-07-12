@@ -302,5 +302,5 @@ Backend에서는 운영 환경을 해석하는 방법을 배웠다.
 | Part 2 | 첫 번째 삽: Frontend Pipeline 만들기 |
 | Part 3 | Mobile로의 확장: iOS와 Android Pipeline 구축 |
 | **Part 4** | **마지막 퍼즐: Backend Pipeline 구축** ← 현재 글 |
-| Part 5 | 중복을 코드로: Shared Library와 Git 기반 전환 |
+| Part 5 | 중복을 코드로: Shared Library 도입과 Git 기반 전환 |
 | Part 6 | 회고: 없던 것을 만들고 통합하기까지 |

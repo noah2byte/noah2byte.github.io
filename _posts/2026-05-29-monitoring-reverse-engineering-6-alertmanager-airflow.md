@@ -2,7 +2,6 @@
 title: "[모니터링 시스템 역추적기 #6] Alertmanager → Airflow — 스펙에 없는 필드와 싸운 기록"
 date: 2026-05-29 11:00:00 +0900
 categories: [문제 상황 개선 사례, 천재교육, 모니터링 시스템 역추적기]
-tags: [alertmanager, airflow, webhook, alerting, go-template]
 description: "알림의 목적지가 사람이 아니라 Airflow DAG인 설계. webhook payload를 두고 존재하지 않는 필드들과 싸운 트러블슈팅의 전말과 미검증 판정."
 mermaid: true
 ---

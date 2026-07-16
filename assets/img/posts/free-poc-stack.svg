@@ -1,0 +1,68 @@
+<svg viewBox="0 0 880 470" xmlns="http://www.w3.org/2000/svg" font-family="'Malgun Gothic','Apple SD Gothic Neo','Noto Sans KR',sans-serif">
+  <defs>
+    <marker id="arr4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+  </defs>
+  <rect width="880" height="470" fill="#ffffff"/>
+  <text x="24" y="34" font-size="17" font-weight="700" fill="#0f172a">그림 4. 이번 무료 PoC의 구성 (총비용 ₩0)</text>
+  <text x="24" y="54" font-size="12" fill="#64748b">외부로 나가는 유료 호출이 하나도 없는 구성 — 대신 기능 커버리지를 포기한 지점(적색)이 존재한다</text>
+
+  <!-- PC boundary -->
+  <rect x="24" y="72" width="520" height="360" rx="12" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="40" y="96" font-size="12.5" font-weight="700" fill="#64748b">Windows 11 PC (모든 것이 이 안에서 동작)</text>
+
+  <rect x="48" y="112" width="220" height="120" rx="10" fill="#ffffff" stroke="#0d9488" stroke-width="1.6"/>
+  <text x="158" y="138" font-size="13.5" font-weight="700" fill="#115e59" text-anchor="middle">Hermes Agent v0.18.2</text>
+  <g font-size="11" fill="#334155">
+    <text x="64" y="162">%LOCALAPPDATA%\hermes\</text>
+    <text x="64" y="180">· config.yaml (설정)</text>
+    <text x="64" y="198">· .env (키 — 비어 있음)</text>
+    <text x="64" y="216">· sessions / skills / logs</text>
+  </g>
+
+  <line x1="268" y1="172" x2="316" y2="172" stroke="#475569" stroke-width="1.6" marker-end="url(#arr4)" marker-start="url(#arr4)"/>
+  <text x="292" y="160" font-size="10" fill="#64748b" text-anchor="middle">OpenAI 호환</text>
+
+  <rect x="320" y="112" width="200" height="120" rx="10" fill="#ffffff" stroke="#6366f1" stroke-width="1.6"/>
+  <text x="420" y="138" font-size="13.5" font-weight="700" fill="#3730a3" text-anchor="middle">Ollama</text>
+  <g font-size="11" fill="#334155" text-anchor="middle">
+    <text x="420" y="162">127.0.0.1:11434/v1</text>
+    <text x="420" y="182">모델: gemma4:e2b</text>
+    <text x="420" y="202">(provider: custom)</text>
+  </g>
+
+  <!-- local tools inside pc -->
+  <rect x="48" y="252" width="472" height="160" rx="10" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="64" y="276" font-size="12" font-weight="700" fill="#64748b">로컬에서 도는 툴 (전부 무료 · 키 불필요)</text>
+  <g font-size="11.5" fill="#0f172a">
+    <rect x="64"  y="288" width="212" height="30" rx="6" fill="#f0fdfa" stroke="#0d9488"/><text x="76" y="308">터미널·파일·코드 실행 (local)</text>
+    <rect x="292" y="288" width="212" height="30" rx="6" fill="#f0fdfa" stroke="#0d9488"/><text x="304" y="308">브라우저: 로컬 Chromium</text>
+    <rect x="64"  y="326" width="212" height="30" rx="6" fill="#f0fdfa" stroke="#0d9488"/><text x="76" y="346">TTS: Microsoft Edge TTS</text>
+    <rect x="292" y="326" width="212" height="30" rx="6" fill="#fffbeb" stroke="#f59e0b"/><text x="304" y="346">Computer Use (설치 실패 ⚠)</text>
+    <rect x="64"  y="364" width="440" height="30" rx="6" fill="#f0fdfa" stroke="#0d9488"/><text x="76" y="384">웹 검색: DuckDuckGo ddgs — 단, 검색 스니펫까지만 (search-only)</text>
+  </g>
+
+  <!-- outside: internet -->
+  <line x1="544" y1="379" x2="592" y2="379" stroke="#475569" stroke-width="1.4" marker-end="url(#arr4)"/>
+  <rect x="596" y="352" width="260" height="54" rx="10" fill="#f8fafc" stroke="#cbd5e1"/>
+  <text x="726" y="374" font-size="12" font-weight="700" fill="#334155" text-anchor="middle">인터넷 (무료 호출만)</text>
+  <text x="726" y="392" font-size="11" fill="#64748b" text-anchor="middle">DuckDuckGo 검색 · Edge TTS</text>
+
+  <!-- unavailable -->
+  <rect x="596" y="72" width="260" height="260" rx="10" fill="#fef2f2" stroke="#dc2626"/>
+  <text x="726" y="98" font-size="12.5" font-weight="700" fill="#991b1b" text-anchor="middle">무료 구성에서 포기한 기능</text>
+  <g font-size="11.5" fill="#7f1c1c">
+    <text x="614" y="126">✗ 이미지 생성 (FAL/OpenAI 키 필요)</text>
+    <text x="614" y="150">✗ 페이지 본문 추출 web_extract</text>
+    <text x="628" y="166" font-size="10.5" fill="#b91c1c">→ 무료 우회: Firecrawl 셀프호스팅</text>
+    <text x="614" y="192">✗ Skills Hub (GITHUB_TOKEN)</text>
+    <text x="628" y="208" font-size="10.5" fill="#b91c1c">→ 토큰 발급 자체는 무료</text>
+    <text x="614" y="234">✗ 비디오 분석·생성, X 검색</text>
+    <text x="614" y="260">✗ 프론티어 모델의 추론력</text>
+    <text x="628" y="276" font-size="10.5" fill="#b91c1c">→ 이것이 가장 치명적 (본문 5장)</text>
+  </g>
+  <text x="614" y="312" font-size="10.5" fill="#991b1b">색 규약: 청록=무료로 동작, 호박=주의, 적색=불가</text>
+
+  <text x="24" y="454" font-size="10.5" fill="#94a3b8">본문 3.5절(툴별 선택)과 5.2절(기능별 제약 표)의 시각 요약</text>
+</svg>

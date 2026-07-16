@@ -1,0 +1,51 @@
+<svg viewBox="0 0 880 470" xmlns="http://www.w3.org/2000/svg" font-family="'Malgun Gothic','Apple SD Gothic Neo','Noto Sans KR',sans-serif">
+  <defs>
+    <marker id="arr2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+  </defs>
+  <rect width="880" height="470" fill="#ffffff"/>
+  <text x="24" y="34" font-size="17" font-weight="700" fill="#0f172a">그림 2. 툴 콜링(Tool Calling)의 기본 원리</text>
+  <text x="24" y="54" font-size="12" fill="#64748b">LLM은 아무것도 직접 실행하지 않는다 — "실행 요청서(JSON)"를 쓸 뿐이고, 실제 실행은 프레임워크의 몫이다</text>
+
+  <!-- lanes -->
+  <g font-size="13.5" font-weight="700" text-anchor="middle">
+    <rect x="60"  y="80" width="180" height="36" rx="8" fill="#f1f5f9" stroke="#94a3b8"/><text x="150" y="103" fill="#0f172a">사용자</text>
+    <rect x="350" y="80" width="180" height="36" rx="8" fill="#eef2ff" stroke="#6366f1"/><text x="440" y="103" fill="#3730a3">LLM (모델)</text>
+    <rect x="640" y="80" width="180" height="36" rx="8" fill="#f0fdfa" stroke="#0d9488"/><text x="730" y="103" fill="#115e59">프레임워크 + 실제 도구</text>
+  </g>
+  <line x1="150" y1="116" x2="150" y2="430" stroke="#cbd5e1" stroke-dasharray="4 4"/>
+  <line x1="440" y1="116" x2="440" y2="430" stroke="#cbd5e1" stroke-dasharray="4 4"/>
+  <line x1="730" y1="116" x2="730" y2="430" stroke="#cbd5e1" stroke-dasharray="4 4"/>
+
+  <!-- 1 -->
+  <line x1="150" y1="150" x2="436" y2="150" stroke="#475569" stroke-width="1.6" marker-end="url(#arr2)"/>
+  <rect x="180" y="128" width="230" height="20" rx="4" fill="#ffffff"/>
+  <text x="293" y="142" font-size="12" fill="#0f172a" text-anchor="middle">① "서울 날씨 알려줘"</text>
+
+  <!-- 2 -->
+  <line x1="440" y1="205" x2="726" y2="205" stroke="#6366f1" stroke-width="1.6" marker-end="url(#arr2)"/>
+  <rect x="460" y="164" width="260" height="38" rx="4" fill="#ffffff"/>
+  <text x="590" y="178" font-size="12" fill="#3730a3" text-anchor="middle">② 툴 호출 요청 (텍스트일 뿐, 실행 아님)</text>
+  <text x="590" y="196" font-size="11.5" fill="#334155" text-anchor="middle" font-family="Consolas,monospace">get_weather({"city":"Seoul"})</text>
+
+  <!-- 3 -->
+  <rect x="646" y="222" width="168" height="52" rx="8" fill="#f0fdfa" stroke="#0d9488"/>
+  <text x="730" y="243" font-size="12" font-weight="700" fill="#115e59" text-anchor="middle">③ 실제 실행</text>
+  <text x="730" y="261" font-size="11" fill="#334155" text-anchor="middle">API 호출·셸 명령·파일 IO</text>
+
+  <!-- 4 -->
+  <line x1="726" y1="310" x2="444" y2="310" stroke="#0d9488" stroke-width="1.6" marker-end="url(#arr2)"/>
+  <rect x="460" y="286" width="260" height="20" rx="4" fill="#ffffff"/>
+  <text x="590" y="300" font-size="12" fill="#115e59" text-anchor="middle">④ 결과 주입: tool 메시지 "31C, sunny"</text>
+
+  <!-- 5 -->
+  <line x1="436" y1="365" x2="154" y2="365" stroke="#475569" stroke-width="1.6" marker-end="url(#arr2)"/>
+  <rect x="180" y="343" width="240" height="20" rx="4" fill="#ffffff"/>
+  <text x="300" y="357" font-size="12" fill="#0f172a" text-anchor="middle">⑤ "서울은 31도, 맑아요" (결과를 소화한 답)</text>
+
+  <!-- failure callout -->
+  <rect x="60" y="392" width="760" height="58" rx="8" fill="#fef2f2" stroke="#dc2626"/>
+  <text x="76" y="415" font-size="12.5" font-weight="700" fill="#991b1b">이번 PoC의 실패 지점 = ④→⑤ 사이</text>
+  <text x="76" y="435" font-size="12" fill="#7f1c1c">gemma4:e2b는 ②까지는 수행했지만(형식상 툴 호출 가능), ④로 돌아온 결과를 읽고 ⑤로 엮어내는 데 실패했다.</text>
+</svg>

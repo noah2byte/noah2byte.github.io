@@ -1,0 +1,111 @@
+<svg viewBox="0 0 960 680" width="960" height="680" style="max-width:100%;height:auto" xmlns="http://www.w3.org/2000/svg" font-family="'Pretendard','Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif">
+  <defs>
+    <marker id="arrow2" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#64748b"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#059669"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="960" height="680" fill="#ffffff"/>
+
+  <text x="480" y="34" text-anchor="middle" font-size="22" font-weight="700" fill="#0f172a">TO-BE : GitLab Helm Chart 19.x (컴포넌트 분리)</text>
+  <text x="480" y="56" text-anchor="middle" font-size="13" fill="#64748b">lms-comm-2 (KVM 하이퍼바이저 신규 클러스터) — 컴포넌트별 독립 파드 + 스테이트풀 서비스 별도 차트</text>
+
+  <!-- Cluster (외부 서비스는 오른쪽 컬럼으로 분리) -->
+  <rect x="30" y="80" width="690" height="450" rx="14" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="50" y="106" font-size="14" font-weight="600" fill="#334155">☸ lms-comm-2 클러스터 · namespace: gitlab-n</text>
+
+  <!-- Stateless group -->
+  <rect x="55" y="125" width="400" height="200" rx="10" fill="#fff7ed" stroke="#fb923c" stroke-width="2"/>
+  <text x="70" y="150" font-size="13.5" font-weight="700" fill="#c2410c">🦊 GitLab Helm 릴리스 (Stateless 컴포넌트)</text>
+  <g font-size="11.5" fill="#431407">
+    <rect x="75" y="164" width="175" height="28" rx="5" fill="#ffedd5" stroke="#fdba74"/><text x="162" y="182" text-anchor="middle">webservice ×2 (replica)</text>
+    <rect x="262" y="164" width="175" height="28" rx="5" fill="#ffedd5" stroke="#fdba74"/><text x="349" y="182" text-anchor="middle">sidekiq</text>
+    <rect x="75" y="200" width="175" height="28" rx="5" fill="#ffedd5" stroke="#fdba74"/><text x="162" y="218" text-anchor="middle">gitlab-shell</text>
+    <rect x="262" y="200" width="175" height="28" rx="5" fill="#ffedd5" stroke="#fdba74"/><text x="349" y="218" text-anchor="middle">gitlab-kas / registry</text>
+    <rect x="75" y="236" width="175" height="28" rx="5" fill="#dbeafe" stroke="#60a5fa"/><text x="162" y="254" text-anchor="middle" font-weight="700">toolbox (백업/복구 워커)</text>
+    <rect x="262" y="236" width="175" height="28" rx="5" fill="#ffedd5" stroke="#fdba74"/><text x="349" y="254" text-anchor="middle">runner / exporter</text>
+  </g>
+  <text x="75" y="300" font-size="11" fill="#9a3412">각 컴포넌트가 독립 Deployment → 하나가 죽어도</text>
+  <text x="75" y="316" font-size="11" fill="#9a3412">전체 중단으로 번지지 않음 (장애 반경 축소)</text>
+
+  <!-- Backup flow (in-cluster: toolbox가 수행하는 일) -->
+  <rect x="500" y="125" width="200" height="190" rx="10" fill="#ecfdf5" stroke="#34d399" stroke-width="1.5"/>
+  <text x="600" y="150" text-anchor="middle" font-size="12.5" font-weight="700" fill="#047857">백업 수행 (toolbox)</text>
+  <text x="600" y="174" text-anchor="middle" font-size="10.5" fill="#065f46">① 02:00 백업 잡 수신</text>
+  <text x="600" y="192" text-anchor="middle" font-size="10.5" fill="#065f46">gitlab-rake gitlab:backup:create</text>
+  <text x="600" y="214" text-anchor="middle" font-size="10.5" fill="#065f46">② tar 생성 → 즉시 버킷 전송</text>
+  <text x="600" y="232" text-anchor="middle" font-size="10.5" fill="#065f46">③ 파드 내부에는 미적재</text>
+  <text x="600" y="258" text-anchor="middle" font-size="10" fill="#047857">사유: AS-IS에서 tar 누적이</text>
+  <text x="600" y="274" text-anchor="middle" font-size="10" fill="#047857">디스크 풀 → PG 중단을 유발한</text>
+  <text x="600" y="290" text-anchor="middle" font-size="10" fill="#047857">구조 자체를 제거</text>
+  <path d="M250 250 C 380 250, 430 190, 500 180" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrow2)"/>
+
+  <!-- Stateful group -->
+  <rect x="55" y="345" width="400" height="165" rx="10" fill="#eef2ff" stroke="#818cf8" stroke-width="2"/>
+  <text x="70" y="370" font-size="13.5" font-weight="700" fill="#4338ca">🗄 스테이트풀 서비스 (19.x부터 별도 Helm 차트)</text>
+  <g font-size="11.5" fill="#312e81">
+    <rect x="75" y="384" width="175" height="30" rx="5" fill="#e0e7ff" stroke="#a5b4fc"/><text x="162" y="403" text-anchor="middle" font-weight="700">PostgreSQL 17 (bitnami)</text>
+    <rect x="262" y="384" width="175" height="30" rx="5" fill="#e0e7ff" stroke="#a5b4fc"/><text x="349" y="403" text-anchor="middle" font-weight="700">Redis (bitnami)</text>
+    <rect x="75" y="422" width="175" height="30" rx="5" fill="#e0e7ff" stroke="#a5b4fc"/><text x="162" y="441" text-anchor="middle" font-weight="700">MinIO (별도 차트)</text>
+    <rect x="262" y="422" width="175" height="30" rx="5" fill="#e0e7ff" stroke="#a5b4fc"/><text x="349" y="441" text-anchor="middle" font-weight="700">Gitaly (StatefulSet)</text>
+  </g>
+  <text x="75" y="478" font-size="11" fill="#3730a3">GitLab 본체와 라이프사이클 분리 → 업그레이드 시</text>
+  <text x="75" y="494" font-size="11" fill="#3730a3">DB가 함께 재배포되는 리스크 제거</text>
+
+  <!-- Storage -->
+  <rect x="500" y="345" width="200" height="165" rx="10" fill="#eff6ff" stroke="#60a5fa" stroke-width="1.5"/>
+  <text x="600" y="370" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1d4ed8">PVC / StorageClass</text>
+  <g font-size="10.5" fill="#1e40af">
+    <text x="512" y="392">gitlab-postgresql-sc</text>
+    <text x="512" y="410">gitlab-redis-sc</text>
+    <text x="512" y="428">gitlab-minio-sc</text>
+    <text x="512" y="446">gitlab-gitaly-sc</text>
+  </g>
+  <text x="600" y="472" text-anchor="middle" font-size="11.5" font-weight="700" fill="#047857">NAS 기반 (nas.csi.ncloud.com)</text>
+  <text x="600" y="490" text-anchor="middle" font-size="11.5" font-weight="700" fill="#047857">Reclaim: Retain ✔</text>
+  <path d="M455 430 L500 430" stroke="#64748b" stroke-width="2" marker-end="url(#arrow2)"/>
+
+  <!-- ===== 오른쪽 컬럼: 클러스터 외부 자원 ===== -->
+
+  <!-- Backup scheduler (외부 VM) -->
+  <rect x="740" y="95" width="190" height="100" rx="10" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="835" y="120" text-anchor="middle" font-size="12.5" font-weight="700" fill="#334155">bak-vms-01 (백업 스케줄러)</text>
+  <text x="835" y="142" text-anchor="middle" font-size="10.5" fill="#475569">매일 02:00 크론 스케줄링</text>
+  <text x="835" y="158" text-anchor="middle" font-size="10.5" fill="#475569">→ toolbox에 백업 잡 실행</text>
+  <text x="835" y="180" text-anchor="middle" font-size="10" fill="#64748b">(AS-IS의 백업 주기 체계 유지)</text>
+  <path d="M740 155 C 726 162, 716 166, 704 172" stroke="#059669" stroke-width="2" fill="none" marker-end="url(#arrowGreen)"/>
+  <text x="716" y="150" font-size="11" font-weight="700" fill="#059669">①</text>
+
+  <!-- SMTP proxy -->
+  <rect x="740" y="215" width="190" height="100" rx="10" fill="#fdf4ff" stroke="#c084fc"/>
+  <text x="835" y="240" text-anchor="middle" font-size="12.5" font-weight="700" fill="#7e22ce">SMTP-Proxy 서버</text>
+  <text x="835" y="262" text-anchor="middle" font-size="10.5" fill="#6b21a8">사내 SMTP 부재 →</text>
+  <text x="835" y="278" text-anchor="middle" font-size="10.5" fill="#6b21a8">NCP Outbound Mailer API</text>
+  <text x="835" y="294" text-anchor="middle" font-size="10.5" fill="#6b21a8">경유 메일 발송 (:1025 수신)</text>
+  <path d="M455 195 C 600 195, 690 240, 740 258" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrow2)"/>
+
+  <!-- NCR -->
+  <rect x="740" y="335" width="190" height="95" rx="10" fill="#fefce8" stroke="#facc15"/>
+  <text x="835" y="360" text-anchor="middle" font-size="12.5" font-weight="700" fill="#a16207">NCP Container Registry</text>
+  <text x="835" y="382" text-anchor="middle" font-size="10.5" fill="#854d0e">bitnami 정책 변경 대비,</text>
+  <text x="835" y="398" text-anchor="middle" font-size="10.5" fill="#854d0e">필수 이미지 포크·푸시하여</text>
+  <text x="835" y="414" text-anchor="middle" font-size="10.5" fill="#854d0e">자체 레지스트리에서 관리</text>
+
+  <!-- Backup bucket (Object Storage) -->
+  <rect x="740" y="450" width="190" height="85" rx="10" fill="#ecfdf5" stroke="#34d399" stroke-width="1.5"/>
+  <text x="835" y="475" text-anchor="middle" font-size="12.5" font-weight="700" fill="#047857">sto-bak-01 (Object Storage)</text>
+  <text x="835" y="497" text-anchor="middle" font-size="10.5" fill="#065f46">백업 tar 적재·보관</text>
+  <text x="835" y="513" text-anchor="middle" font-size="10.5" fill="#065f46">버킷에서 백업 데이터 일원 관리</text>
+  <path d="M698 300 C 724 350, 727 410, 740 468" stroke="#059669" stroke-width="2" fill="none" marker-end="url(#arrowGreen)"/>
+  <text x="708" y="380" font-size="11" font-weight="700" fill="#059669">②</text>
+
+  <!-- Bottom effect -->
+  <rect x="30" y="555" width="900" height="110" rx="12" fill="#f0fdf4" stroke="#22c55e" stroke-width="1.5"/>
+  <text x="50" y="582" font-size="13" font-weight="700" fill="#15803d">전환 효과</text>
+  <text x="50" y="604" font-size="12" fill="#166534">· 동일 원인 반복 장애 제거 → 무중단 운영 달성 · 장애 반경이 파드 단위로 축소 · 데이터는 Retain PV로 보존 · 코드(values.yaml)로 구성 관리 → 재현성·멱등성 확보</text>
+  <text x="50" y="626" font-size="12" fill="#166534">· 백업: 매일 02:00 자동 백업 체계는 유지·보완 — 수행 주체를 toolbox로, 보관처를 버킷으로 바꿔 "백업이 장애 원인이 되던 고리"를 차단</text>
+  <text x="50" y="648" font-size="12" fill="#166534">· 남은 과제: PostgreSQL/Redis/MinIO의 매니지드 서비스 전환 (비용 이슈로 보류) — 수동 정합성 작업의 보안·운영 리스크는 여전히 존재</text>
+</svg>

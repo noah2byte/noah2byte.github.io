@@ -135,4 +135,10 @@ agent:
 
 하지만 기반만으로는 배포 시간이 줄지 않는다. 이 위에서 46개 교과목을 **어떤 순서와 구조로 동시에 돌릴 것인가** — 그것이 다음 편의 주제다.
 
+## 부록 — 참고 자료
+
+- Jenkins 차트 : https://github.com/jenkinsci/helm-charts/tree/main/charts/jenkins
+
+---
+
 > **다음 편 예고** — 교과목 × 서비스 2단 `parallel` 구조, 그리고 46개 잡을 그냥 병렬로 던지면 벌어지는 참사(thundering herd)를 막는 "1회 선빌드" 패턴. Groovy 클로저의 변수 캡처 함정까지.

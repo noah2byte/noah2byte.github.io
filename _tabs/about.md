@@ -10,11 +10,9 @@ permalink: /about/
 > 📧 [{{ site.social.email }}](mailto:{{ site.social.email }})
 {: .prompt-tip }
 
-> 더 많은 정보를 얻고 싶으시거나 저에 대해 궁금하시면 아래 링크에 접속해주세요~
-
-> [개인 네이버 블로그 > IT개발](https://blog.naver.com/y09255)<br>
-[개인 브런치스토리](https://brunch.co.kr/@17ab0b1a2030498)
-{: .prompt-tip }
+> - [네이버 블로그 · IT개발](https://blog.naver.com/y09255) — ~2023년 까지 공부하며 정리해온 IT 학습 기록입니다. 블로그 내 "IT개발" 카테고리를 확인해주세요.
+> - [브런치스토리](https://brunch.co.kr/@17ab0b1a2030498) — IT와는 별개로 꾸준히 써온 개인 글입니다.
+{: .prompt-info }
 
 &nbsp;
 

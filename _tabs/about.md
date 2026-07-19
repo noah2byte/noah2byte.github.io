@@ -5,6 +5,11 @@ order: 1
 permalink: /about/
 ---
 
+> 이 블로그는 실무에서 마주한 문제와 해결 과정을 기록하는 공간입니다. **채용 제안, 협업 문의, 커피챗 요청**은 아래 이메일로 편하게 연락 주세요. 확인하는 대로 회신드리겠습니다.
+>
+> 📧 [{{ site.social.email }}](mailto:{{ site.social.email }})
+{: .prompt-tip }
+
 > 더 많은 정보를 얻고 싶으시거나 저에 대해 궁금하시면 아래 링크에 접속해주세요~
 
 > [개인 네이버 블로그 > IT개발](https://blog.naver.com/y09255)<br>

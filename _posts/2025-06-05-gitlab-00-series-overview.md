@@ -1,5 +1,5 @@
 ---
-title: GitLab 마이그레이션 연대기(0)
+title: "[GitLab 마이그레이션 연대기 #0] 시리즈를 시작하며 — Omnibus 16.6.1에서 Helm 19.0.2까지"
 author: 노아
 date: 2025-06-05 09:38:00 +0800
 categories: [문제 상황 개선 사례, 천재교육, DevOps 플랫폼 개선]

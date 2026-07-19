@@ -1,5 +1,5 @@
 ---
-title: GitLab 마이그레이션 연대기(3)
+title: "[GitLab 마이그레이션 연대기 #3] 실전 — Omnibus에서 Helm으로"
 author: 노아
 date: 2025-07-29 09:38:00 +0800
 categories: [문제 상황 개선 사례, 천재교육, DevOps 플랫폼 개선]

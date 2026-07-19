@@ -12,13 +12,79 @@ layout: page
     <span class="lead text-muted ps-2">{{ page.posts | size }}</span>
   </h1>
 
-  <ul class="content ps-0">
-    {% for post in page.posts %}
-      <li class="d-flex justify-content-between px-md-3">
-        <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-        <span class="dash flex-grow-1"></span>
-        {% include datetime.html date=post.date class='text-muted small text-nowrap' lang=lang %}
-      </li>
+  {% comment %}
+    A post's `categories` front matter can go deeper than the 2 levels the
+    theme's Categories tab groups by (e.g. [문제 상황 개선 사례, 천재교육, 모니터링 시스템 역추적기]).
+    Here we group the posts of *this* category page by whichever category
+    comes right after `page.title` in each post's `categories` list, so a
+    page like /categories/천재교육/ shows its posts split by series instead
+    of one flat, unordered list.
+  {% endcomment %}
+
+  {% assign sub_categories = '' | split: '' %}
+  {% assign ungrouped_posts = '' | split: '' %}
+
+  {% for post in page.posts %}
+    {% assign next_category = nil %}
+    {% for cat in post.categories %}
+      {% if cat == page.title %}
+        {% assign next_category = post.categories[forloop.index] %}
+      {% endif %}
     {% endfor %}
-  </ul>
+
+    {% if next_category %}
+      {% unless sub_categories contains next_category %}
+        {% assign sub_categories = sub_categories | push: next_category %}
+      {% endunless %}
+    {% else %}
+      {% assign ungrouped_posts = ungrouped_posts | push: post %}
+    {% endif %}
+  {% endfor %}
+
+  {% assign sub_categories = sub_categories | sort %}
+
+  {% if sub_categories.size > 0 %}
+    {% comment %}
+      Sub-categories exist under this one — show only the folders here.
+      Posts show up one level down, on each sub-category's own archive page.
+    {% endcomment %}
+    <div class="card categories">
+      <ul class="list-group list-group-flush">
+        {% for sub_category in sub_categories %}
+          {% assign posts_size = site.categories[sub_category] | size %}
+          <li class="list-group-item">
+            <i class="far fa-folder fa-fw"></i>
+            {% capture _sub_ctg_url %}/categories/{{ sub_category | slugify | url_encode }}/{% endcapture %}
+            <a href="{{ _sub_ctg_url | relative_url }}" class="mx-2">{{ sub_category }}</a>
+            <span class="text-muted small font-weight-light">
+              {{ posts_size }}
+              {% if posts_size > 1 %}
+                {{
+                  site.data.locales[lang].categories.post_measure.plural
+                  | default: site.data.locales[lang].categories.post_measure
+                }}
+              {% else %}
+                {{
+                  site.data.locales[lang].categories.post_measure.singular
+                  | default: site.data.locales[lang].categories.post_measure
+                }}
+              {% endif %}
+            </span>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+
+  {% if ungrouped_posts.size > 0 %}
+    <ul class="content ps-0">
+      {% for post in ungrouped_posts %}
+        <li class="d-flex justify-content-between px-md-3">
+          <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+          <span class="dash flex-grow-1"></span>
+          {% include datetime.html date=post.date class='text-muted small text-nowrap' lang=lang %}
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
 </div>

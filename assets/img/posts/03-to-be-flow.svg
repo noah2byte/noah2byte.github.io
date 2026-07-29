@@ -1,0 +1,67 @@
+<svg width="700" height="640" viewBox="0 0 700 640" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR', sans-serif">
+  <rect x="0" y="0" width="700" height="640" fill="#fbfcfd"/>
+
+  <text x="350" y="36" text-anchor="middle" font-size="18" font-weight="700" fill="#1f2328">TO-BE — ArgoCD가 상시 감시·동기화</text>
+  <text x="350" y="56" text-anchor="middle" font-size="12.5" fill="#8b949e">Git과 클러스터가 다르면 자동으로 맞추는 지속적 구조</text>
+
+  <defs>
+    <marker id="arrow-blue2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#57606a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arrow-loop2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#1d6fb8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <!-- GitLab box -->
+  <rect x="230" y="80" width="240" height="86" rx="8" fill="#ffffff" stroke="#8b949e" stroke-width="1.5"/>
+  <text x="350" y="102" text-anchor="middle" font-size="13.5" font-weight="700" fill="#24292f">GitLab</text>
+  <text x="350" y="122" text-anchor="middle" font-size="10.5" fill="#6e7781">values-*.yaml</text>
+  <text x="350" y="138" text-anchor="middle" font-size="10.5" fill="#6e7781">Namespace.yml</text>
+  <text x="350" y="156" text-anchor="middle" font-size="10.5" fill="#8b949e">(진실의 원천)</text>
+
+  <!-- Jenkins box (left loop) -->
+  <rect x="20" y="230" width="250" height="100" rx="9" fill="#fff8f0" stroke="#e8b567" stroke-width="1.5"/>
+  <text x="145" y="258" text-anchor="middle" font-size="13" font-weight="700" fill="#9a5b13">젠킨스 (역할 축소)</text>
+  <text x="145" y="280" text-anchor="middle" font-size="11" fill="#8b6a3f">빌드 · 이미지 푸시</text>
+  <text x="145" y="298" text-anchor="middle" font-size="11" fill="#8b6a3f">이미지 태그만 patch</text>
+  <text x="145" y="316" text-anchor="middle" font-size="10" fill="#b08a4a">kubectl · helm 없음</text>
+
+  <!-- checkout arrow: GitLab -> Jenkins (left side) -->
+  <path d="M 260 166 L 175 230" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#arrow-blue2)"/>
+  <rect x="98" y="182" width="66" height="20" rx="4" fill="#fbfcfd"/>
+  <text x="131" y="196" text-anchor="middle" font-size="10.5" fill="#6e7781">체크아웃</text>
+
+  <!-- push arrow: Jenkins -> GitLab (right side, separated) -->
+  <path d="M 225 230 L 310 166" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#arrow-blue2)"/>
+  <rect x="185" y="192" width="120" height="20" rx="4" fill="#fbfcfd"/>
+  <text x="245" y="206" text-anchor="middle" font-size="10.5" fill="#6e7781">태그 patch 후 push</text>
+
+  <!-- main vertical flow: GitLab -> ArgoCD -->
+  <line x1="350" y1="166" x2="350" y2="338" stroke="#57606a" stroke-width="1.6" marker-end="url(#arrow-blue2)"/>
+  <rect x="357" y="242" width="94" height="20" rx="4" fill="#fbfcfd"/>
+  <text x="360" y="256" font-size="11" fill="#6e7781">Git 변경 감지</text>
+
+  <!-- ArgoCD box -->
+  <rect x="230" y="342" width="240" height="74" rx="8" fill="#eef2ff" stroke="#5a5fc7" stroke-width="1.6"/>
+  <text x="350" y="370" text-anchor="middle" font-size="14" font-weight="700" fill="#3b3fa8">ArgoCD</text>
+  <text x="350" y="390" text-anchor="middle" font-size="10.5" fill="#4c50a8">helm template 렌더링</text>
+  <text x="350" y="406" text-anchor="middle" font-size="10.5" fill="#4c50a8">→ 클러스터 상태 비교</text>
+
+  <!-- ArgoCD -> Cluster -->
+  <line x1="350" y1="416" x2="350" y2="454" stroke="#57606a" stroke-width="1.6" marker-end="url(#arrow-blue2)"/>
+  <rect x="357" y="425" width="94" height="20" rx="4" fill="#fbfcfd"/>
+  <text x="360" y="439" font-size="11" fill="#6e7781">다르면 반영</text>
+
+  <!-- Cluster box -->
+  <rect x="230" y="458" width="240" height="56" rx="8" fill="#ffffff" stroke="#8b949e" stroke-width="1.5"/>
+  <text x="350" y="491" text-anchor="middle" font-size="13.5" font-weight="700" fill="#24292f">클러스터</text>
+
+  <!-- continuous loop arrow: Cluster -> ArgoCD, pushed further right -->
+  <path d="M 470 486 C 600 486, 600 379, 470 379" fill="none" stroke="#1d6fb8" stroke-width="1.8" marker-end="url(#arrow-loop2)"/>
+  <rect x="580" y="410" width="20" height="54" rx="4" fill="#fbfcfd"/>
+  <text x="594" y="432" font-size="11" font-weight="600" fill="#1d6fb8" transform="rotate(-90 594 432)" text-anchor="middle">자동 동기화</text>
+
+  <text x="350" y="558" text-anchor="middle" font-size="12" fill="#1d6fb8" font-weight="600">이 루프가 계속 도는 게 AS-IS와의 핵심 차이다</text>
+  <text x="350" y="580" text-anchor="middle" font-size="11" fill="#8b949e">"한 번 밀어넣고 끝" → "다르면 계속 맞춘다"</text>
+</svg>

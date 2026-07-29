@@ -1,0 +1,49 @@
+<svg width="680" height="580" viewBox="0 0 680 580" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR', sans-serif">
+  <rect x="0" y="0" width="680" height="580" fill="#fbfcfd"/>
+
+  <text x="340" y="36" text-anchor="middle" font-size="18" font-weight="700" fill="#1f2328">AS-IS — 젠킨스가 직접 배포</text>
+  <text x="340" y="56" text-anchor="middle" font-size="12.5" fill="#8b949e">배포되는 그 순간에만 반영되는 이벤트성 구조</text>
+
+  <defs>
+    <marker id="arrow-gray" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#6e7781" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <!-- GitLab box -->
+  <rect x="230" y="86" width="220" height="54" rx="8" fill="#ffffff" stroke="#8b949e" stroke-width="1.5"/>
+  <text x="340" y="107" text-anchor="middle" font-size="13.5" font-weight="700" fill="#24292f">GitLab</text>
+  <text x="340" y="125" text-anchor="middle" font-size="11" fill="#6e7781">인프라 헬름 차트 레포</text>
+
+  <line x1="340" y1="140" x2="340" y2="172" stroke="#6e7781" stroke-width="1.6" marker-end="url(#arrow-gray)"/>
+
+  <!-- Jenkins container -->
+  <rect x="110" y="176" width="460" height="308" rx="10" fill="#fff8f0" stroke="#e8b567" stroke-width="1.5"/>
+  <text x="340" y="204" text-anchor="middle" font-size="14" font-weight="700" fill="#9a5b13">젠킨스</text>
+
+  <!-- stage 1 -->
+  <rect x="140" y="220" width="400" height="56" rx="7" fill="#ffffff" stroke="#e0d9cf" stroke-width="1.2"/>
+  <text x="340" y="243" text-anchor="middle" font-size="12.5" font-weight="600" fill="#24292f">빌드 환경 변수 설정</text>
+  <text x="340" y="262" text-anchor="middle" font-size="11" fill="#8b949e">환경 · 도메인별 값 계산</text>
+
+  <line x1="340" y1="276" x2="340" y2="296" stroke="#b08a4a" stroke-width="1.4" marker-end="url(#arrow-gray)"/>
+
+  <!-- stage 2 -->
+  <rect x="140" y="300" width="400" height="56" rx="7" fill="#ffffff" stroke="#e0d9cf" stroke-width="1.2"/>
+  <text x="340" y="323" text-anchor="middle" font-size="12.5" font-weight="600" fill="#24292f">어플리케이션 설정 정보 구성</text>
+  <text x="340" y="342" text-anchor="middle" font-size="11" fill="#8b949e">ConfigMap · Secret 직접 생성</text>
+
+  <line x1="340" y1="356" x2="340" y2="376" stroke="#b08a4a" stroke-width="1.4" marker-end="url(#arrow-gray)"/>
+
+  <!-- stage 3 - highlighted problem -->
+  <rect x="140" y="380" width="400" height="86" rx="7" fill="#fdecec" stroke="#d1453b" stroke-width="1.6"/>
+  <text x="340" y="405" text-anchor="middle" font-size="12.5" font-weight="700" fill="#8c1f18">쿠버네티스 배포</text>
+  <text x="340" y="425" text-anchor="middle" font-size="11" fill="#a5372f">helm upgrade --install 직접 실행</text>
+  <text x="340" y="443" text-anchor="middle" font-size="10.5" fill="#a5372f">이 순간 한 번만 반영됨</text>
+
+  <line x1="340" y1="484" x2="340" y2="508" stroke="#6e7781" stroke-width="1.6" marker-end="url(#arrow-gray)"/>
+
+  <!-- Cluster box -->
+  <rect x="230" y="512" width="220" height="48" rx="8" fill="#ffffff" stroke="#8b949e" stroke-width="1.5"/>
+  <text x="340" y="541" text-anchor="middle" font-size="13.5" font-weight="700" fill="#24292f">클러스터</text>
+</svg>

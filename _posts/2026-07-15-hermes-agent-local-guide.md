@@ -2,7 +2,7 @@
 title: "Hermes Agent 설치 및 로컬 모델 한계 정리"
 date: 2026-07-15 14:00:00 +0900
 categories: [운영 이모저모, LLM]
-pin: true
+pin: false
 math: true
 mermaid: true
 ---

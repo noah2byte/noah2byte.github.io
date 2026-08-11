@@ -9,7 +9,7 @@ mermaid: false
 
 # Hermes Agent 후속 — 컨텍스트 벽을 넘자 나타난 새로운 벽
 
-> 전편: [Hermes Agent 무료(Zero-Cost) PoC 가이드](/posts/hermes-agent-local-guide/)
+> 전편: [Hermes Agent 무료(Zero-Cost) PoC 가이드](/posts/hermes-agent-local-guide/)<br>
 > 이 글은 전편의 4.3절에서 이어진다. 남겨뒀던 숙제 하나를 실제로 풀어본 기록이다.
 
 ---

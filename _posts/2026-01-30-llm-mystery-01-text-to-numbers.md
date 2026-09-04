@@ -2,7 +2,6 @@
 title: "[LLM 탐정 시리즈 #1] 문장이 숫자가 되기까지"
 date: 2026-01-30 00:00:00 +0900
 categories: [운영 이모저모, LLM]
-tags: [llm, nlp, tokenizer, bpe, embedding]
 mermaid: true
 ---
 

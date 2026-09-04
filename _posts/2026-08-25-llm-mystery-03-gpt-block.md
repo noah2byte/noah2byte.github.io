@@ -2,7 +2,6 @@
 title: "[LLM 탐정 시리즈 #3] 블록을 쌓아 거인을 만들다"
 date: 2026-08-25 02:00:00 +0900
 categories: [운영 이모저모, LLM]
-tags: [llm, gpt, transformer, layernorm, gelu]
 mermaid: true
 ---
 

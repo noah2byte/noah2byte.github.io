@@ -2,7 +2,6 @@
 title: "[LLM 탐정 시리즈 #6] 이미 똑똑한 뇌를 빌리다"
 date: 2026-08-28 05:00:00 +0900
 categories: [운영 이모저모, LLM]
-tags: [llm, pretrained-weights, transfer-learning, checkpoint]
 mermaid: true
 ---
 

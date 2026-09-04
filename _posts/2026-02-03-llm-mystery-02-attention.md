@@ -2,7 +2,6 @@
 title: "[LLM 탐정 시리즈 #2] 기계는 어떻게 '집중'을 배웠나"
 date: 2026-02-03 01:00:00 +0900
 categories: [운영 이모저모, LLM]
-tags: [llm, attention, self-attention, transformer]
 mermaid: true
 ---
 

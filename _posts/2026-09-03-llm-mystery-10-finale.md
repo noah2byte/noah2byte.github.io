@@ -2,7 +2,6 @@
 title: "[LLM 탐정 시리즈 #10] 그래서, 이걸 알면 뭐가 달라지나"
 date: 2026-09-03 09:00:00 +0900
 categories: [운영 이모저모, LLM]
-tags: [llm, token, context-window, wrap-up]
 mermaid: true
 ---
 

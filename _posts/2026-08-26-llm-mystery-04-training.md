@@ -2,7 +2,6 @@
 title: "[LLM 탐정 시리즈 #4] 틀리면서 배우는 기계"
 date: 2026-08-26 03:00:00 +0900
 categories: [운영 이모저모, LLM]
-tags: [llm, cross-entropy, backpropagation, training]
 mermaid: true
 ---
 

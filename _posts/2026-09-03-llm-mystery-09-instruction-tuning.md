@@ -2,7 +2,6 @@
 title: "[LLM 탐정 시리즈 #9] 명령을 이해하는 모델"
 date: 2026-09-03 08:00:00 +0900
 categories: [운영 이모저모, LLM]
-tags: [llm, instruction-tuning, chatgpt, fine-tuning]
 mermaid: true
 ---
 

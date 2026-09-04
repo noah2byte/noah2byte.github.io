@@ -2,7 +2,6 @@
 title: "[LLM 탐정 시리즈 #8] 판사가 된 언어모델"
 date: 2026-09-02 07:00:00 +0900
 categories: [운영 이모저모, LLM]
-tags: [llm, fine-tuning, classification-head, spam-classifier]
 mermaid: true
 ---
 

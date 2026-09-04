@@ -2,7 +2,6 @@
 title: "[LLM 탐정 시리즈 #7] 숫자 정렬의 함정"
 date: 2026-08-31 06:00:00 +0900
 categories: [운영 이모저모, LLM]
-tags: [llm, padding, dataloader, collate-function, batch]
 mermaid: true
 ---
 

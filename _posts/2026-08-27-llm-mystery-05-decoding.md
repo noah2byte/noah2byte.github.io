@@ -2,7 +2,6 @@
 title: "[LLM 탐정 시리즈 #5] 무작위성의 온도"
 date: 2026-08-27 04:00:00 +0900
 categories: [운영 이모저모, LLM]
-tags: [llm, temperature, sampling, decoding]
 mermaid: true
 ---
 

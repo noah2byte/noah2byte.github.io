@@ -8,7 +8,7 @@ permalink: /about/
 > 이 블로그는 실무에서 마주한 문제와 해결 과정을 기록하는 공간입니다. **채용 제안, 협업 문의, 커피챗 요청**은 아래 이메일로 편하게 연락 주세요. 확인하는 대로 회신드리겠습니다.
 >
 > 📧 [{{ site.social.email }}](mailto:{{ site.social.email }})  
-> 📄 [포트폴리오 보기](/assets/files/portfolio.html) · [다운로드](...){: download="..." }
+> 📄 [포트폴리오 보기](/assets/files/portfolio.html) · [다운로드](/assets/files/portfolio.html){: download="노아_포트폴리오.html" }
 {: .prompt-tip }
 
 > - [네이버 블로그 · IT개발](https://blog.naver.com/y09255) — ~2023년 까지 공부하며 정리해온 IT 학습 기록입니다. 블로그 내 "IT개발" 카테고리를 확인해주세요.

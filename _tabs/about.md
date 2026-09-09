@@ -19,7 +19,7 @@ permalink: /about/
 **보유 기술**
 ----------------------
 - **CI/CD & DevOps Tools**
-  - Jenkins, GitLab, GitHub, GitHub Actions, Nexus
+  - Jenkins, GitLab, GitHub, GitHub Actions, Nexus, ArgoCD
   - Git 기반 Pipeline 관리 및 Shared Library 설계 경험
 - **Cloud**
   - NCP, GCP

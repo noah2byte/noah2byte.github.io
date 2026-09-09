@@ -702,17 +702,58 @@
       <section id="security">
         <div class="kicker">FILE 07 — 보안 파일</div>
         <h2 class="section-title">Secret 관리 표준화 — Vault 도입</h2>
-        <p>백엔드 CI/CD 파이프라인의 시크릿 관리 방식을 단계적으로 전환한 기록이다.</p>
-        <table class="filetable">
-          <tr><th>단계</th><th>내용</th></tr>
-          <tr><td><strong>1편</strong></td><td>Jenkins·Kaniko·Helm·웹훅으로 구성된 백엔드 CI/CD 전체 구조 정리</td></tr>
-          <tr><td><strong>2편</strong></td><td>Spring Config Server를 걷어내고 ConfigMap/Secret 기반으로 전환</td></tr>
-          <tr><td><strong>3편</strong></td><td>외부 Vault 서버와 Agent Injector 구축, 파드 실행 시점 시크릿 주입</td></tr>
-          <tr><td><strong>4편</strong></td><td>Vault를 CI/CD에 실제로 녹여내고 전환 과정 전체 회고</td></tr>
-        </table>
-        <div class="open-item" style="margin-top:20px;">
-          <span class="label">미결 사항</span>
-          스테이징(vault.enabled=false)과 운영(vault.enabled=true)이 시크릿 관리 방식에서 대칭적이지 않다는 것을 ArgoCD 전수조사 중 발견 — 운영 전환 전 별도 재확인 예정.
+        <div class="case">
+          <div class="case-head">
+            <div>
+              <div class="case-num">CASE No. 06 · 백엔드 CI/CD</div>
+              <h3 class="case-title">시크릿이 코드와 함께 굴러다니지 않도록</h3>
+            </div>
+            <span class="stamp">해결 · CLOSED</span>
+          </div>
+          <div class="case-tags">
+            <span class="case-tag">Vault</span><span class="case-tag">Secret 관리</span><span class="case-tag">보안</span><span class="case-tag">표준화</span>
+          </div>
+
+          <div class="case-block">
+            <span class="label">발단</span>
+            <p>Spring Config Server 기반 시크릿 관리에서 원인 불명의 장애가 반복됐다. 통신 문제인지 Config Server 자체 결함인지조차 특정할 수 없었고, 설상가상으로 초기 설계자가 이미 퇴사한 상태라 분석할 근거조차 없었다. 게다가 소스 코드·설정 파일에 시크릿 값이 그대로 노출되어 있다는 보안 문제도 함께 있었다.</p>
+          </div>
+
+          <details class="disclosure">
+            <summary>전체 조사 기록</summary>
+            <div class="disclosure-body">
+              <div class="case-block">
+                <span class="label">현장 · CONTEXT</span>
+                <p>AIDT LMS 백엔드 CI/CD(Jenkins·Kaniko·Helm·웹훅) 파이프라인 기준. Config Server를 최초 설계한 담당자는 이미 퇴사한 상태였음.</p>
+              </div>
+              <div class="case-block">
+                <span class="label">조사 · ANALYSIS</span>
+                <p>반복되는 장애를 개별적으로 대응하는 대신, Spring Config Server 자체를 걷어내는 방향으로 결론지음. 애초에 Kubernetes 기반 운영에도 맞지 않는 방식이었던 터라, 트러블슈팅 부담과 아키텍처 부적합 문제를 한 번에 해결할 기회로 판단. 단순 교체를 넘어, 시크릿이 소스·설정 파일에 노출되지 않도록 파드 실행 시점에 동적으로 주입하는 Vault 구조까지 도입하기로 결정.</p>
+              </div>
+              <div class="case-block">
+                <span class="label">해결 · SOLUTION</span>
+                <ul>
+                  <li>Spring Config Server 방식을 걷어내고 Kubernetes 네이티브인 <strong>ConfigMap/Secret</strong> 기반으로 전환.</li>
+                  <li>외부 <strong>Vault</strong> 서버와 Agent Injector를 구축해, 파드 실행 시점에 시크릿이 주입되는 구조로 전환.</li>
+                  <li>Vault를 실제 CI/CD 파이프라인에 녹여내고, 전환 과정 전체를 회고.</li>
+                </ul>
+              </div>
+              <div class="case-block">
+                <span class="label">담당자 메모</span>
+                <p>구조 파악부터 Config Server 탈피, Vault 도입, CI/CD 통합까지 전 과정을 직접 설계·수행함.</p>
+              </div>
+            </div>
+          </details>
+
+          <div class="case-block" style="margin-top:22px;">
+            <span class="label">결과 · RESULT</span>
+            <p>한 번에 갈아엎지 않고 네 단계로 리스크를 나눠 진행, 백엔드 시크릿 관리를 Vault 기반으로 완전히 전환했다.</p>
+          </div>
+
+          <div class="open-item">
+            <span class="label">미결 사항</span>
+            스테이징(vault.enabled=false)과 운영(vault.enabled=true)이 시크릿 관리 방식에서 대칭적이지 않다는 것을 ArgoCD 전수조사 중 발견 — 운영 전환 전 별도 재확인 예정.
+          </div>
         </div>
       </section>
 

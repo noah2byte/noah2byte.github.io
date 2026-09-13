@@ -247,11 +247,12 @@ nginx는 한 가지가 아니라 **두 가지 완전히 다른 배포 경로**�
 
 실측값 시뮬레이션만 보면 나중에 "그래서 maxSurge랑 maxUnavailable이 정확히 뭐였지"가 다시 헷갈릴 수 있어서, 개념 자체를 처음부터 다시 정리해둔다.
 
-### maxSurge / maxUnavailable가 정확히 뭘 통제하는가
+### maxSurge — 실제 값으로 비교하면
 
-Deployment의 `strategy.rollingUpdate` 아래에 두 값이 들어간다.
+같은 값이라도 실제 차트에 어떻게 박혀 있는지 봐야 감이 온다. 백엔드(prod)의 실제 `values.yaml`은 이렇다.
 
 ```yaml
+# aidt-api-lm (backend, prod)
 strategy:
   type: RollingUpdate
   rollingUpdate:
@@ -259,30 +260,62 @@ strategy:
     maxUnavailable: 0
 ```
 
-- **maxSurge**: 원하는 replica 수보다 순간적으로 **최대 몇 개까지 더** 띄울 수 있는가. replica가 3이고 maxSurge=1이면, 롤링 업데이트 도중 최대 4개까지 동시에 떠 있을 수 있다는 뜻이다. 신규 파드를 먼저 띄우고 그다음 구버전을 내리는 순서로 진행된다.
-- **maxUnavailable**: 롤링 업데이트 도중 동시에 몇 개까지 "서비스 불가" 상태여도 되는가. 0으로 두면 "항상 정상 replica 수를 유지한 채로" 교체하라는 뜻이라 무중단에 가까워진다.
+`maxSurge: 1`이라 desired replica(1) + 1 = 최대 2개까지 동시에 뜰 수 있다. 실제로 이 값 때문에 벌어지는 일이 위 1번 시뮬레이션의 2단계다 — v1을 그대로 둔 채 v2를 "추가로" 하나 더 띄운다.
+
+반면 nginx의 실제 값은 이렇다.
+
+```yaml
+# nginx
+strategy:
+  type: RollingUpdate
+  rollingUpdate:
+    maxSurge: 0
+    maxUnavailable: 1
+```
+
+`maxSurge: 0`이면 아예 추가로 띄우는 일이 없다. desired replica(3)를 절대 넘기지 않겠다는 뜻이라, 새 파드를 만들려면 반드시 기존 파드 하나가 먼저 빠져야 자리가 생긴다. 백엔드처럼 여유 리소스를 잠깐 더 쓰는 방식이 아예 선택지에서 빠져 있는 것이다 — nginx가 HPA로 3~5개를 넉넉히 굴리고 있어서, 순간적으로 리소스를 더 쓰기보다는 있는 자원 안에서 하나씩 교체하는 쪽을 택한 것으로 보인다.
+
+### maxUnavailable — 실제 값으로 비교하면
+
+같은 두 값을 이번엔 maxUnavailable 관점에서 보면 왜 정반대로 설계했는지가 명확해진다.
+
+- **백엔드 `maxUnavailable: 0`**: HPA가 `minReplicas: maxReplicas: 1`로 고정돼 있어서 replica가 사실상 1개뿐이다. 즉 파드 하나가 곧 서비스 전체다. 이 상태에서 `maxUnavailable`이 조금이라도 허용되면 배포 중 서비스가 완전히 끊기는 순간이 생긴다 — 그래서 0으로 못박아 "항상 최소 1개는 떠 있어야 한다"를 강제한 것이다.
+- **nginx `maxUnavailable: 1`**: HPA min=3이라 파드 하나가 잠깐 빠져도 나머지 2개가 트래픽을 받아낼 수 있다. 그래서 구버전 하나를 먼저 내리고 그 자리에 새 버전을 채우는, 리소스를 더 안 쓰는 방식을 택할 여유가 있다.
+
+참고로 stg 환경은 아예 `Recreate` 전략을 쓰는데, 이것도 같은 맥락이다. stg는 replica가 1개인 테스트 환경이라 무중단 자체가 의미가 없어서, 구버전을 통째로 내리고 신버전을 새로 띄우는 가장 단순한 방식을 쓴다. prod가 `RollingUpdate` + `maxUnavailable: 0`이라는 훨씬 까다로운 조합을 쓰는 이유는, stg와 달리 실제 사용자 트래픽이 들어오기 때문이다.
 
 ![롤링 업데이트 5단계 진행 과정](/assets/img/posts/rolling-update-flow.png)
-_maxSurge=1, maxUnavailable=0 조합에서 새 파드가 추가로 뜨고, Ready가 확인된 뒤에야 구 파드가 내려가는 흐름_
-
-이 둘의 조합에 따라 진행 순서 자체가 달라진다.
-
-- **maxSurge > 0, maxUnavailable = 0** (백엔드): 새 파드를 먼저 추가로 띄우고, Ready가 확인되면 그제서야 구 파드를 내린다. 순간적으로 리소스를 더 쓰지만 트래픽 끊김이 없다.
-- **maxSurge = 0, maxUnavailable > 0** (nginx): 추가로 띄우지 않고, 구 파드를 먼저 내린 다음 그 자리에 새 파드를 채운다. 리소스는 그대로 쓰지만 그 순간만큼은 정상 replica 수가 줄어든다.
+_maxSurge=1, maxUnavailable=0 조합(백엔드)에서 새 파드가 추가로 뜨고, Ready가 확인된 뒤에야 구 파드가 내려가는 흐름_
 
 ### Readiness Probe가 왜 "게이트" 역할을 하는가
 
 새 파드가 뜬다고 바로 트래픽을 받는 게 아니다. Deployment 컨트롤러는 **Readiness Probe가 성공할 때까지 다음 단계로 넘어가지 않는다** — 이게 롤링 업데이트에서 가장 중요한 지점이다. 파드 상태가 `Running`이어도 `Ready`가 아니면 Service의 EndpointSlice에 등록되지 않아서 트래픽을 못 받는다.
 
-그래서 init 컨테이너(vault-agent-init 등)나 사이드카(istio-proxy 등)가 붙는 파드는, 그것들이 전부 초기화될 때까지 메인 컨테이너의 Readiness가 통과되지 않도록 `initialDelaySeconds`를 여유 있게 잡아두는 게 안전하다. 이 값이 너무 짧으면, 사이드카가 준비되기 전에 트래픽을 받아버리는 상황이 생길 수 있다.
+백엔드의 실제 probe 설정은 이렇다.
 
-**Probe가 계속 실패하면 롤링 업데이트 자체가 멈춘다.** `maxUnavailable=0`인 상태에서 새 파드가 계속 NotReady면, 구 파드를 못 내리고(무중단 조건 위반이라서) 새 파드를 더 늘리지도 못한다(`maxSurge`를 이미 다 썼으므로). 서비스는 구 버전이 계속 받아내서 정상이지만, 배포 자체는 `Progressing` 상태에 갇혀서 끝나지 않는다.
+```yaml
+readinessProbe:
+  httpGet:
+    path: /healthcheck
+    port: 8080
+  initialDelaySeconds: 50
+  periodSeconds: 5
+  timeoutSeconds: 1
+  failureThreshold: 5
+```
+
+`initialDelaySeconds: 50`을 이렇게 넉넉히 잡은 사유가 있다. 이 파드는 vault-agent-init 같은 init 컨테이너와 istio-proxy 사이드카가 함께 뜨는 구조라, 그것들이 전부 초기화될 때까지 메인 컨테이너의 Readiness가 통과되지 않도록 여유를 준 것이다. 이 값이 너무 짧으면, 사이드카가 준비되기 전에 트래픽을 받아버리는 상황이 생길 수 있다. 반대로 nginx Deployment에는 readinessProbe 자체가 아예 없다 — 이게 2-1절에서 다룰 nginx의 리스크 포인트다.
+
+**Probe가 계속 실패하면 롤링 업데이트 자체가 멈춘다.** `failureThreshold: 5, periodSeconds: 5`이니 약 25초 연속 실패하면 새 파드는 계속 NotReady로 남는다. `maxUnavailable=0`인 상태에서 새 파드가 계속 NotReady면, 구 파드를 못 내리고(무중단 조건 위반이라서) 새 파드를 더 늘리지도 못한다(`maxSurge`를 이미 다 썼으므로). 서비스는 구 버전이 계속 받아내서 정상이지만, 배포 자체는 `Progressing` 상태에 갇혀서 끝나지 않는다.
 
 ### Topology Spread Constraint (maxSkew) — 롤링 업데이트와는 별개의 개념
 
 maxSurge/maxUnavailable이 "언제 몇 개씩 뜨고 내리는가"를 정하는 규칙이라면, maxSkew는 **"그 파드들을 어느 노드에 배치할 것인가"**를 정하는 완전히 다른 레이어의 규칙이다. 롤링 업데이트 중 새 파드가 스케줄링될 때 이 제약도 함께 참조된다.
 
+아래는 실제 우리 백엔드 앱(`aidt-api-lm`)에 이 제약을 적용한다면 들어갈 형태다 — 다만 현재 차트에 실제로 이 값이 설정돼 있는지는 별개로 확인이 필요한 부분이라, 여기서는 개념 설명용으로 우리 앱 이름을 그대로 넣은 예시로 본다.
+
 ```yaml
+# aidt-api-lm 차트에 적용한다면
 topologySpreadConstraints:
   - maxSkew: 1
     topologyKey: kubernetes.io/hostname

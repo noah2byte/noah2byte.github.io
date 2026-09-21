@@ -7,6 +7,12 @@
 #   category: 카테고리 (예: 미니게임, 퍼즐 ...)
 #   icon: 이모지 하나 (선택, 기본값은 🎮)
 
+#
+# 아래 필드는 선택이며, 없으면 기본 모양으로 표시된다
+#   id: 딥링크 주소(/game/#id)에 쓰는 이름 (기본값은 url의 마지막 경로. 예: world-bomb-war-game)
+#   thumbnail: 카드 상단 이미지 경로 (없으면 아이콘을 크게 보여주는 기본 커버)
+#   controls: 조작법 한 줄
+#   source: 소스 저장소 주소 (플레이어 상단에 "소스" 버튼으로 표시)
 - title: 폭탄 전쟁 게임
   description: 클릭 한 번으로 즐기는 미니 게임
   url: https://noah2byte.github.io/world-bomb-war-game/
@@ -18,3 +24,21 @@
   url: https://noah2byte.github.io/world-bomb-war-exploration/
   category: 탐험
   icon: 🌍
+
+- title: 종이배
+  description: 해 질 녘 강을 따라 떠내려가며 바위를 피하고 등불을 모으는 게임
+  url: https://noah2byte.github.io/paper-boat/
+  category: 3D 캐주얼
+  icon: ⛵
+  controls: ←/→ 또는 화면 드래그
+  source: https://github.com/noah2byte/paper-boat
+  thumbnail: /assets/img/games/paper-boat.webp
+
+- title: 도심 질주
+  description: 밤의 서울 도로에서 차 사이를 빠져나가는 3D 레이싱. 도심·한강 다리·터널·항만·한옥 마을 등 8개 구역과 비가 번갈아 등장
+  url: https://noah2byte.github.io/city-rush/
+  category: 3D 레이싱
+  icon: 🏎️
+  controls: ←/→ 조향, ↑ 가속, ↓ 브레이크
+  source: https://github.com/noah2byte/city-rush
+  thumbnail: /assets/img/games/city-rush.webp

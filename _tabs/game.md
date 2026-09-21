@@ -58,8 +58,8 @@ permalink: /game/
     <strong id="game-player-title" class="gp-title"></strong>
     <span class="gp-actions">
       <button type="button" class="gp-full">전체 화면</button>
-      <a class="gp-source" target="_blank" rel="noopener">소스</a>
-      <a class="gp-newtab" target="_blank" rel="noopener">새 탭</a>
+      <a class="gp-source" href="#" target="_blank" rel="noopener">소스</a>
+      <a class="gp-newtab" href="#" target="_blank" rel="noopener">새 탭</a>
       <button type="button" class="gp-close" aria-label="닫기">✕</button>
     </span>
   </div>

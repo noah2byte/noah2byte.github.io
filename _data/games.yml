@@ -35,10 +35,10 @@
   thumbnail: /assets/img/games/paper-boat.webp
 
 - title: 도심 질주
-  description: 밤의 서울 도로에서 차 사이를 빠져나가는 3D 레이싱. 도심·한강 다리·터널·항만·한옥 마을 등 8개 구역과 비가 번갈아 등장
+  description: 밤의 서울을 3바퀴 도는 3D 레이싱. 라이벌 7대와 실시간으로 순위를 다투고, 레이스마다 도심·한강 다리·터널·한옥 마을 등으로 코스가 바뀜
   url: https://noah2byte.github.io/city-rush/
   category: 3D 레이싱
   icon: 🏎️
-  controls: ←/→ 조향, ↑ 가속, ↓ 브레이크
+  controls: ←/→ 조향, ↑ 가속, ↓ 브레이크, 화살표 패드는 부스트
   source: https://github.com/noah2byte/city-rush
   thumbnail: /assets/img/games/city-rush.webp

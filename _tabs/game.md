@@ -129,7 +129,7 @@ permalink: /game/
 <script>
   (() => {
     const dialog = document.getElementById('game-player');
-    if (!dialog || typeof dialog.showModal !== 'function') return; // dialog 미지원 브라우저는 카드 링크(새 탭)로 동작한다
+    if (!dialog || typeof dialog.showModal !== 'function') return; /* dialog 미지원 브라우저는 카드 링크(새 탭)로 동작한다 */
     const frame = dialog.querySelector('.gp-frame');
     const title = dialog.querySelector('.gp-title');
     const newTab = dialog.querySelector('.gp-newtab');
@@ -147,29 +147,29 @@ permalink: /game/
       source.hidden = !card.dataset.gameSource;
       if (card.dataset.gameSource) source.href = card.dataset.gameSource;
       dialog.showModal();
-      iframe.focus(); // 키보드 입력이 바로 게임으로 가도록
-      // 주소에 게임 id를 남겨 그대로 공유·새로고침해도 같은 게임이 열리게 한다
+      iframe.focus(); /* 키보드 입력이 바로 게임으로 가도록 */
+      /* 주소에 게임 id를 남겨 그대로 공유·새로고침해도 같은 게임이 열리게 한다 */
       history.replaceState(null, '', `#${card.dataset.gameId}`);
     }
 
-    // 정리는 닫는 즉시 동기로 한다. close 이벤트는 비동기로 전달돼, 무거운 게임이 메인 스레드를 잡고 있으면 늦게 처리된다
+    /* 정리는 닫는 즉시 동기로 한다. close 이벤트는 비동기로 전달돼, 무거운 게임이 메인 스레드를 잡고 있으면 늦게 처리된다 */
     function cleanup() {
       if (!frame.firstChild) return;
-      frame.replaceChildren(); // iframe을 지워 게임 루프와 GPU 사용을 멈춘다
+      frame.replaceChildren(); /* iframe을 지워 게임 루프와 GPU 사용을 멈춘다 */
       history.replaceState(null, '', location.pathname + location.search);
     }
     function close() {
       dialog.close();
       cleanup();
     }
-    dialog.addEventListener('close', cleanup); // ESC로 닫는 경우
-    dialog.addEventListener('click', e => { if (e.target === dialog) close(); }); // 바깥(backdrop) 클릭으로 닫기
+    dialog.addEventListener('close', cleanup); /* ESC로 닫는 경우 */
+    dialog.addEventListener('click', e => { if (e.target === dialog) close(); }); /* 바깥(backdrop) 클릭으로 닫기 */
     dialog.querySelector('.gp-close').addEventListener('click', close);
     dialog.querySelector('.gp-full').addEventListener('click', () => frame.querySelector('iframe')?.requestFullscreen?.());
 
     for (const card of cards) {
       card.addEventListener('click', e => {
-        if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey) return; // 새 탭 열기 동작은 그대로 둔다
+        if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey) return; /* 새 탭 열기 동작은 그대로 둔다 */
         e.preventDefault();
         open(card);
       });

@@ -1,7 +1,7 @@
 ---
 title: "로그 제작기 2 — 세계관부터 세웠다: 동양 신화와 현대의 결합"
 date: 2026-09-29 20:10:00 +0900
-categories: [운영 이모저모, 기타]
+categories: [운영 이모저모, 게임 제작]
 media_subpath: /assets/img/posts/log-game/
 image:
   path: /assets/img/posts/log-game/02-concept-world.webp

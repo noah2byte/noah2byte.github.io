@@ -1,7 +1,7 @@
 ---
 title: "로그 제작기 3 — 연옥으로의 초대: 세계관 일러스트로 먼저 보는 로그의 세계"
 date: 2026-09-29 20:15:00 +0900
-categories: [운영 이모저모, 기타]
+categories: [운영 이모저모, 게임 제작]
 # media_subpath: /assets/img/posts/log-game/
 image:
   path: /assets/img/posts/log-game/g-world-panorama.webp

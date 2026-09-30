@@ -1,7 +1,7 @@
 ---
 title: "로그 제작기 7 — 아키텍처와 흐름: 한 파일짜리 PoC를 관리 가능한 프로젝트로"
 date: 2026-09-29 20:50:00 +0900
-categories: [운영 이모저모, 기타]
+categories: [운영 이모저모, 게임 제작]
 # media_subpath: /assets/img/posts/log-game/
 mermaid: true
 image:

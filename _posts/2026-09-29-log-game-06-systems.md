@@ -1,7 +1,7 @@
 ---
 title: "로그 제작기 6 — 게임 시스템 설계: 넋칼, 요괴, 십이지신, 스테이지"
 date: 2026-09-29 20:40:00 +0900
-categories: [운영 이모저모, 기타]
+categories: [운영 이모저모, 게임 제작]
 # media_subpath: /assets/img/posts/log-game/
 mermaid: true
 image:

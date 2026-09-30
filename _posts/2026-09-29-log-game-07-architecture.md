@@ -102,15 +102,15 @@ flowchart TB
 ```mermaid
 sequenceDiagram
   participant RAF as requestAnimationFrame
-  participant Loop as main.loop
-  participant Step as step(1/120s)
-  participant Render as render
-  RAF->>Loop: 매 프레임
-  Loop->>Loop: 경과 시간 누적
+  participant ML as main.loop
+  participant ST as step(1/120초)
+  participant RD as render
+  RAF->>ML: 매 프레임
+  ML->>ML: 경과 시간 누적
   loop 누적이 1/120초 이상인 동안
-    Loop->>Step: 입력 → 이동·충돌 → 적·보스 → 넋칼 → 입자
+    ML->>ST: 입력 → 이동·충돌 → 적·보스 → 넋칼 → 입자
   end
-  Loop->>Render: 배경 → 지형 → 적 → 로그 → 효과 → HUD
+  ML->>RD: 배경 → 지형 → 적 → 로그 → 효과 → HUD
 ```
 
 화면 갱신과 물리 갱신을 분리했다. 60Hz와 144Hz 모니터에서 점프 높이가 같아야 하기 때문이다. 모드(`title`, `intro`, `game`, `loading`)에 따라 같은 루프가 타이틀, 컷신, 게임, 로딩 화면을 그린다.

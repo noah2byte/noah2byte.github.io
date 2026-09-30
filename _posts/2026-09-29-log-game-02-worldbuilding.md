@@ -4,7 +4,7 @@ date: 2026-09-29 20:10:00 +0900
 categories: [운영 이모저모, 기타]
 media_subpath: /assets/img/posts/log-game/
 image:
-  path: 02-concept-world.webp
+  path: /assets/img/posts/log-game/02-concept-world.webp
   alt: 연옥 세계관 설정화
 ---
 

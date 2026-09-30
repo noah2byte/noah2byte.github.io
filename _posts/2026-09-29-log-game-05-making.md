@@ -5,7 +5,7 @@ categories: [운영 이모저모, 기타]
 media_subpath: /assets/img/posts/log-game/
 mermaid: true
 image:
-  path: 04-bosses-8.webp
+  path: /assets/img/posts/log-game/04-bosses-8.webp
   alt: 여덟 보스 전투 장면
 ---
 

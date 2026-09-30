@@ -4,7 +4,7 @@ date: 2026-09-29 21:00:00 +0900
 categories: [운영 이모저모, 기타]
 media_subpath: /assets/img/posts/log-game/
 image:
-  path: 02-concept-battle.webp
+  path: /assets/img/posts/log-game/02-concept-battle.webp
   alt: 십이지신과의 전투 설정화
 ---
 

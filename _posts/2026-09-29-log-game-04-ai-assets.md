@@ -5,7 +5,7 @@ categories: [운영 이모저모, 기타]
 mermaid: true
 media_subpath: /assets/img/posts/log-game/
 image:
-  path: 03-log-sheet.webp
+  path: /assets/img/posts/log-game/03-log-sheet.webp
   alt: 로그 스프라이트 시트
 ---
 

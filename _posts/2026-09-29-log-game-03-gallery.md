@@ -4,7 +4,7 @@ date: 2026-09-29 20:15:00 +0900
 categories: [운영 이모저모, 기타]
 media_subpath: /assets/img/posts/log-game/
 image:
-  path: g-world-panorama.webp
+  path: /assets/img/posts/log-game/g-world-panorama.webp
   alt: 연옥의 전경
 ---
 

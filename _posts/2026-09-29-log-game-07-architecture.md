@@ -5,7 +5,7 @@ categories: [운영 이모저모, 기타]
 media_subpath: /assets/img/posts/log-game/
 mermaid: true
 image:
-  path: 06-loading.webp
+  path: /assets/img/posts/log-game/06-loading.webp
   alt: 로딩 화면
 ---
 

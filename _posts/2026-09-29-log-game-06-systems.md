@@ -5,7 +5,7 @@ categories: [운영 이모저모, 기타]
 media_subpath: /assets/img/posts/log-game/
 mermaid: true
 image:
-  path: 04-rabbit-lantern.webp
+  path: /assets/img/posts/log-game/04-rabbit-lantern.webp
   alt: 토끼 보스전 정화 장면
 ---
 

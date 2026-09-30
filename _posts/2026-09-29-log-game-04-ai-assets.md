@@ -1,7 +1,7 @@
 ---
 title: "로그 제작기 4 — 용도별 AI 협업과 프롬프트: 그림을 만들어 게임에 넣기까지"
 date: 2026-09-29 20:20:00 +0900
-categories: [운영 이모저모, 기타]
+categories: [운영 이모저모, 게임 제작]
 mermaid: true
 # media_subpath: /assets/img/posts/log-game/
 image:

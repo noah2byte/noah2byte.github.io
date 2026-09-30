@@ -2,7 +2,7 @@
 title: "로그 제작기 6 — 게임 시스템 설계: 넋칼, 요괴, 십이지신, 스테이지"
 date: 2026-09-29 20:40:00 +0900
 categories: [운영 이모저모, 기타]
-media_subpath: /assets/img/posts/log-game/
+# media_subpath: /assets/img/posts/log-game/
 mermaid: true
 image:
   path: /assets/img/posts/log-game/04-rabbit-lantern.webp
@@ -72,7 +72,7 @@ flowchart LR
 - **넋 대검에서 규칙이 바뀐다**: 초반엔 랜턴이 필수인 적을, 성장하면 랜턴 없이 벨 수 있다. 성장한 만큼 게임 방식이 바뀌어야 보상감이 있다.
 - 덩치 큰 요괴일수록 넋을 많이 떨군다(불가사리·두억시니 3, 양반탈·장산범 2, 보스 6).
 
-![넋칼 단계 상승](04-soul-sword.webp){: w="800"}
+![넋칼 단계 상승](/assets/img/posts/log-game/04-soul-sword.webp){: w="800"}
 _"넋날이 자랐다 · 넋 장검"_
 
 보스 보상으로 무기가 늘어난다. 세 무기는 **넋 저장소를 공유**한다. 무기마다 넋을 따로 모으면 무기를 바꾸는 순간 손해라, 결국 하나만 쓰게 되기 때문이다.
@@ -188,10 +188,10 @@ flowchart TB
 - 계단은 공중에 뜬 발판이 아니라 **올라갔다 내려오는 더미**로 만든다. 한쪽으로만 오르면 꼭대기에 절벽이 생긴다.
 - 장애물과 계단 위에는 발판을 두지 않고, 요괴도 그 안에 생기지 않는다.
 
-![레벨 지도](05-level-map.webp){: w="800"}
+![레벨 지도](/assets/img/posts/log-game/05-level-map.webp){: w="800"}
 _해시 맵을 위에서 본 모습. 금화 더미, 발판, 요괴 위치를 검사할 때 이런 지도를 뽑아 봤다_
 
-![금화 더미](05-mound.webp){: w="800"}
+![금화 더미](/assets/img/posts/log-game/05-mound.webp){: w="800"}
 _해시의 금화 더미. 오르내리는 모양이라 절벽이 없다_
 
 이 규칙을 넣은 뒤 열두 스테이지를 자동 검사해서 **막힌 발판 0, 건널 수 없는 구덩이 0**을 확인했다.

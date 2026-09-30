@@ -3,7 +3,7 @@ title: "로그 제작기 4 — 용도별 AI 협업과 프롬프트: 그림을 �
 date: 2026-09-29 20:20:00 +0900
 categories: [운영 이모저모, 기타]
 mermaid: true
-media_subpath: /assets/img/posts/log-game/
+# media_subpath: /assets/img/posts/log-game/
 image:
   path: /assets/img/posts/log-game/03-log-sheet.webp
   alt: 로그 스프라이트 시트
@@ -76,7 +76,7 @@ Same character design and size in every frame, evenly spaced.
 Solid flat magenta (#FF00FF) background, no shadows, no text, no grid lines.
 ```
 
-![로그 스프라이트 시트](03-log-sheet.webp){: w="700"}
+![로그 스프라이트 시트](/assets/img/posts/log-game/03-log-sheet.webp){: w="700"}
 _제미나이가 그린 로그. 11프레임 내내 얼굴과 옷이 거의 흔들리지 않았다_
 
 ### 요괴·보스 프롬프트 틀
@@ -97,32 +97,32 @@ Grid layout on one image:
 Solid flat magenta (#FF00FF) background, no glow effects, no shadows, no text, no grid lines.
 ```
 
-![양반탈 요괴](03-yokai-yangban.webp){: w="600"}
+![양반탈 요괴](/assets/img/posts/log-game/03-yokai-yangban.webp){: w="600"}
 _하회 양반탈을 쓴 안개 요괴. 쓰러질 때 탈과 갓이 벗겨지는 컷까지 그려줬다_
 
-![어둑시니](03-yokai-eodug.webp){: w="600"}
+![어둑시니](/assets/img/posts/log-game/03-yokai-eodug.webp){: w="600"}
 _어둑시니. 커지는 단계를 행별로 따로 받아 "쳐다볼수록 커진다"를 구현했다_
 
-![불가사리](03-yokai-bulga.webp){: w="600"}
+![불가사리](/assets/img/posts/log-game/03-yokai-bulga.webp){: w="600"}
 _쇠를 먹는 불가사리. 입에 신호등 조각이 물려 있다_
 
-![도둑 쥐](03-boss-rat.webp){: w="600"}
+![도둑 쥐](/assets/img/posts/log-game/03-boss-rat.webp){: w="600"}
 _자(子) 도둑 쥐. 쥐 떼로 분열하는 동작이 인상적이다_
 
-![달토끼](03-boss-rabbit.webp){: w="600"}
+![달토끼](/assets/img/posts/log-game/03-boss-rabbit.webp){: w="600"}
 _묘(卯) 달토끼. 등에 절구를 메고 있지만 절구공이는 없다(로그가 가진 칼자루의 복선)_
 
-![금관의 용](03-boss-dragon.webp){: w="600"}
+![금관의 용](/assets/img/posts/log-game/03-boss-dragon.webp){: w="600"}
 _진(辰) 금관의 용. 정장 위에 금관을 쓴 최종 보스_
 
-![부자 돼지](03-boss-pig.webp){: w="600"}
+![부자 돼지](/assets/img/posts/log-game/03-boss-pig.webp){: w="600"}
 _해(亥) 부자 돼지. 구르는 공 모양 프레임이 그대로 굴러 돌진 패턴이 됐다_
 
 ### 그림이 설정과 다를 때 — 오히려 설정을 바꾼 경우
 
 로그가 칼자루를 쥐고 휘두르는 공격 모션을 요청하면서 "칼날 없이 짧은 칼자루만"이라고 했는데, 제미나이는 **긴 나무 막대**를 그려왔다.
 
-![공격 모션](03-log-attack.webp){: w="600"}
+![공격 모션](/assets/img/posts/log-game/03-log-attack.webp){: w="600"}
 _짧은 칼자루를 요청했는데 긴 막대가 왔다_
 
 다시 뽑을까 하다가, 이 칼자루의 정체가 **달토끼의 절구공이**라는 설정을 떠올렸다. 절구공이는 원래 긴 나무 막대다. 넋이 없을 땐 나무 막대를 휘두르고, 넋이 모이면 막대 끝에서 청록 넋날이 자라나는 모습이 오히려 설정을 더 잘 보여줬다. AI의 "실수"가 설정을 풍부하게 만든 경우다.
@@ -146,7 +146,7 @@ flowchart LR
 - **기준점**: 프레임마다 폭이 달라서 이미지 가운데를 기준으로 그리면 걸을 때 캐릭터가 좌우로 떨린다. 발끝(가장 아래 불투명 픽셀)과 머리 쪽 무게중심을 기준점으로 삼았다.
 - **외곽선**: 어두운 배경에 먹색 코트가 묻혀서, 게임이 불러올 때 스프라이트 둘레에 은은한 밝은 테두리를 입힌다.
 
-![배경 제거 결과](03-log-keyed.webp){: w="800"}
+![배경 제거 결과](/assets/img/posts/log-game/03-log-keyed.webp){: w="800"}
 _배경을 지우고 프레임을 잘라낸 로그. 랜턴의 빛 번짐은 지우고 코드로 다시 그렸다_
 
 ## 업로드 사고들
@@ -167,20 +167,20 @@ _배경을 지우고 프레임을 잘라낸 로그. 랜턴의 빛 번짐은 지�
 3. 달토끼의 귀를 안쪽까지 흰색으로, 눈동자를 연한 회청색으로 바꿔줘. 분홍색은 쓰지 않는다.
 ```
 
-![재회 장면](02-reunion.webp){: w="800"}
+![재회 장면](/assets/img/posts/log-game/02-reunion.webp){: w="800"}
 _재회 장면 설정화_
 
 엔딩은 픽셀 컷신으로 이야기를 다 따라온 뒤, 마지막에 한 번만 일러스트로 바꿨다. 중간에 넣으면 픽셀 장면으로 돌아올 때 격차가 도드라지지만, 마지막 한 장은 보상처럼 느껴지기 때문이다.
 
-![포옹 스프라이트](03-pair.webp){: w="600"}
+![포옹 스프라이트](/assets/img/posts/log-game/03-pair.webp){: w="600"}
 _엔딩용으로 받은 포옹·동행 스프라이트_
 
-![엔딩 일러스트](03-ending-cg.webp){: w="800"}
+![엔딩 일러스트](/assets/img/posts/log-game/03-ending-cg.webp){: w="800"}
 _엔딩 일러스트. 검던 해가 금빛으로 돌아오고, 발밑에는 끊어진 청록 사슬이 흩어져 있다_
 
 ## 아이템
 
-![아이템](03-items.webp){: w="700"}
+![아이템](/assets/img/posts/log-game/03-items.webp){: w="700"}
 _빈 칼자루, 넋창 자루, 넋활, 넋 구슬, 기억의 조각_
 
 아이템 이미지는 HUD의 무기 아이콘, 요괴가 떨구는 넋 구슬, 용의 여의주 탄, 랜턴으로 찾는 기억 조각으로 재활용했다. 칼날은 넋 수에 따라 길이가 변해야 해서 이미지에 넣지 않고 코드로 그린다.
@@ -191,7 +191,7 @@ _빈 칼자루, 넋창 자루, 넋활, 넋 구슬, 기억의 조각_
 
 가장 반복된 문제다. 설정화에서 "붉은 홍살문"이라고 캡션을 달아 놓고 그림은 **일본 도리이**를 그렸다. 문 양옆의 석상도 한국 해태보다 일본 신사의 고마이누에 가까웠다. 재회 장면, 전투 장면에서도 같은 문이 반복됐다.
 
-![도리이로 그려진 홍살문](g-gate-torii.webp){: w="600"}
+![도리이로 그려진 홍살문](/assets/img/posts/log-game/g-gate-torii.webp){: w="600"}
 _캡션은 홍살문, 그림은 도리이_
 
 원인은 학습 데이터의 쏠림으로 보인다. 세계적으로 유통되는 애니메이션·게임 그림에서 "동양 전통 판타지"의 대부분이 일본 양식이라, 모델은 "동양의 붉은 문"을 요청받으면 가장 흔한 답인 도리이로 끌려간다. 한국 요소일수록 이름만으로는 부족하다.
@@ -211,13 +211,13 @@ _캡션은 홍살문, 그림은 도리이_
 
 그림 속 한글이 자주 틀렸다.
 
-![혜시](g-typo-hyesi.webp){: w="600"}
+![혜시](/assets/img/posts/log-game/g-typo-hyesi.webp){: w="600"}
 _"해시(돼지)"가 "혜시(돼지)"로. "유시(닭)"의 "닭"도 뭉개졌다_
 
-![다도](g-typo-dado.webp){: w="500"}
+![다도](/assets/img/posts/log-game/g-typo-dado.webp){: w="500"}
 _"나도… 사랑해"가 "다도…"로_
 
-![겨을](g-typo-gyeoeul.webp){: w="400"}
+![겨을](/assets/img/posts/log-game/g-typo-gyeoeul.webp){: w="400"}
 _"겨눌 수 없어"가 "겨을 수 없어"로_
 
 "열두 시진"이 "얼두 시진"이 된 곳도 있었다. 이미지 생성 모델은 글자를 "쓰는" 게 아니라 글자처럼 보이는 모양을 "그리기" 때문에, 받침이 복잡하거나 덜 흔한 음절일수록 비슷한 모양의 다른 글자로 새는 것으로 보인다.
@@ -231,7 +231,7 @@ _"겨눌 수 없어"가 "겨을 수 없어"로_
 
 로그의 깃털은 두 개인데 세 개로, 토끼의 흰 귀는 분홍으로 그려졌다. 엔딩 일러스트 한 버전은 해가 금빛으로 돌아온 장면인데도 **검은 일식**이 그대로였다. 바로 앞 장면에서 "검은 해에 빛이 돌아왔다"고 해놓고 검은 해가 보이면 이야기 순서가 뒤집힌다. 세 번 바꿔 끼운 끝에 해가 밝게 떠 있는 버전으로 정했다.
 
-![검은 해가 남은 엔딩 버전](g-ending-blacksun.webp){: w="700"}
+![검은 해가 남은 엔딩 버전](/assets/img/posts/log-game/g-ending-blacksun.webp){: w="700"}
 _이야기상 해가 돌아온 뒤인데 검은 해가 남아 있다_
 
 **조치**: 세계관의 "변하면 안 되는 설정"을 목록으로 만들어 모든 프롬프트 앞에 붙였다(깃털 두 개, 흰 귀, 홍살문 구조, 시진 이름 표기). 이런 목록을 **세계관 스타일 가이드**로 문서화해두면, 모델이 바뀌어도 같은 기준으로 검수할 수 있다.

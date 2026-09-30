@@ -2,7 +2,7 @@
 title: "로그 제작기 7 — 아키텍처와 흐름: 한 파일짜리 PoC를 관리 가능한 프로젝트로"
 date: 2026-09-29 20:50:00 +0900
 categories: [운영 이모저모, 기타]
-media_subpath: /assets/img/posts/log-game/
+# media_subpath: /assets/img/posts/log-game/
 mermaid: true
 image:
   path: /assets/img/posts/log-game/06-loading.webp
@@ -143,7 +143,7 @@ flowchart LR
 - 첫 화면에 필요한 것만 먼저 받고, 나머지는 플레이하는 동안 뒤에서 받는다.
 - `import.meta.glob`으로 에셋을 불러와서, 폴더에 파일을 추가하면 코드 수정 없이 포함된다.
 
-![로딩 화면](06-loading.webp){: w="700"}
+![로딩 화면](/assets/img/posts/log-game/06-loading.webp){: w="700"}
 _첫 로딩 화면_
 
 ## 소리

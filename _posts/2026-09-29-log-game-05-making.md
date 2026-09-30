@@ -1,7 +1,7 @@
 ---
 title: "로그 제작기 5 — PoC에서 열두 개의 문까지: 제작 과정 전체"
 date: 2026-09-29 20:30:00 +0900
-categories: [운영 이모저모, 기타]
+categories: [운영 이모저모, 게임 제작]
 # media_subpath: /assets/img/posts/log-game/
 mermaid: true
 image:

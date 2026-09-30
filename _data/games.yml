@@ -42,3 +42,12 @@
   controls: ←/→ 조향, ↑ 가속, ↓ 브레이크, 화살표 패드는 부스트
   source: https://github.com/noah2byte/city-rush
   thumbnail: /assets/img/games/city-rush.webp
+
+- title: 로그 — 열두 시진의 문
+  description: 검은 해 아래 멈춘 연옥에서 십이지신이 지키는 열두 개의 문을 넘어 빼앗긴 달토끼를 되찾는 2D 픽셀 액션 플랫포머 (프로토타입)
+  url: https://noah2byte.github.io/log-game/
+  category: 2D 액션
+  icon: 🏮
+  controls: ←/→ 이동, Space 점프, Z 공격, X 랜턴, C 무기 전환
+  source: https://github.com/noah2byte/log-game
+  thumbnail: /assets/img/games/log-game.webp

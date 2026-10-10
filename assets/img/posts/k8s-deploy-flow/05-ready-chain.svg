@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 450" width="960" height="450">
+  <style>
+    text { font-family: 'Noto Sans CJK KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif; fill:#1e293b; }
+    .title { font-size:22px; font-weight:700; }
+    .sub { font-size:13px; fill:#475569; }
+    .h { font-size:14px; font-weight:700; }
+    .body { font-size:13px; }
+    .who { font-size:12px; font-weight:700; fill:#7c3aed; }
+    .small { font-size:12px; fill:#475569; }
+    .code { font-family: 'DejaVu Sans Mono','Menlo','Consolas','Noto Sans CJK KR',monospace; font-size:12px; fill:#0f172a; }
+  </style>
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#64748b"/>
+    </marker>
+  </defs>
+  <rect width="960" height="450" fill="#ffffff"/>
+
+  <text x="40" y="42" class="title">Running ≠ 트래픽 수신 — Ready가 되기까지</text>
+  <text x="40" y="66" class="sub">보라색 글씨 = 그 화살표를 움직이는 주체. 서로 부르지 않고 각자 API 서버를 watch한다</text>
+
+  <!-- boxes y=110 h=90 -->
+  <rect x="30" y="110" width="140" height="90" rx="10" fill="#f0fdf4" stroke="#15803d"/>
+  <text x="100" y="148" text-anchor="middle" class="h">Running</text>
+  <text x="100" y="170" text-anchor="middle" class="small">컨테이너는 떠 있다</text>
+  <text x="100" y="186" text-anchor="middle" class="small">아직 트래픽 없음</text>
+
+  <line x1="174" y1="155" x2="204" y2="155" stroke="#94a3b8" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="189" y="232" text-anchor="middle" class="who">kubelet</text>
+
+  <rect x="210" y="110" width="180" height="90" rx="10" fill="#eff6ff" stroke="#2563eb"/>
+  <text x="300" y="138" text-anchor="middle" class="h">readiness 확인</text>
+  <text x="300" y="160" text-anchor="middle" class="code">kubelet -&gt; istio-proxy</text>
+  <text x="300" y="176" text-anchor="middle" class="code">:15020 -&gt; app /readyz</text>
+  <text x="300" y="192" text-anchor="middle" class="small">Istio가 probe를 바꿔 씀</text>
+
+  <line x1="394" y1="155" x2="424" y2="155" stroke="#94a3b8" stroke-width="2" marker-end="url(#arr)"/>
+
+  <rect x="430" y="110" width="140" height="90" rx="10" fill="#f8fafc" stroke="#64748b"/>
+  <text x="500" y="148" text-anchor="middle" class="h">Pod Ready</text>
+  <text x="500" y="170" text-anchor="middle" class="small">READY 칸 3/3</text>
+  <text x="500" y="186" text-anchor="middle" class="small">Ready 조건 True</text>
+
+  <line x1="574" y1="155" x2="604" y2="155" stroke="#94a3b8" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="589" y="232" text-anchor="middle" class="who">EndpointSlice 컨트롤러</text>
+
+  <rect x="610" y="110" width="150" height="90" rx="10" fill="#faf5ff" stroke="#7c3aed"/>
+  <text x="685" y="140" text-anchor="middle" class="h">EndpointSlice</text>
+  <text x="685" y="164" text-anchor="middle" class="code">ready: true</text>
+  <text x="685" y="186" text-anchor="middle" class="small">Service의 엔드포인트</text>
+
+  <line x1="764" y1="155" x2="794" y2="155" stroke="#94a3b8" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="779" y="232" text-anchor="middle" class="who">istiod</text>
+
+  <rect x="800" y="110" width="130" height="90" rx="10" fill="#eff6ff" stroke="#2563eb"/>
+  <text x="865" y="140" text-anchor="middle" class="h">모든 Envoy</text>
+  <text x="865" y="162" text-anchor="middle" class="small">엔드포인트 목록</text>
+  <text x="865" y="178" text-anchor="middle" class="small">갱신 → 트래픽 수신</text>
+
+  <!-- notes -->
+  <rect x="30" y="262" width="900" height="160" rx="10" fill="#fffbeb" stroke="#fcd34d"/>
+  <text x="50" y="292" class="h">기억할 것 세 가지</text>
+  <text x="50" y="320" class="body">1. 준비 전 파드도 EndpointSlice에 있을 수 있다. 다만 ready: false로 표시되고 트래픽은 ready: true인 곳으로만 간다</text>
+  <text x="66" y="340" class="body">→ 그래서 "IP가 있나"가 아니라 "ready인가"를 본다</text>
+  <text x="50" y="366" class="body">2. 사이드카가 있는 파드에서 나가는 요청은 kube-proxy가 아니라 호출하는 쪽 Envoy가 이 목록으로 대상 파드를 직접 고른다</text>
+  <text x="50" y="392" class="body">3. 종료할 때는 이 사슬이 거꾸로 돈다. 엔드포인트 제거 전파와 SIGTERM이 동시에 시작돼서 preStop 대기가 필요하다</text>
+</svg>

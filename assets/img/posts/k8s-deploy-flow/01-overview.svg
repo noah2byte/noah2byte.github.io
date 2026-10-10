@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" width="960" height="520">
+  <style>
+    text { font-family: 'Noto Sans CJK KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif; fill:#1e293b; }
+    .title { font-size:22px; font-weight:700; }
+    .sub { font-size:13px; fill:#475569; }
+    .head { font-size:15px; font-weight:700; fill:#ffffff; }
+    .body { font-size:13px; }
+    .small { font-size:12px; fill:#475569; }
+    .key { font-size:15px; font-weight:700; }
+    .warn { font-size:13px; fill:#b91c1c; font-weight:700; }
+  </style>
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#64748b"/>
+    </marker>
+  </defs>
+  <rect width="960" height="520" fill="#ffffff"/>
+
+  <text x="40" y="42" class="title">코드 push부터 요청이 파드에 닿기까지 — 단계 7개</text>
+  <text x="40" y="66" class="sub">모두 API 서버에 쓰고, 각자 API 서버를 지켜보다가, 자기 차례가 오면 자기 일만 한다</text>
+
+  <!-- legend -->
+  <rect x="560" y="80" width="14" height="14" rx="3" fill="#64748b"/><text x="580" y="92" class="small">외부 도구</text>
+  <rect x="650" y="80" width="14" height="14" rx="3" fill="#7c3aed"/><text x="670" y="92" class="small">컨트롤 플레인</text>
+  <rect x="760" y="80" width="14" height="14" rx="3" fill="#0f766e"/><text x="780" y="92" class="small">웹훅</text>
+  <rect x="820" y="80" width="14" height="14" rx="3" fill="#15803d"/><text x="840" y="92" class="small">노드</text>
+  <rect x="880" y="80" width="14" height="14" rx="3" fill="#2563eb"/><text x="900" y="92" class="small">Istio</text>
+
+  <!-- Row 1: y=115 -->
+  <!-- 1 -->
+  <rect x="40" y="115" width="200" height="120" rx="10" fill="#f8fafc" stroke="#cbd5e1"/>
+  <rect x="40" y="115" width="200" height="34" rx="10" fill="#64748b"/><rect x="40" y="135" width="200" height="14" fill="#64748b"/>
+  <text x="140" y="138" text-anchor="middle" class="head">① 트리거</text>
+  <text x="56" y="174" class="body">helm upgrade 또는</text>
+  <text x="56" y="194" class="body">ArgoCD 동기화</text>
+  <text x="56" y="220" class="small">여기까지만 경로가 다르다</text>
+  <line x1="244" y1="175" x2="264" y2="175" stroke="#94a3b8" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- 2 -->
+  <rect x="270" y="115" width="200" height="120" rx="10" fill="#f8fafc" stroke="#cbd5e1"/>
+  <rect x="270" y="115" width="200" height="34" rx="10" fill="#7c3aed"/><rect x="270" y="135" width="200" height="14" fill="#7c3aed"/>
+  <text x="370" y="138" text-anchor="middle" class="head">② 체인</text>
+  <text x="286" y="174" class="body">API 서버(etcd)</text>
+  <text x="286" y="194" class="body">→ Deployment 컨트롤러</text>
+  <text x="286" y="214" class="body">→ RS 컨트롤러 → Pod</text>
+  <line x1="474" y1="175" x2="494" y2="175" stroke="#94a3b8" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- 3 -->
+  <rect x="500" y="115" width="200" height="120" rx="10" fill="#f8fafc" stroke="#cbd5e1"/>
+  <rect x="500" y="115" width="200" height="34" rx="10" fill="#0f766e"/><rect x="500" y="135" width="200" height="14" fill="#0f766e"/>
+  <text x="600" y="138" text-anchor="middle" class="head">③ 웹훅</text>
+  <text x="516" y="174" class="body">저장 직전에 주입</text>
+  <text x="516" y="194" class="body">Istio: 네임스페이스 라벨</text>
+  <text x="516" y="214" class="body">Vault: 파드 어노테이션</text>
+  <line x1="704" y1="175" x2="724" y2="175" stroke="#94a3b8" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- 4 -->
+  <rect x="730" y="115" width="200" height="120" rx="10" fill="#f8fafc" stroke="#cbd5e1"/>
+  <rect x="730" y="115" width="200" height="34" rx="10" fill="#15803d"/><rect x="730" y="135" width="200" height="14" fill="#15803d"/>
+  <text x="830" y="138" text-anchor="middle" class="head">④ 노드</text>
+  <text x="746" y="174" class="body">스케줄러(requests 기준)</text>
+  <text x="746" y="194" class="body">→ kubelet → init 순서</text>
+  <text x="746" y="214" class="body">→ 컨테이너 시작</text>
+
+  <!-- turn arrow 4 -> 5 -->
+  <line x1="830" y1="239" x2="830" y2="279" stroke="#94a3b8" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Row 2: y=285, right to left -->
+  <!-- 5 -->
+  <rect x="730" y="285" width="200" height="120" rx="10" fill="#f8fafc" stroke="#cbd5e1"/>
+  <rect x="730" y="285" width="200" height="34" rx="10" fill="#2563eb"/><rect x="730" y="305" width="200" height="14" fill="#2563eb"/>
+  <text x="830" y="308" text-anchor="middle" class="head">⑤ Ready</text>
+  <text x="746" y="344" class="body">readiness(15020)</text>
+  <text x="746" y="364" class="body">→ EndpointSlice ready</text>
+  <text x="746" y="384" class="body">→ istiod → Envoy 전파</text>
+  <line x1="726" y1="345" x2="706" y2="345" stroke="#94a3b8" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- 6 -->
+  <rect x="500" y="285" width="200" height="120" rx="10" fill="#f8fafc" stroke="#cbd5e1"/>
+  <rect x="500" y="285" width="200" height="34" rx="10" fill="#7c3aed"/><rect x="500" y="305" width="200" height="14" fill="#7c3aed"/>
+  <text x="600" y="308" text-anchor="middle" class="head">⑥ 교체 · 종료</text>
+  <text x="516" y="344" class="body">maxSurge 1 / maxUnavail 0</text>
+  <text x="516" y="364" class="body">옛 파드: 엔드포인트 제거와</text>
+  <text x="516" y="384" class="body">SIGTERM이 동시에</text>
+  <line x1="496" y1="345" x2="476" y2="345" stroke="#94a3b8" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- 7 -->
+  <rect x="270" y="285" width="200" height="120" rx="10" fill="#fff7ed" stroke="#dc2626" stroke-width="2"/>
+  <rect x="270" y="285" width="200" height="34" rx="10" fill="#2563eb"/><rect x="270" y="305" width="200" height="14" fill="#2563eb"/>
+  <text x="370" y="308" text-anchor="middle" class="head">⑦ 요청 흐름</text>
+  <text x="286" y="344" class="body">LB → Ingress Gateway</text>
+  <text x="286" y="364" class="body">→ nginx → 메시 내부</text>
+  <text x="286" y="384" class="body">→ 백엔드 (외부 미노출)</text>
+
+  <text x="40" y="330" class="warn">⑦을 빼먹지 말 것</text>
+  <text x="40" y="350" class="small">"요청이 파드에 닿기까지"의</text>
+  <text x="40" y="368" class="small">후반부다. ①~⑥만 말하면</text>
+  <text x="40" y="386" class="small">절반만 답한 것이다.</text>
+
+  <!-- mnemonic bar -->
+  <rect x="40" y="440" width="890" height="50" rx="10" fill="#eef2ff" stroke="#c7d2fe"/>
+  <text x="60" y="471" class="key">외우는 문장: 트리거 → 체인 → 웹훅 → 노드 → Ready → 교체 → 요청</text>
+</svg>

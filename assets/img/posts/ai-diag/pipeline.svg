@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="800" viewBox="0 0 960 800" font-family="Noto Sans CJK KR, Noto Sans KR, sans-serif">
+<defs>
+<marker id="t" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1L8 5L1 9" fill="none" stroke="#0F6E56" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker>
+</defs>
+<rect width="960" height="800" fill="#ffffff"/>
+<text x="24" y="30" font-size="18" font-weight="700" fill="#2C2C2A">분석 파이프라인 (사령부 내부, diag.py v3.5)</text>
+<text x="24" y="50" font-size="12" fill="#5F5E5A">확정할 수 있는 것은 코드가 정하고, LLM은 설명만 한다. LLM 출력은 코드가 검증하고 어떤 경우에도 실행하지 않는다.</text>
+<text x="40" y="80" font-size="13" font-weight="700" fill="#085041">단계 (함수)</text>
+<text x="580" y="80" font-size="13" font-weight="700" fill="#5F5E5A">왜 이렇게 했나 (계기)</text>
+
+<g font-size="12">
+<!-- 1 -->
+<rect x="40" y="90" width="500" height="104" rx="8" fill="#E1F5EE" stroke="#0F6E56"/>
+<text x="56" y="112" font-size="14" font-weight="700" fill="#085041">1. 수집 collect()</text>
+<text x="56" y="133" fill="#0F6E56">디플로이먼트 · ReplicaSet(리비전, Ready 수) · 정상 리비전 찾기</text>
+<text x="56" y="152" fill="#0F6E56">최신 리비전 파드 상세: 상태 · Warning 이벤트 · 로그(중복 줄 묶음)</text>
+<text x="56" y="171" fill="#0F6E56">이전 리비전 파드: 상태 한 줄 · Istio probe 원래 경로 복원</text>
+<text x="56" y="187" fill="#0F6E56">K8sGPT 분석기 (Pod · Deployment · ReplicaSet · Service)</text>
+<rect x="570" y="90" width="360" height="104" rx="8" fill="#F8F7F3" stroke="#D3D1C7"/>
+<text x="584" y="112" fill="#444441">평소 손으로 보던 순서를 코드로 고정한다.</text>
+<text x="584" y="131" fill="#444441">LLM이 명령을 고르지 않아 판단이 흔들리지 않는다.</text>
+<text x="584" y="150" fill="#5F5E5A">v2: 로그 재시도·중복 제거 (S3·S4)</text>
+<text x="584" y="169" fill="#5F5E5A">v3.1: Istio가 바꾼 probe 경로 복원 (S4)</text>
+<text x="584" y="188" fill="#5F5E5A">v3.4: 이전 리비전은 한 줄만 (연속 실패)</text>
+<line x1="290" y1="194" x2="290" y2="210" stroke="#0F6E56" stroke-width="1.6" marker-end="url(#t)"/>
+
+<!-- 2 -->
+<rect x="40" y="214" width="500" height="104" rx="8" fill="#E1F5EE" stroke="#0F6E56"/>
+<text x="56" y="236" font-size="14" font-weight="700" fill="#085041">2. 규칙 판별 classify()</text>
+<text x="56" y="257" fill="#0F6E56">OOM · 이미지 pull(없음/인증/접속) · 비정상 종료 + 첫 에러 로그</text>
+<text x="56" y="276" fill="#0F6E56">probe(404/5xx/거부/시간 초과) · 스케줄링 · 롤아웃 멈춤</text>
+<text x="56" y="295" fill="#0F6E56">→ 원인 결론 + 권장 조치 문장. 롤백은 정상 리비전 --to-revision만</text>
+<text x="56" y="311" fill="#0F6E56">이전 리비전 문제는 '참고'로 분리</text>
+<rect x="570" y="214" width="360" height="104" rx="8" fill="#F8F7F3" stroke="#D3D1C7"/>
+<text x="584" y="236" fill="#444441">4B 모델은 증거를 보고도 해석을 틀렸다.</text>
+<text x="584" y="255" fill="#444441">패턴이 분명한 장애는 코드가 결론까지 쓴다.</text>
+<text x="584" y="274" fill="#5F5E5A">v3: "과도하게 사용"(S1) · "파일 없음"(S4) 오류</text>
+<text x="584" y="293" fill="#5F5E5A">v3.4: 실패 리비전으로 rollout undo 권고(S4)</text>
+<text x="584" y="312" fill="#5F5E5A">v3.5: 잘못된 '최근 변경' 문장 제한</text>
+<line x1="290" y1="318" x2="290" y2="334" stroke="#0F6E56" stroke-width="1.6" marker-end="url(#t)"/>
+
+<!-- 3 -->
+<rect x="40" y="338" width="500" height="104" rx="8" fill="#E1F5EE" stroke="#0F6E56"/>
+<text x="56" y="360" font-size="14" font-weight="700" fill="#085041">3. 증거 문서 render_evidence() + mask()</text>
+<text x="56" y="381" fill="#0F6E56">순서: 규칙 판별 → 설정 → 변경 이력 → 최신 파드 → 참고 → K8sGPT</text>
+<text x="56" y="400" fill="#0F6E56">3,000자 예산 (약 1,500토큰), 넘으면 뒤를 자른다</text>
+<text x="56" y="419" fill="#0F6E56">마스킹: Authorization · password/token/key · JWT · AKIA ·</text>
+<text x="56" y="435" fill="#0F6E56">URL 계정 · 이메일 · 전화번호</text>
+<rect x="570" y="338" width="360" height="104" rx="8" fill="#F8F7F3" stroke="#D3D1C7"/>
+<text x="584" y="360" fill="#444441">처리 시간 대부분이 입력 처리(약 25~28 tok/s)다.</text>
+<text x="584" y="379" fill="#444441">중요한 것을 앞에 두어 잘려도 핵심은 남긴다.</text>
+<text x="584" y="398" fill="#444441">결과는 외부(Jira Cloud)로 나가므로 마스킹한다.</text>
+<text x="584" y="417" fill="#5F5E5A">v2: 4,500 → 3,000자, 평균 99초 → 약 50초</text>
+<line x1="290" y1="442" x2="290" y2="458" stroke="#0F6E56" stroke-width="1.6" marker-end="url(#t)"/>
+
+<!-- 4 -->
+<rect x="40" y="462" width="500" height="88" rx="8" fill="#EEEDFE" stroke="#534AB7"/>
+<text x="56" y="484" font-size="14" font-weight="700" fill="#3C3489">4. LLM 분석 ask_llm()</text>
+<text x="56" y="505" fill="#534AB7">시스템 프롬프트 12개 규칙 · /no_think · temperature 0.2 · 출력 300토큰</text>
+<text x="56" y="524" fill="#534AB7">형식: 요약(한 문장) · 원인 후보(최대 2개, 근거 인용) · 조치 제안</text>
+<text x="56" y="542" fill="#534AB7">확인 명령어는 쓰지 않는다</text>
+<rect x="570" y="462" width="360" height="88" rx="8" fill="#F8F7F3" stroke="#D3D1C7"/>
+<text x="584" y="484" fill="#444441">LLM의 역할은 규칙 결론과 증거를 읽기 쉽게</text>
+<text x="584" y="503" fill="#444441">정리하는 것이다. 시스템 프롬프트는 캐시돼</text>
+<text x="584" y="522" fill="#444441">두 번째 요청부터 다시 계산하지 않는다.</text>
+<line x1="290" y1="550" x2="290" y2="566" stroke="#0F6E56" stroke-width="1.6" marker-end="url(#t)"/>
+
+<!-- 5 -->
+<rect x="40" y="570" width="500" height="88" rx="8" fill="#E1F5EE" stroke="#0F6E56"/>
+<text x="56" y="592" font-size="14" font-weight="700" fill="#085041">5. 출력 검증</text>
+<text x="56" y="613" fill="#0F6E56">strip_unsupported_examples(): '(예: X)'의 X가 증거에 없으면 삭제</text>
+<text x="56" y="632" fill="#0F6E56">build_commands(): 장애 유형별 확인 명령어를 코드가 생성 (최대 4개)</text>
+<text x="56" y="650" fill="#0F6E56">모두 조회 명령. 실제 파드·컨테이너 이름 사용</text>
+<rect x="570" y="570" width="360" height="88" rx="8" fill="#F8F7F3" stroke="#D3D1C7"/>
+<text x="584" y="592" fill="#444441">프롬프트로 금지해도 지어낸 값이 나왔다.</text>
+<text x="584" y="611" fill="#5F5E5A">v3.2: '/index.html', 없는 jsonpath 필드</text>
+<text x="584" y="630" fill="#5F5E5A">v3.3: 코드 검증 도입 · v3.5: 단어 경계 비교</text>
+<text x="584" y="649" fill="#5F5E5A">('/health'가 '/healthz'에 걸려 통과하던 문제)</text>
+<line x1="290" y1="658" x2="290" y2="674" stroke="#0F6E56" stroke-width="1.6" marker-end="url(#t)"/>
+
+<!-- 6 -->
+<rect x="40" y="678" width="500" height="88" rx="8" fill="#F1EFE8" stroke="#888780"/>
+<text x="56" y="700" font-size="14" font-weight="700" fill="#2C2C2A">6. Jira 기록 (commander.py)</text>
+<text x="56" y="721" fill="#444441">첨부: &lt;이슈&gt;-&lt;회차&gt;-&lt;시각&gt;-evidence.md (수집 원본, 마스킹)</text>
+<text x="56" y="740" fill="#444441">      &lt;이슈&gt;-&lt;회차&gt;-&lt;시각&gt;-analysis.md (분석 전문)</text>
+<text x="56" y="759" fill="#444441">댓글: 분석 결과 #n (위키 마크업, 첨부 링크, 면책 문구)</text>
+<rect x="570" y="678" width="360" height="88" rx="8" fill="#F8F7F3" stroke="#D3D1C7"/>
+<text x="584" y="700" fill="#444441">원본을 붙여야 LLM이 틀렸을 때 바로 검증한다.</text>
+<text x="584" y="719" fill="#444441">회차와 시각을 파일 이름에 넣어 겹치지 않게 한다.</text>
+<text x="584" y="738" fill="#444441">이후 판단과 상태 변경은 사람의 몫이다.</text>
+</g>
+<text x="24" y="788" font-size="11" fill="#5F5E5A">어느 단계든 실패하면 '분석 실패 #n' 댓글을 남긴다. 수집 실패는 오류 문구(마스킹), LLM 실패는 수집 원본을 첨부한다.</text>
+</svg>

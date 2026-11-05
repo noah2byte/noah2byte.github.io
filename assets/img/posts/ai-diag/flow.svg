@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="830" viewBox="0 0 960 830" font-family="Noto Sans CJK KR, Noto Sans KR, sans-serif">
+<defs>
+<marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1L8 5L1 9" fill="none" stroke="#444441" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker>
+<marker id="t" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1L8 5L1 9" fill="none" stroke="#0F6E56" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker>
+<marker id="r" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1L8 5L1 9" fill="none" stroke="#A32D2D" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker>
+<marker id="o" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1L8 5L1 9" fill="none" stroke="#854F0B" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker>
+</defs>
+<rect width="960" height="830" fill="#ffffff"/>
+<text x="24" y="30" font-size="18" font-weight="700" fill="#2C2C2A">ai-diag 처리 플로우</text>
+<text x="24" y="50" font-size="12" fill="#5F5E5A">사람이 승인해야만 시작하고, 사령부가 바꾸는 상태는 '승인 → 진행' 하나뿐이다.</text>
+
+<!-- 상태 띠 -->
+<text x="24" y="82" font-size="13" font-weight="700" fill="#2C2C2A">Jira 상태 (워크플로 고정)</text>
+<rect x="24" y="94" width="110" height="40" rx="6" fill="#F1EFE8" stroke="#888780"/><text x="79" y="119" text-anchor="middle" font-size="13" fill="#2C2C2A">계획</text>
+<rect x="194" y="94" width="130" height="40" rx="6" fill="#FAEEDA" stroke="#854F0B" stroke-width="1.4"/><text x="259" y="113" text-anchor="middle" font-size="13" font-weight="700" fill="#633806">승인</text><text x="259" y="128" text-anchor="middle" font-size="10" fill="#854F0B">상태 ID 10040</text>
+<rect x="400" y="94" width="130" height="40" rx="6" fill="#E1F5EE" stroke="#0F6E56" stroke-width="1.4"/><text x="465" y="113" text-anchor="middle" font-size="13" font-weight="700" fill="#085041">진행</text><text x="465" y="128" text-anchor="middle" font-size="10" fill="#0F6E56">전환 ID 21</text>
+<rect x="606" y="94" width="150" height="40" rx="6" fill="#F1EFE8" stroke="#888780"/><text x="681" y="119" text-anchor="middle" font-size="13" fill="#2C2C2A">테스트 및 검증</text>
+<rect x="800" y="94" width="136" height="40" rx="6" fill="#F1EFE8" stroke="#888780"/><text x="868" y="113" text-anchor="middle" font-size="13" fill="#2C2C2A">완료</text><text x="868" y="128" text-anchor="middle" font-size="10" fill="#5F5E5A">/ 미완료(계획 취소)</text>
+<line x1="134" y1="114" x2="190" y2="114" stroke="#854F0B" stroke-width="1.5" marker-end="url(#o)"/><text x="162" y="148" text-anchor="middle" font-size="11" fill="#854F0B">사람</text>
+<line x1="324" y1="114" x2="396" y2="114" stroke="#0F6E56" stroke-width="1.8" marker-end="url(#t)"/><text x="360" y="148" text-anchor="middle" font-size="11" font-weight="700" fill="#0F6E56">사령부</text>
+<line x1="530" y1="114" x2="602" y2="114" stroke="#854F0B" stroke-width="1.5" marker-end="url(#o)"/><text x="566" y="148" text-anchor="middle" font-size="11" fill="#854F0B">사람</text>
+<line x1="756" y1="114" x2="796" y2="114" stroke="#854F0B" stroke-width="1.5" marker-end="url(#o)"/><text x="776" y="148" text-anchor="middle" font-size="11" fill="#854F0B">사람</text>
+<path d="M465 134 L465 162 L259 162 L259 138" fill="none" stroke="#854F0B" stroke-width="1.4" stroke-dasharray="5 4" marker-end="url(#o)"/>
+<text x="362" y="176" text-anchor="middle" font-size="11" fill="#854F0B">재분석: 사람이 다시 승인으로 (회차 #n 증가)</text>
+
+<!-- 레인 -->
+<g font-size="13" font-weight="700" text-anchor="middle">
+<rect x="40" y="198" width="120" height="34" rx="6" fill="#FAEEDA" stroke="#854F0B"/><text x="100" y="220" fill="#633806">담당자</text>
+<rect x="220" y="198" width="120" height="34" rx="6" fill="#F1EFE8" stroke="#888780"/><text x="280" y="220" fill="#2C2C2A">Jira</text>
+<rect x="420" y="198" width="120" height="34" rx="6" fill="#E1F5EE" stroke="#0F6E56"/><text x="480" y="220" fill="#085041">사령부</text>
+<rect x="620" y="198" width="120" height="34" rx="6" fill="#E6F1FB" stroke="#185FA5"/><text x="680" y="220" fill="#0C447C">API 서버·demo</text>
+<rect x="800" y="198" width="120" height="34" rx="6" fill="#EEEDFE" stroke="#534AB7"/><text x="860" y="220" fill="#3C3489">LLM</text>
+</g>
+<g stroke="#D3D1C7" stroke-width="1.2" stroke-dasharray="4 4">
+<line x1="100" y1="232" x2="100" y2="815"/><line x1="280" y1="232" x2="280" y2="815"/><line x1="480" y1="232" x2="480" y2="815"/><line x1="680" y1="232" x2="680" y2="815"/><line x1="860" y1="232" x2="860" y2="815"/>
+</g>
+
+<g font-size="12">
+<line x1="100" y1="262" x2="276" y2="262" stroke="#854F0B" stroke-width="1.5" marker-end="url(#o)"/>
+<text x="108" y="256" fill="#633806">① 이슈 생성</text>
+<text x="290" y="258" fill="#5F5E5A">제목 [분석] demo / &lt;앱&gt; · 라벨 ai-diag</text>
+
+<line x1="100" y1="300" x2="276" y2="300" stroke="#854F0B" stroke-width="1.5" marker-end="url(#o)"/>
+<text x="108" y="294" fill="#633806">② 상태를 승인으로</text>
+
+<line x1="480" y1="340" x2="284" y2="340" stroke="#0F6E56" stroke-width="1.6" marker-end="url(#t)"/>
+<text x="292" y="334" fill="#0F6E56">③ 30초 폴링 (JQL: 프로젝트 · 승인 · ai-diag)</text>
+<line x1="280" y1="362" x2="476" y2="362" stroke="#888780" stroke-width="1.3" stroke-dasharray="5 4" marker-end="url(#a)"/>
+<text x="292" y="378" fill="#5F5E5A">이슈 · 변경 이력(마지막 승인자)</text>
+
+<rect x="360" y="392" width="350" height="56" rx="6" fill="#E1F5EE" stroke="#0F6E56"/>
+<text x="372" y="414" fill="#085041" font-weight="700">④ 검증</text>
+<text x="372" y="434" fill="#0F6E56">승인자 accountId · 제목 형식 · 네임스페이스 · 처리 이력</text>
+<line x1="360" y1="436" x2="284" y2="460" stroke="#A32D2D" stroke-width="1.3" stroke-dasharray="5 4" marker-end="url(#r)"/>
+<text x="272" y="470" text-anchor="end" fill="#A32D2D">실패: 거부 #n 댓글 · 상태 유지</text>
+
+<line x1="480" y1="490" x2="284" y2="490" stroke="#0F6E56" stroke-width="1.6" marker-end="url(#t)"/>
+<text x="292" y="484" fill="#0F6E56">⑤ 진행으로 전환 + 분석 시작 #n 댓글</text>
+<text x="490" y="494" fill="#5F5E5A" font-size="11">처리 이력을 먼저 저장 (중복 방지)</text>
+
+<line x1="480" y1="530" x2="676" y2="530" stroke="#0F6E56" stroke-width="1.6" marker-end="url(#t)"/>
+<text x="488" y="524" fill="#0F6E56">⑥ 읽기 전용 수집</text>
+<text x="690" y="534" fill="#5F5E5A" font-size="11">deploy · rs · pod · events · logs · k8sgpt</text>
+<line x1="680" y1="552" x2="484" y2="552" stroke="#888780" stroke-width="1.3" stroke-dasharray="5 4" marker-end="url(#a)"/>
+
+<rect x="380" y="572" width="300" height="40" rx="6" fill="#E1F5EE" stroke="#0F6E56"/>
+<text x="392" y="597" fill="#0F6E56"><tspan font-weight="700" fill="#085041">⑦</tspan> 규칙 판별 · 증거 3,000자 이내 · 마스킹</text>
+
+<line x1="480" y1="636" x2="856" y2="636" stroke="#0F6E56" stroke-width="1.6" marker-end="url(#t)"/>
+<text x="488" y="630" fill="#0F6E56">⑧ 분석 요청 (증거만 전달, API 키)</text>
+<line x1="860" y1="658" x2="484" y2="658" stroke="#888780" stroke-width="1.3" stroke-dasharray="5 4" marker-end="url(#a)"/>
+<text x="600" y="674" fill="#5F5E5A">요약 · 원인 후보 · 조치 제안 (텍스트)</text>
+
+<rect x="380" y="688" width="300" height="40" rx="6" fill="#E1F5EE" stroke="#0F6E56"/>
+<text x="392" y="713" fill="#0F6E56"><tspan font-weight="700" fill="#085041">⑨</tspan> 지어낸 예시 제거 · 확인 명령어 코드 생성</text>
+
+<line x1="480" y1="752" x2="284" y2="752" stroke="#0F6E56" stroke-width="1.6" marker-end="url(#t)"/>
+<text x="292" y="746" fill="#0F6E56">⑩ 첨부 2개 + 결과 #n 댓글 (작성자: 서비스 계정)</text>
+<text x="560" y="764" fill="#5F5E5A" font-size="11">실패 시: 분석 실패 #n 댓글 (+수집 원본)</text>
+
+<line x1="280" y1="792" x2="104" y2="792" stroke="#854F0B" stroke-width="1.5" marker-end="url(#o)"/>
+<text x="290" y="796" fill="#633806">⑪ 결과 확인, 이후 상태는 사람이 판단</text>
+</g>
+</svg>

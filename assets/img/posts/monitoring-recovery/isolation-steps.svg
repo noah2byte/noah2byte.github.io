@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 580" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">
+<svg width="940" height="580" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 580" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">
   <rect width="940" height="580" rx="14" fill="#FFFFFF"/>
   <text x="20" y="30" font-size="16" font-weight="700" fill="#111827">구간을 하나씩 지워 나간 순서</text>
 

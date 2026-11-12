@@ -111,6 +111,9 @@ flowchart TB
 
 시리즈를 읽어주셔서 감사합니다.
 
+> **후속 시리즈 「모니터링 시스템 복구기」** — 2026년 11월, 이 지도를 들고 실제 시스템을 다시 열어 보니 스택은 8개월째 아무것도 수집하지 않고 있었다. 그 복구와 이후 고도화 기록은 새 시리즈 [모니터링 시스템 복구기 #1](/posts/monitoring-recovery-1-revival/)로 이어진다. 두 시리즈에 나온 개념은 [복구기 부록: 개념 정리](/posts/monitoring-recovery-appendix-concepts/)에 모아 두었다.
+{: .prompt-info }
+
 ---
 
 **시리즈 전체 보기**
@@ -123,6 +126,10 @@ flowchart TB
 [6편 Alertmanager → Airflow — 스펙에 없는 필드와 싸운 기록](/posts/monitoring-reverse-engineering-6-alertmanager-airflow/)
 [7편 Loki & Promtail — 로그 파이프라인: 폐기된 Kafka 완충로와 헬스체크 방랑기](/posts/monitoring-reverse-engineering-7-loki-promtail/)
 8편 에필로그 — 역추적이 남긴 것 (본 편)
+
+**후속 시리즈 — 모니터링 시스템 복구기**
+[1편 8개월간 멈춰 있던 스택을 되살리다 — 세 겹의 장애와 내부 경로 전환](/posts/monitoring-recovery-1-revival/)
+[부록 — 개념 정리: 메트릭이 화면에 뜨기까지](/posts/monitoring-recovery-appendix-concepts/)
 
 ---
 

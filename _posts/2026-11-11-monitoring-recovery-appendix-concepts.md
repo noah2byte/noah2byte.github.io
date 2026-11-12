@@ -2,7 +2,6 @@
 title: "[모니터링 시스템 복구기 부록] 개념 정리 — 메트릭이 화면에 뜨기까지"
 date: 2026-11-11 13:10:00 +0900
 categories: [문제 상황 개선 사례, 천재교육, 모니터링 시스템 복구기]
-tags: [prometheus, mimir, grafana, loki, kubernetes, promql, helm, concepts]
 description: "역추적기·복구기 두 시리즈에 나온 Prometheus, Mimir, Grafana, Loki와 그 사이 네트워크 개념을 택배 회사 비유 하나로 처음부터 풀어 쓴 부록. 각 개념에서 해당 편으로 이어진다."
 ---
 

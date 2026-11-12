@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 580" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">
+  <rect width="940" height="580" rx="14" fill="#FFFFFF"/>
+  <text x="20" y="30" font-size="16" font-weight="700" fill="#111827">구간을 하나씩 지워 나간 순서</text>
+
+  <text x="70" y="58" font-size="12" font-weight="700" fill="#6B7280">확인한 것</text>
+  <text x="555" y="58" text-anchor="middle" font-size="12" font-weight="700" fill="#6B7280">결과</text>
+  <text x="650" y="58" font-size="12" font-weight="700" fill="#6B7280">해석</text>
+
+  <!-- row 1 -->
+  <rect x="20" y="68" width="900" height="56" rx="8" fill="#F9FAFB" stroke="#E5E7EB"/>
+  <circle cx="44" cy="96" r="12" fill="#374151"/><text x="44" y="100" text-anchor="middle" font-size="12" font-weight="700" fill="#FFFFFF">1</text>
+  <text x="70" y="101" font-size="13" fill="#111827">클러스터 Prometheus → Mimir 도메인 push</text>
+  <rect x="480" y="83" width="150" height="26" rx="13" fill="#FEE2E2"/><text x="555" y="101" text-anchor="middle" font-size="12" font-weight="700" fill="#B91C1C">타임아웃</text>
+  <text x="650" y="101" font-size="13" fill="#111827">경로 어딘가가 끊겨 있다</text>
+
+  <!-- row 2 -->
+  <rect x="20" y="134" width="900" height="56" rx="8" fill="#F9FAFB" stroke="#E5E7EB"/>
+  <circle cx="44" cy="162" r="12" fill="#374151"/><text x="44" y="166" text-anchor="middle" font-size="12" font-weight="700" fill="#FFFFFF">2</text>
+  <text x="70" y="167" font-size="13" fill="#111827">Ingress 상태 (kubectl get ingress)</text>
+  <rect x="480" y="149" width="150" height="26" rx="13" fill="#FEE2E2"/><text x="555" y="167" text-anchor="middle" font-size="12" font-weight="700" fill="#B91C1C">ADDRESS 없음</text>
+  <text x="650" y="167" font-size="13" fill="#111827">① ALB가 없다 → 인증서 만료 확인</text>
+
+  <!-- row 3 -->
+  <rect x="20" y="200" width="900" height="56" rx="8" fill="#F9FAFB" stroke="#E5E7EB"/>
+  <circle cx="44" cy="228" r="12" fill="#374151"/><text x="44" y="232" text-anchor="middle" font-size="12" font-weight="700" fill="#FFFFFF">3</text>
+  <text x="70" y="233" font-size="13" fill="#111827">도메인 조회 (nslookup)</text>
+  <rect x="480" y="215" width="150" height="26" rx="13" fill="#FEE2E2"/><text x="555" y="233" text-anchor="middle" font-size="12" font-weight="700" fill="#B91C1C">옛 LB 주소</text>
+  <text x="650" y="233" font-size="13" fill="#111827">② 사라진 LB를 가리킨다</text>
+
+  <!-- row 4 -->
+  <rect x="20" y="266" width="900" height="56" rx="8" fill="#F9FAFB" stroke="#E5E7EB"/>
+  <circle cx="44" cy="294" r="12" fill="#374151"/><text x="44" y="298" text-anchor="middle" font-size="12" font-weight="700" fill="#FFFFFF">4</text>
+  <text x="70" y="299" font-size="13" fill="#111827">인증서 교체 후 외부 PC → 새 ALB</text>
+  <rect x="480" y="281" width="150" height="26" rx="13" fill="#DCFCE7"/><text x="555" y="299" text-anchor="middle" font-size="12" font-weight="700" fill="#15803D">301 응답</text>
+  <text x="650" y="299" font-size="13" fill="#111827">ALB 자체는 정상이다</text>
+
+  <!-- row 5 -->
+  <rect x="20" y="332" width="900" height="56" rx="8" fill="#F9FAFB" stroke="#E5E7EB"/>
+  <circle cx="44" cy="360" r="12" fill="#374151"/><text x="44" y="364" text-anchor="middle" font-size="12" font-weight="700" fill="#FFFFFF">5</text>
+  <text x="70" y="365" font-size="13" fill="#111827">클러스터 파드 → 새 ALB</text>
+  <rect x="480" y="347" width="150" height="26" rx="13" fill="#FEE2E2"/><text x="555" y="365" text-anchor="middle" font-size="12" font-weight="700" fill="#B91C1C">타임아웃</text>
+  <text x="650" y="365" font-size="13" fill="#111827">클러스터 → ALB 구간이 막혔다</text>
+
+  <!-- row 6 -->
+  <rect x="20" y="398" width="900" height="56" rx="8" fill="#F9FAFB" stroke="#E5E7EB"/>
+  <circle cx="44" cy="426" r="12" fill="#374151"/><text x="44" y="430" text-anchor="middle" font-size="12" font-weight="700" fill="#FFFFFF">6</text>
+  <text x="70" y="431" font-size="13" fill="#111827">클러스터 파드 → 외부 웹사이트</text>
+  <rect x="480" y="413" width="150" height="26" rx="13" fill="#DCFCE7"/><text x="555" y="431" text-anchor="middle" font-size="12" font-weight="700" fill="#15803D">성공</text>
+  <text x="650" y="431" font-size="13" fill="#111827">출구(NAT)는 정상이다</text>
+
+  <!-- row 7 -->
+  <rect x="20" y="464" width="900" height="56" rx="8" fill="#FEF2F2" stroke="#FCA5A5"/>
+  <circle cx="44" cy="492" r="12" fill="#DC2626"/><text x="44" y="496" text-anchor="middle" font-size="12" font-weight="700" fill="#FFFFFF">7</text>
+  <text x="70" y="497" font-size="13" fill="#111827">LB 서브넷 NACL 인바운드 규칙</text>
+  <rect x="480" y="479" width="150" height="26" rx="13" fill="#FEE2E2"/><text x="555" y="497" text-anchor="middle" font-size="12" font-weight="700" fill="#B91C1C">8200만 허용</text>
+  <text x="650" y="497" font-size="13" font-weight="700" fill="#991B1B">③ NAT IP의 443이 막혀 있었다</text>
+
+  <text x="20" y="555" font-size="12.5" fill="#4B5563">비교 대상(외부 PC, 외부 웹사이트)을 하나씩 두면서, 정상인 구간을 지워 막힌 구간만 남겼다.</text>
+</svg>

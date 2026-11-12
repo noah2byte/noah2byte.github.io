@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 560" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#374151"/></marker>
+    <marker id="ab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0369A1"/></marker>
+  </defs>
+  <rect width="940" height="560" fill="#FFFFFF"/>
+  <text x="20" y="30" font-size="16" font-weight="700" fill="#111827">같은 VPC 안의 트래픽을 인터넷으로 돌리지 않는다</text>
+  <text x="20" y="50" font-size="12" fill="#4B5563">복구 직후(위)와 내부 경로 전환 후(아래). 로드밸런서 수는 그대로다</text>
+
+  <!-- BEFORE -->
+  <text x="20" y="86" font-size="13" font-weight="700" fill="#991B1B">복구 직후 — 모든 클라이언트가 공인 도메인을 거친다</text>
+  <rect x="20" y="100" width="900" height="170" rx="10" fill="#FEF2F2" stroke="#FCA5A5"/>
+  <rect x="40" y="116" width="170" height="44" rx="8" fill="#FFFFFF" stroke="#4B5563"/>
+  <text x="125" y="143" text-anchor="middle" font-size="12.5" fill="#111827">관리 클러스터 Prometheus</text>
+  <rect x="40" y="166" width="170" height="44" rx="8" fill="#FFFFFF" stroke="#4B5563"/>
+  <text x="125" y="193" text-anchor="middle" font-size="12.5" fill="#111827">관리 클러스터 Grafana</text>
+  <rect x="40" y="216" width="170" height="44" rx="8" fill="#FFFFFF" stroke="#4B5563"/>
+  <text x="125" y="243" text-anchor="middle" font-size="12.5" fill="#111827">운영 클러스터 A</text>
+  <rect x="250" y="160" width="110" height="56" rx="8" fill="#FFFFFF" stroke="#4B5563"/>
+  <text x="305" y="185" text-anchor="middle" font-size="12.5" font-weight="700" fill="#111827">NAT</text>
+  <text x="305" y="203" text-anchor="middle" font-size="11" fill="#4B5563">트래픽 과금</text>
+  <path d="M210 138 H230 V176 H248" fill="none" stroke="#374151" stroke-width="1.4" marker-end="url(#a)"/>
+  <path d="M210 188 H248" fill="none" stroke="#374151" stroke-width="1.4" marker-end="url(#a)"/>
+  <path d="M210 238 H230 V200 H248" fill="none" stroke="#374151" stroke-width="1.4" marker-end="url(#a)"/>
+  <rect x="396" y="164" width="96" height="48" rx="24" fill="#FFFFFF" stroke="#9CA3AF"/>
+  <text x="444" y="193" text-anchor="middle" font-size="12.5" fill="#4B5563">인터넷</text>
+  <path d="M360 188 H394" fill="none" stroke="#374151" stroke-width="1.4" marker-end="url(#a)"/>
+  <rect x="528" y="156" width="150" height="64" rx="8" fill="#FFFFFF" stroke="#DC2626"/>
+  <text x="603" y="180" text-anchor="middle" font-size="12.5" font-weight="700" fill="#991B1B">공인 ALB</text>
+  <text x="603" y="198" text-anchor="middle" font-size="11" fill="#991B1B">HTTPS · 인증서 필요</text>
+  <text x="603" y="212" text-anchor="middle" font-size="11" fill="#991B1B">NACL 허용 필요</text>
+  <path d="M492 188 H526" fill="none" stroke="#374151" stroke-width="1.4" marker-end="url(#a)"/>
+  <rect x="716" y="160" width="184" height="56" rx="8" fill="#FFFFFF" stroke="#4B5563"/>
+  <text x="808" y="185" text-anchor="middle" font-size="12.5" font-weight="700" fill="#111827">Mimir 게이트웨이</text>
+  <text x="808" y="203" text-anchor="middle" font-size="11" fill="#4B5563">관리 클러스터 안</text>
+  <path d="M678 188 H714" fill="none" stroke="#374151" stroke-width="1.4" marker-end="url(#a)"/>
+
+  <!-- AFTER -->
+  <text x="20" y="306" font-size="13" font-weight="700" fill="#0C4A6E">내부 경로 전환 후 — 같은 클러스터는 서비스 주소로, 다른 클러스터는 사설 ALB로</text>
+  <rect x="20" y="320" width="900" height="210" rx="10" fill="#F0F9FF" stroke="#BAE6FD"/>
+  <rect x="40" y="336" width="170" height="44" rx="8" fill="#FFFFFF" stroke="#4B5563"/>
+  <text x="125" y="363" text-anchor="middle" font-size="12.5" fill="#111827">관리 클러스터 Prometheus</text>
+  <rect x="40" y="386" width="170" height="44" rx="8" fill="#FFFFFF" stroke="#4B5563"/>
+  <text x="125" y="413" text-anchor="middle" font-size="12.5" fill="#111827">관리 클러스터 Grafana</text>
+  <rect x="40" y="446" width="170" height="36" rx="8" fill="#FFFFFF" stroke="#4B5563"/>
+  <text x="125" y="469" text-anchor="middle" font-size="12.5" fill="#111827">운영 클러스터 A</text>
+  <rect x="40" y="488" width="170" height="36" rx="8" fill="#FFFFFF" stroke="#4B5563"/>
+  <text x="125" y="511" text-anchor="middle" font-size="12.5" fill="#111827">운영 클러스터 B</text>
+  <path d="M210 358 H714" fill="none" stroke="#0369A1" stroke-width="1.6" marker-end="url(#ab)"/>
+  <path d="M210 408 H700 V370 H714" fill="none" stroke="#0369A1" stroke-width="1.6" marker-end="url(#ab)"/>
+  <text x="440" y="350" text-anchor="middle" font-size="11.5" fill="#075985">클러스터 내부 서비스 주소 (HTTP)</text>
+  <rect x="528" y="456" width="150" height="56" rx="8" fill="#E0F2FE" stroke="#0369A1" stroke-width="2"/>
+  <text x="603" y="480" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0C4A6E">사설 ALB</text>
+  <text x="603" y="498" text-anchor="middle" font-size="11" fill="#075985">HTTP · 인증서 불필요</text>
+  <path d="M210 464 H360 V476 H526" fill="none" stroke="#0369A1" stroke-width="1.6" marker-end="url(#ab)"/>
+  <path d="M210 506 H360 V494 H526" fill="none" stroke="#0369A1" stroke-width="1.6" marker-end="url(#ab)"/>
+  <text x="440" y="452" text-anchor="middle" font-size="11.5" fill="#075985">도메인 → 사설 ALB (VPC 내부)</text>
+  <rect x="716" y="342" width="184" height="56" rx="8" fill="#FFFFFF" stroke="#4B5563"/>
+  <text x="808" y="367" text-anchor="middle" font-size="12.5" font-weight="700" fill="#111827">Mimir 게이트웨이</text>
+  <text x="808" y="385" text-anchor="middle" font-size="11" fill="#4B5563">관리 클러스터 안</text>
+  <path d="M678 484 H808 V400" fill="none" stroke="#0369A1" stroke-width="1.6" marker-end="url(#ab)"/>
+</svg>

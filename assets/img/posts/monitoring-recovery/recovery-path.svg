@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 440" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#374151"/>
+    </marker>
+  </defs>
+  <rect width="920" height="440" rx="14" fill="#FFFFFF"/>
+  <text x="20" y="28" font-size="16" font-weight="700" fill="#111827">메트릭 수집 경로와 세 개의 고장 지점</text>
+
+  <g transform="translate(0,20)">
+    <!-- 클러스터 -->
+    <rect x="20" y="50" width="190" height="56" rx="8" fill="#F3F4F6" stroke="#4B5563"/>
+    <text x="115" y="73" text-anchor="middle" font-size="13" font-weight="700" fill="#111827">관리 클러스터</text>
+    <text x="115" y="93" text-anchor="middle" font-size="11" fill="#4B5563">Prometheus</text>
+
+    <rect x="20" y="130" width="190" height="56" rx="8" fill="#F3F4F6" stroke="#4B5563"/>
+    <text x="115" y="153" text-anchor="middle" font-size="13" font-weight="700" fill="#111827">운영 클러스터 A</text>
+    <text x="115" y="173" text-anchor="middle" font-size="11" fill="#4B5563">Prometheus</text>
+
+    <rect x="20" y="210" width="190" height="56" rx="8" fill="#FFFFFF" stroke="#9CA3AF" stroke-dasharray="6 4"/>
+    <text x="115" y="233" text-anchor="middle" font-size="13" font-weight="700" fill="#6B7280">운영 클러스터 B</text>
+    <text x="115" y="253" text-anchor="middle" font-size="11" fill="#9CA3AF">remote_write 미설정</text>
+
+    <!-- NAT -->
+    <rect x="250" y="130" width="130" height="56" rx="8" fill="#F3F4F6" stroke="#4B5563"/>
+    <text x="315" y="153" text-anchor="middle" font-size="13" font-weight="700" fill="#111827">NAT Gateway</text>
+    <text x="315" y="173" text-anchor="middle" font-size="11" fill="#4B5563">공인 IP 1개 공유</text>
+
+    <line x1="210" y1="78" x2="248" y2="148" stroke="#374151" stroke-width="1.6" marker-end="url(#arr)"/>
+    <line x1="210" y1="158" x2="248" y2="158" stroke="#374151" stroke-width="1.6" marker-end="url(#arr)"/>
+
+    <!-- NACL -->
+    <text x="452" y="78" text-anchor="middle" font-size="11" fill="#991B1B">LB 서브넷</text>
+    <text x="452" y="92" text-anchor="middle" font-size="11" font-weight="700" fill="#991B1B">NACL</text>
+    <rect x="440" y="100" width="24" height="116" rx="4" fill="#FEE2E2" stroke="#DC2626"/>
+    <line x1="380" y1="158" x2="438" y2="158" stroke="#374151" stroke-width="1.6" marker-end="url(#arr)"/>
+    <line x1="464" y1="158" x2="518" y2="158" stroke="#374151" stroke-width="1.6" marker-end="url(#arr)"/>
+
+    <!-- DNS -->
+    <rect x="520" y="30" width="130" height="48" rx="8" fill="#F3F4F6" stroke="#4B5563"/>
+    <text x="585" y="50" text-anchor="middle" font-size="13" font-weight="700" fill="#111827">DNS</text>
+    <text x="585" y="68" text-anchor="middle" font-size="10.5" fill="#4B5563">mimir.example.com</text>
+    <line x1="585" y1="78" x2="585" y2="128" stroke="#374151" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#arr)"/>
+
+    <!-- ALB -->
+    <rect x="520" y="130" width="130" height="56" rx="8" fill="#F3F4F6" stroke="#4B5563"/>
+    <text x="585" y="153" text-anchor="middle" font-size="13" font-weight="700" fill="#111827">ALB</text>
+    <text x="585" y="173" text-anchor="middle" font-size="11" fill="#4B5563">Ingress가 생성</text>
+    <line x1="650" y1="158" x2="698" y2="158" stroke="#374151" stroke-width="1.6" marker-end="url(#arr)"/>
+
+    <!-- Mimir 쪽 -->
+    <rect x="700" y="130" width="190" height="56" rx="8" fill="#F3F4F6" stroke="#4B5563"/>
+    <text x="795" y="153" text-anchor="middle" font-size="13" font-weight="700" fill="#111827">mimir-nginx</text>
+    <text x="795" y="173" text-anchor="middle" font-size="11" fill="#4B5563">게이트웨이</text>
+
+    <rect x="700" y="220" width="190" height="56" rx="8" fill="#E0F2FE" stroke="#0369A1"/>
+    <text x="795" y="243" text-anchor="middle" font-size="13" font-weight="700" fill="#0C4A6E">Mimir</text>
+    <text x="795" y="263" text-anchor="middle" font-size="11" fill="#075985">distributor → ingester</text>
+    <line x1="795" y1="186" x2="795" y2="218" stroke="#374151" stroke-width="1.6" marker-end="url(#arr)"/>
+
+    <rect x="700" y="310" width="190" height="50" rx="8" fill="#F3F4F6" stroke="#4B5563"/>
+    <text x="795" y="340" text-anchor="middle" font-size="13" font-weight="700" fill="#111827">Grafana</text>
+    <line x1="795" y1="310" x2="795" y2="278" stroke="#374151" stroke-width="1.6" marker-end="url(#arr)"/>
+    <text x="805" y="298" font-size="11" fill="#4B5563">조회</text>
+
+    <!-- 고장 지점 마커 -->
+    <circle cx="650" cy="130" r="11" fill="#DC2626"/>
+    <text x="650" y="134" text-anchor="middle" font-size="12" font-weight="700" fill="#FFFFFF">1</text>
+    <circle cx="650" cy="30" r="11" fill="#DC2626"/>
+    <text x="650" y="34" text-anchor="middle" font-size="12" font-weight="700" fill="#FFFFFF">2</text>
+    <circle cx="452" cy="230" r="11" fill="#DC2626"/>
+    <text x="452" y="234" text-anchor="middle" font-size="12" font-weight="700" fill="#FFFFFF">3</text>
+
+    <!-- 범례 -->
+    <rect x="20" y="290" width="640" height="110" rx="8" fill="#F9FAFB" stroke="#E5E7EB"/>
+    <circle cx="42" cy="310" r="9" fill="#DC2626"/>
+    <text x="42" y="314" text-anchor="middle" font-size="11" font-weight="700" fill="#FFFFFF">1</text>
+    <text x="60" y="314" font-size="12.5" fill="#111827">인증서 만료 → Ingress가 ALB를 만들지 못함 (ADDRESS 비어 있음)</text>
+    <circle cx="42" cy="336" r="9" fill="#DC2626"/>
+    <text x="42" y="340" text-anchor="middle" font-size="11" font-weight="700" fill="#FFFFFF">2</text>
+    <text x="60" y="340" font-size="12.5" fill="#111827">DNS가 이미 사라진 옛 LB 주소를 가리킴</text>
+    <circle cx="42" cy="362" r="9" fill="#DC2626"/>
+    <text x="42" y="366" text-anchor="middle" font-size="11" font-weight="700" fill="#FFFFFF">3</text>
+    <text x="60" y="366" font-size="12.5" fill="#111827">LB 서브넷 NACL이 클러스터 NAT IP의 443 통신을 허용하지 않음</text>
+    <rect x="34" y="380" width="16" height="11" fill="none" stroke="#9CA3AF" stroke-dasharray="3 2"/>
+    <text x="60" y="390" font-size="11.5" fill="#6B7280">점선 박스: 연동 설정 자체가 없는 클러스터</text>
+  </g>
+</svg>

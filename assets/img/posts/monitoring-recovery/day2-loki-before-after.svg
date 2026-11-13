@@ -1,0 +1,52 @@
+<svg width="1000" height="500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">
+  <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#374151"/></marker></defs>
+  <rect width="1000" height="500" fill="#FFFFFF"/>
+  <text x="10" y="22" font-size="14" font-weight="700" fill="#111827">로그(Loki) — 11-13 아침과 정리 후</text>
+  <text x="10" y="52" font-size="13" font-weight="700" fill="#991B1B">아침 (AS-IS)</text>
+  <text x="510" y="52" font-size="13" font-weight="700" fill="#166534">정리 후 (TO-BE)</text>
+  <line x1="500" y1="40" x2="500" y2="488" stroke="#E5E7EB" stroke-width="1"/>
+  <rect x="10" y="64" width="150" height="60" rx="8" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.5"/>
+  <text x="85.0" y="89.46" font-size="11" font-weight="700" text-anchor="middle" fill="#991B1B">promtail ×6</text>
+  <text x="85.0" y="106.46" font-size="10" text-anchor="middle" fill="#991B1B">관리 클러스터만</text>
+  <rect x="190" y="64" width="140" height="60" rx="8" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.5"/>
+  <text x="260.0" y="89.46" font-size="11" font-weight="700" text-anchor="middle" fill="#991B1B">공인 LB</text>
+  <text x="260.0" y="106.46" font-size="10" text-anchor="middle" fill="#991B1B">로그 도메인</text>
+  <rect x="360" y="64" width="130" height="60" rx="8" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.5"/>
+  <text x="425.0" y="89.46" font-size="11" font-weight="700" text-anchor="middle" fill="#991B1B">ingester</text>
+  <text x="425.0" y="106.46" font-size="10" text-anchor="middle" fill="#991B1B">링 UNHEALTHY</text>
+  <path d="M160 94 L188 94" fill="none" stroke="#DC2626" stroke-width="1.5" marker-end="url(#a)"/>
+  <path d="M330 94 L358 94" fill="none" stroke="#DC2626" stroke-width="1.5" marker-end="url(#a)"/>
+  <text x="164" y="84" font-size="10" fill="#991B1B">타임아웃</text>
+  <rect x="10" y="144" width="480" height="66" rx="8" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.5"/>
+  <text x="250.0" y="172.46" font-size="11" font-weight="700" text-anchor="middle" fill="#991B1B">저장소 로그 버킷</text>
+  <text x="250.0" y="189.46" font-size="10" text-anchor="middle" fill="#991B1B">보관 기간 0s(무기한) · 2025년 운영 LMS 앱 로그 약 1년치</text>
+  <rect x="10" y="230" width="480" height="50" rx="8" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.5"/>
+  <text x="250.0" y="259.32" font-size="12" font-weight="700" text-anchor="middle" fill="#991B1B">입구가 인터넷에 열려 있음 (공인 LB)</text>
+  <rect x="10" y="300" width="480" height="50" rx="8" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.5"/>
+  <text x="250.0" y="329.32" font-size="12" font-weight="700" text-anchor="middle" fill="#991B1B">Grafana: Loki 데이터소스 없음 · Log Viewer 빈 파일(EOF)</text>
+  <rect x="10" y="370" width="480" height="50" rx="8" fill="#F9FAFB" stroke="#9CA3AF" stroke-width="1.5"/>
+  <text x="250.0" y="399.32" font-size="12" font-weight="700" text-anchor="middle" fill="#374151">운영 클러스터: 로그 수집기 없음 (처음부터)</text>
+  <rect x="10" y="440" width="480" height="44" rx="8" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.5"/>
+  <text x="250.0" y="466.32" font-size="12" font-weight="700" text-anchor="middle" fill="#991B1B">수집 0 · 조회 불가</text>
+  <rect x="510" y="64" width="150" height="60" rx="8" fill="#F9FAFB" stroke="#9CA3AF" stroke-width="1.5"/>
+  <text x="585.0" y="89.46" font-size="11" font-weight="700" text-anchor="middle" fill="#374151">promtail 삭제</text>
+  <text x="585.0" y="106.46" font-size="10" text-anchor="middle" fill="#374151">수집 중지 (재설치 가능)</text>
+  <rect x="690" y="64" width="140" height="60" rx="8" fill="#F0FDF4" stroke="#15803D" stroke-width="1.5"/>
+  <text x="760.0" y="89.46" font-size="11" font-weight="700" text-anchor="middle" fill="#166534">사설 LB</text>
+  <text x="760.0" y="106.46" font-size="10" text-anchor="middle" fill="#166534">사설 IP</text>
+  <rect x="860" y="64" width="130" height="60" rx="8" fill="#F0FDF4" stroke="#15803D" stroke-width="1.5"/>
+  <text x="925.0" y="89.46" font-size="11" font-weight="700" text-anchor="middle" fill="#166534">ingester</text>
+  <text x="925.0" y="106.46" font-size="10" text-anchor="middle" fill="#166534">링 ACTIVE</text>
+  <path d="M830 94 L858 94" fill="none" stroke="#374151" stroke-width="1.5" marker-end="url(#a)"/>
+  <rect x="510" y="144" width="480" height="66" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.5"/>
+  <text x="750.0" y="172.46" font-size="11" font-weight="700" text-anchor="middle" fill="#92400E">저장소 그대로 보존</text>
+  <text x="750.0" y="189.46" font-size="10" text-anchor="middle" fill="#92400E">옛 로그 처리(삭제/아카이브/보관)는 팀장 결정 대기 — 개인정보·CSAP</text>
+  <rect x="510" y="230" width="480" height="50" rx="8" fill="#F0FDF4" stroke="#15803D" stroke-width="1.5"/>
+  <text x="750.0" y="259.32" font-size="12" font-weight="700" text-anchor="middle" fill="#166534">공인 LB · 공인 DNS 레코드 삭제 → 내부 전용</text>
+  <rect x="510" y="300" width="480" height="50" rx="8" fill="#F0FDF4" stroke="#15803D" stroke-width="1.5"/>
+  <text x="750.0" y="329.32" font-size="12" font-weight="700" text-anchor="middle" fill="#166534">Grafana: Loki 데이터소스(파일 등록) · Log Viewer 복구</text>
+  <rect x="510" y="370" width="480" height="50" rx="8" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
+  <text x="750.0" y="399.32" font-size="12" font-weight="700" text-anchor="middle" fill="#1E40AF">운영 클러스터 로그: 새 시스템(Alloy + Loki 3.x)에서</text>
+  <rect x="510" y="440" width="480" height="44" rx="8" fill="#F0FDF4" stroke="#15803D" stroke-width="1.5"/>
+  <text x="750.0" y="466.32" font-size="12" font-weight="700" text-anchor="middle" fill="#166534">옛 로그 조회 가능 · 새 로그는 쌓지 않음</text>
+</svg>

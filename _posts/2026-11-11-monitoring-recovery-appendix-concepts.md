@@ -363,11 +363,38 @@ Grafana → nginx → query-frontend → query-scheduler → querier ─┬→ i
 | overrides-exporter | 테넌트별 한도 설정을 메트릭으로 노출 |
 | rollout-operator | zone별 ingester·store-gateway를 순서대로 재시작하도록 관리 |
 
-**이번 사례에서는**
-- store-gateway 3개가 0/1이었던 이유: 버킷 최상위에 정체불명 폴더(`monitoring2025...`)가 수천 개 있었다. Mimir는 **버킷 최상위 폴더 하나하나를 테넌트로 취급**한다. 그래서 store-gateway가 그 수천 개 가짜 테넌트의 목차를 받아 두다가 디스크(10Gi)가 꽉 찼다.
-- 그 결과 "최근(ingester) 조회는 되고, 오래된(store-gateway) 조회는 안 되는" 상태다. 약 12시간을 넘는 그래프는 비거나 에러가 날 수 있다.
-- 4월 시도에 있던 `storage_prefix: blocks`는 "블록을 버킷 최상위가 아니라 `blocks/` 폴더 아래에 두라"는 설정이다. 다른 무언가가 버킷 최상위를 어지럽혀도 Mimir가 헷갈리지 않게 하려던 것으로 보인다.
+**이번 사례에서는** ([복구기 #2](/posts/monitoring-recovery-2-loki-and-longterm/)에서 확인한 것. 처음 추정과 달랐던 부분을 바로잡았다)
+- store-gateway 3개가 0/1이었던 이유는 디스크(10Gi)가 **진짜 테넌트 하나의 목차(약 8GB)** 로 꽉 찼기 때문이다. 처음엔 "정체불명 폴더 수천 개의 목차가 채웠다"고 봤는데, 직접 열어 보니 그 폴더들은 0MB였다.
+- 블록이 그렇게 많아진 이유는 **compactor가 220일간 한 번도 성공하지 못해서**다(성공 0 / 실패 약 1만 번). 버킷 최상위의 정체불명 폴더 약 3만 개를 테넌트로 보고 하나씩 도느라 진짜 테넌트를 합치지 못했다.
+- 그 결과 "최근(ingester) 조회는 되고, 12시간이 넘는 조회는 전부 실패"하는 상태였다.
+- `storage_prefix: blocks`는 "블록을 버킷 최상위가 아니라 `blocks/` 폴더 아래에 두라"는 설정이다. 정체불명 폴더와 분리하려던 것인데, 기존 데이터를 옮기지 않고 바꿔 기존 데이터가 안 보이게 되자 원복됐다.
 
+### 창고(버킷)와 작업 책상(디스크)
+
+| | Object Storage 버킷 | 파드 디스크 |
+| --- | --- | --- |
+| 비유 | 창고 | 직원의 작업 책상 |
+| 무엇이 있나 | 원본 전부 | 처리용 복사본(캐시·작업장) |
+| 크기 | 무제한, 쓰는 만큼 과금 | 고정 |
+| 비우면 | 데이터 소실 | 창고에서 다시 가져옴 |
+
+- store-gateway 디스크는 캐시에 가깝지만 **창고의 모든 블록 목차를 다 담아야** 동작한다. 창고의 블록 수가 곧 필요한 디스크 크기다.
+- 디스크에 있어서 재시작해도 남고, 지워도 시작하자마자 다시 만든다. **재시작으로는 해결되지 않는다.**
+
+### 블록, 합치기, 보관 기간
+
+- **블록**: ingester가 2시간치 데이터를 포장한 상자. ingester는 같은 데이터를 3개 존에 저장해서 같은 시간대 블록이 3벌 올라간다.
+- **합치기(compaction)**: compactor가 2시간 블록을 더 큰 블록으로 합친다. 3벌도 1벌로 정리된다. 블록 수가 줄어 찾기 쉬워진다.
+- **보관 기간**: 테넌트별 `compactor_blocks_retention_period`. 기본값 0 = **무기한.** 오래된 블록에 삭제 표시 → 조회 쪽이 무시(약 1시간 뒤) → 실제 삭제(설정한 지연 시간 뒤) 순서로 지운다.
+- 버킷 콘솔의 자동 삭제(수명 주기)로 지우면 안 된다. Mimir가 가진 블록 목록과 실제가 어긋난다.
+
+### 설정을 어디에 넣느냐에 따라 재시작 범위가 다르다
+
+| 넣는 곳 | 재시작 |
+| --- | --- |
+| 공용 설정(`structuredConfig`) | 전 컴포넌트 |
+| 컴포넌트 인자(`<컴포넌트>.extraArgs`) | 그 컴포넌트만 |
+| 테넌트별 runtime 설정(`runtimeConfig.overrides`) | 없음 (주기적으로 다시 읽음) |
 
 > **더 깊이** — [역추적기 #2 Mimir](/posts/monitoring-reverse-engineering-2-mimir/) — 테넌시가 세 번 바뀐 이유와 한도 설정의 정합성 버그
 {: .prompt-tip }
@@ -484,10 +511,18 @@ Prometheus(또는 Mimir ruler)가 알림 규칙으로 "이상하다"고 판단�
 - **promtail**: 각 노드에서 컨테이너 로그 파일을 읽어 Loki로 **보낸다(push)**. 노드마다 하나씩 뜬다(DaemonSet).
 - **Loki**: 로그를 받아 저장한다. 구조는 Mimir와 거의 같다(distributor, ingester, querier, gateway, Object Storage). 같은 회사(Grafana Labs)가 같은 설계로 만들었기 때문이다.
 
-**이번 사례에서는**
-- promtail이 `loki.example.com`로 보내다 타임아웃이 나서, 재시도를 다 쓰고 버린다(`final error sending batch`).
-- Mimir와 마찬가지로 "외부 도메인을 돌아 들어오는" 구조라, 같은 종류의 문제일 가능성이 크다. 아직 확인하지 않았다.
-- promtail은 지원 종료 수순이다. 후속은 Grafana Alloy다. 그래서 운영 클러스터로 넓힐 때는 Alloy를 함께 검토한다.
+**이번 사례에서는** ([복구기 #2](/posts/monitoring-recovery-2-loki-and-longterm/)에서 확인·조치)
+- promtail이 `loki.example.com`로 보내다 타임아웃이 났다. 메트릭과 같은 종류(외부 도메인을 돌아 들어오는 길이 방화벽에 막힘)였다. 내부 주소로 바꿔 해결했다.
+- 안쪽에도 고장이 있었다. ingester가 서로를 알리는 명단(memberlist)에서 빠져 링에 비정상으로 남아 있었다. 재시작으로 복귀시켰다.
+- 그런데 들어오는 건 관리 클러스터 로그뿐이었다. 그래서 입구는 사설 LB로 닫고, 수집은 멈추고, 옛 로그 처리는 결정권자에게 넘겼다.
+- Loki의 보관 기간은 기간보다 오래된 것을 **일괄 삭제**한다. 옛 것만 남기려면 다른 곳에 먼저 복사해야 한다.
+- promtail과 loki-distributed 차트는 지원 종료 수순이다. 운영 클러스터 로그는 Grafana Alloy + Loki 3.x로 받기로 했다.
+
+### LoadBalancer Service를 사설로
+
+- 클라우드에 따라 어노테이션이 없으면 **공인 LB**가 기본이다. 이 사례의 클라우드는 `...-load-balancer-internal: "true"` 어노테이션으로 사설 LB를 만든다.
+- LB의 공인/사설과 서브넷은 **만들 때 정해진다.** 어노테이션만 나중에 바꿔서는 안 바뀌고, Service를 다시 만들어야 한다.
+- 다시 만들 때 `meta.helm.sh/*` 어노테이션을 남기면 Helm이 계속 자기 리소스로 인식한다.
 
 
 > **더 깊이** — [역추적기 #7 Loki & Promtail](/posts/monitoring-reverse-engineering-7-loki-promtail/) — Kafka 완충로 4차 시도와 롤백, 최종 Loki 직결 구조
@@ -715,7 +750,7 @@ kubectl로 직접 바꾸면 Helm이 기억하는 values와 실제가 달라진�
 **이 시리즈 — 모니터링 시스템 복구기**
 [1편 8개월간 멈춰 있던 스택을 되살리다 — 세 겹의 장애와 내부 경로 전환](/posts/monitoring-recovery-1-revival/)
 부록 — 개념 정리: 메트릭이 화면에 뜨기까지 (본 편)
-2편부터 — 페이즈 3: Loki 확인, exporter 재구성, 대시보드 검증 (예정)
+[2편 살린 로그는 닫고, 숨은 고장은 찾았다 — Loki 정리와 220일간 아무도 몰랐던 장기 조회 장애](/posts/monitoring-recovery-2-loki-and-longterm/)
 
 **이전 시리즈 — 모니터링 시스템 역추적기** (이 시스템이 어떻게 만들어졌는지 되짚은 기록)
 [0편 프롤로그 — 문서 없는 모니터링 시스템을 물려받았다](/posts/monitoring-reverse-engineering-0-prologue/)

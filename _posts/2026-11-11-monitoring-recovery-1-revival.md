@@ -357,9 +357,9 @@ B는 처음부터 Helm values로 적용했다. 앞의 클러스터들은 급하�
 | IaC 정리 | 세 클러스터의 values를 저장소에 두고, 클러스터별 차이와 그 이유를 코드·주석으로 남긴다. 다음 단계로 GitOps(ArgoCD) 배포까지 검토 | 시스템이 사람 기억이 아니라 저장소에 의존하게 만든다. 다음 클러스터를 붙일 때 추측이 필요 없어진다 |
 | Helm values 반영 | kubectl로 바꾼 값(Ingress, remote_write, Grafana 데이터소스)을 values와 저장소에 반영 | 다음 `helm upgrade` 때 원복되면 수집이 다시 끊긴다 |
 | 대시보드 검증 | 두 운영 클러스터의 노드·Pod 정보가 표시되는 것까지는 확인했다. 수치가 실제와 맞는지는 아직이다. 파일 시스템·네트워크 패널 No data, 일부 값이 비정상적으로 낮음 | 데이터가 "뜬다"와 "맞다"는 다르다 |
-| **로그 파이프라인(Loki) 보완** ([역추적기 #7](/posts/monitoring-reverse-engineering-7-loki-promtail/)) | promtail → Loki 게이트웨이 도메인이 타임아웃이고, 배치를 버리고 있다. Loki 본체는 떠 있다 | 메트릭과 같은 유형(진입점·방화벽)일 가능성이 크다. 진입점부터 확인하고, 같은 클러스터 안은 내부 주소로 바꾼다. 다른 클러스터의 로그 수집은 promtail이 지원 종료 수순이라 후속 에이전트(Grafana Alloy)와 함께 검토한다 |
+| **로그 파이프라인(Loki) 보완** ([역추적기 #7](/posts/monitoring-reverse-engineering-7-loki-promtail/)) → [복구기 #2에서 정리](/posts/monitoring-recovery-2-loki-and-longterm/) | promtail → Loki 게이트웨이 도메인이 타임아웃이고, 배치를 버리고 있다. Loki 본체는 떠 있다 | 메트릭과 같은 유형(진입점·방화벽)일 가능성이 크다. 진입점부터 확인하고, 같은 클러스터 안은 내부 주소로 바꾼다. 다른 클러스터의 로그 수집은 promtail이 지원 종료 수순이라 후속 에이전트(Grafana Alloy)와 함께 검토한다 |
 | exporter 재구성 ([역추적기 #4](/posts/monitoring-reverse-engineering-4-managed-service-exporters/)) | MySQL, nginx, Redis, Kafka exporter가 이전 연도 운영 대상 기준으로 설정돼 있다 | 엔드포인트만 바꾸는 게 아니라 현재 대상 목록부터 다시 정해 새로 구성한다. `mysql_up` 같은 대상 연결 지표까지 확인한다 |
-| store-gateway 정리 ([역추적기 #2](/posts/monitoring-reverse-engineering-2-mimir/)) | 디스크 용량, 정체불명 테넌트, 블록 경로(`storage_prefix`) 분리, 보관 기간 명시 | 최근 약 12시간을 넘는 구간 조회가 안 되고, CPU를 계속 점유한다 |
+| store-gateway 정리 ([역추적기 #2](/posts/monitoring-reverse-engineering-2-mimir/)) → [복구기 #2에서 원인 추적·조치](/posts/monitoring-recovery-2-loki-and-longterm/) | 디스크 용량, 정체불명 테넌트, 블록 경로(`storage_prefix`) 분리, 보관 기간 명시 | 최근 약 12시간을 넘는 구간 조회가 안 되고, CPU를 계속 점유한다 |
 | 수집 중단 알림 ([역추적기 #6](/posts/monitoring-reverse-engineering-6-alertmanager-airflow/)) | Alertmanager receiver 연결, remote_write 지연 알림 | "8개월간 아무도 몰랐다"를 반복하지 않기 위해 |
 | 버전 업그레이드 | 아래 참고 | 내부 분석용이라 급하지는 않다 |
 
@@ -408,7 +408,7 @@ B는 처음부터 Helm values로 적용했다. 앞의 클러스터들은 급하�
 **이 시리즈 — 모니터링 시스템 복구기**
 1편 8개월간 멈춰 있던 스택을 되살리다 — 세 겹의 장애와 내부 경로 전환 (본 편)
 [부록 — 개념 정리: 메트릭이 화면에 뜨기까지](/posts/monitoring-recovery-appendix-concepts/)
-2편부터 — 페이즈 3: Loki 확인, exporter 재구성, 대시보드 검증 (예정)
+[2편 살린 로그는 닫고, 숨은 고장은 찾았다 — Loki 정리와 220일간 아무도 몰랐던 장기 조회 장애](/posts/monitoring-recovery-2-loki-and-longterm/)
 
 **이전 시리즈 — 모니터링 시스템 역추적기** (이 시스템이 어떻게 만들어졌는지 되짚은 기록)
 [0편 프롤로그 — 문서 없는 모니터링 시스템을 물려받았다](/posts/monitoring-reverse-engineering-0-prologue/)

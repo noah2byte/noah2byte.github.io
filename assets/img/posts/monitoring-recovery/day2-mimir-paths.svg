@@ -1,0 +1,60 @@
+<svg width="1000" height="560" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 560" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">
+  <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#374151"/></marker></defs>
+  <rect width="1000" height="560" fill="#FFFFFF"/>
+  <text x="10" y="22" font-size="14" font-weight="700" fill="#111827">Mimir 안쪽 — 저장하는 길, 조회하는 길, 정리하는 담당 (11-13 아침 상태)</text>
+  <text x="10" y="52" font-size="12" font-weight="700" fill="#111827">저장하는 길</text>
+  <rect x="10" y="62" width="150" height="56" rx="8" fill="#F0FDF4" stroke="#15803D" stroke-width="1.5"/>
+  <text x="85.0" y="85.46" font-size="11" font-weight="700" text-anchor="middle" fill="#166534">Prometheus</text>
+  <text x="85.0" y="102.46" font-size="10" text-anchor="middle" fill="#166534">관리 · 운영 A · 운영 B</text>
+  <rect x="190" y="62" width="150" height="56" rx="8" fill="#F0FDF4" stroke="#15803D" stroke-width="1.5"/>
+  <text x="265.0" y="85.46" font-size="11" font-weight="700" text-anchor="middle" fill="#166534">입구 · distributor</text>
+  <text x="265.0" y="102.46" font-size="10" text-anchor="middle" fill="#166534">mimir-nginx (사설 ALB)</text>
+  <rect x="370" y="62" width="180" height="56" rx="8" fill="#F0FDF4" stroke="#15803D" stroke-width="1.5"/>
+  <text x="460.0" y="85.46" font-size="11" font-weight="700" text-anchor="middle" fill="#166534">ingester (받는 담당)</text>
+  <text x="460.0" y="102.46" font-size="10" text-anchor="middle" fill="#166534">2시간마다 블록으로 포장</text>
+  <path d="M160 90 L188 90" fill="none" stroke="#374151" stroke-width="1.5" marker-end="url(#a)"/>
+  <path d="M340 90 L368 90" fill="none" stroke="#374151" stroke-width="1.5" marker-end="url(#a)"/>
+  <rect x="600" y="62" width="380" height="120" rx="8" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
+  <text x="790.0" y="100.46" font-size="11" font-weight="700" text-anchor="middle" fill="#1E40AF">Object Storage 버킷 관리 클러스터 공용 버킷 (창고)</text>
+  <text x="790.0" y="117.46" font-size="10" text-anchor="middle" fill="#1E40AF">원본 전부. 용량 제한 없음 → 저장은 정상</text>
+  <text x="790.0" y="134.45999999999998" font-size="10" text-anchor="middle" fill="#1E40AF">최상위 폴더 = 테넌트: 관리 테넌트, 운영 테넌트 …</text>
+  <text x="790.0" y="151.45999999999998" font-size="10" text-anchor="middle" fill="#1E40AF">+ 정체불명 monitoring&lt;시각&gt;-&lt;ID&gt; 약 3만 개 (매시간 생성)</text>
+  <path d="M550 90 L598 90" fill="none" stroke="#374151" stroke-width="1.5" marker-end="url(#a)"/>
+  <text x="560" y="82" font-size="10" font-weight="700" fill="#15803D">✓ 업로드</text>
+  <text x="10" y="222" font-size="12" font-weight="700" fill="#111827">정리하는 담당</text>
+  <rect x="600" y="232" width="380" height="96" rx="8" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.5"/>
+  <text x="790.0" y="258.46" font-size="11" font-weight="700" text-anchor="middle" fill="#991B1B">compactor (정리 담당) ✕</text>
+  <text x="790.0" y="275.46" font-size="10" text-anchor="middle" fill="#991B1B">작은 블록 합치기 · 오래된 블록 삭제</text>
+  <text x="790.0" y="292.46" font-size="10" text-anchor="middle" fill="#991B1B">폴더 3만 개를 테넌트로 순회 → 220일간 성공 0회</text>
+  <text x="790.0" y="309.46" font-size="10" text-anchor="middle" fill="#991B1B">작업 디스크 10Gi</text>
+  <path d="M790 230 L790 184" fill="none" stroke="#DC2626" stroke-width="1.5" marker-end="url(#a)"/>
+  <path d="M770 184 L770 230" fill="none" stroke="#DC2626" stroke-width="1.5" marker-end="url(#a)"/>
+  <rect x="370" y="244" width="200" height="72" rx="8" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.5"/>
+  <text x="470.0" y="266.96" font-size="11" font-weight="700" text-anchor="middle" fill="#991B1B">블록 4,536개</text>
+  <text x="470.0" y="283.96" font-size="10" text-anchor="middle" fill="#991B1B">운영 테넌트</text>
+  <text x="470.0" y="300.96" font-size="10" text-anchor="middle" fill="#991B1B">합쳐지지 못한 2시간 블록 (×3 존)</text>
+  <path d="M598 280 L572 280" fill="none" stroke="#DC2626" stroke-width="1.5" marker-end="url(#a)"/>
+  <text x="10" y="362" font-size="12" font-weight="700" fill="#111827">조회하는 길</text>
+  <rect x="10" y="372" width="150" height="56" rx="8" fill="#F0FDF4" stroke="#15803D" stroke-width="1.5"/>
+  <text x="85.0" y="395.46" font-size="11" font-weight="700" text-anchor="middle" fill="#166534">Grafana</text>
+  <text x="85.0" y="412.46" font-size="10" text-anchor="middle" fill="#166534">Explore · 대시보드</text>
+  <rect x="190" y="372" width="150" height="56" rx="8" fill="#F0FDF4" stroke="#15803D" stroke-width="1.5"/>
+  <text x="265.0" y="395.46" font-size="11" font-weight="700" text-anchor="middle" fill="#166534">querier</text>
+  <text x="265.0" y="412.46" font-size="10" text-anchor="middle" fill="#166534">조회 담당</text>
+  <path d="M160 400 L188 400" fill="none" stroke="#374151" stroke-width="1.5" marker-end="url(#a)"/>
+  <rect x="370" y="350" width="200" height="64" rx="8" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.5"/>
+  <text x="470.0" y="368.96" font-size="11" font-weight="700" text-anchor="middle" fill="#991B1B">store-gateway ✕ (꺼내기)</text>
+  <text x="470.0" y="385.96" font-size="10" text-anchor="middle" fill="#991B1B">모든 블록 목차를 디스크에</text>
+  <text x="470.0" y="402.96" font-size="10" text-anchor="middle" fill="#991B1B">디스크 10Gi 초과 → 220일 준비 실패</text>
+  <rect x="370" y="430" width="200" height="50" rx="8" fill="#F0FDF4" stroke="#15803D" stroke-width="1.5"/>
+  <text x="470.0" y="450.46" font-size="11" font-weight="700" text-anchor="middle" fill="#166534">최근 약 12시간</text>
+  <text x="470.0" y="467.46" font-size="10" text-anchor="middle" fill="#166534">ingester가 직접 답함 ✓</text>
+  <path d="M340 392 L368 382" fill="none" stroke="#374151" stroke-width="1.5" marker-end="url(#a)"/>
+  <path d="M340 408 L368 452" fill="none" stroke="#374151" stroke-width="1.5" marker-end="url(#a)"/>
+  <path d="M572 382 L640 382 L640 184" fill="none" stroke="#2563EB" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#a)"/>
+  <text x="648" y="376" font-size="10" fill="#1E40AF">버킷에서 블록을 찾아 읽음 (읽기 전용)</text>
+  <path d="M470 318 L470 348" fill="none" stroke="#DC2626" stroke-width="1.5" marker-end="url(#a)"/>
+  <text x="480" y="338" font-size="10" fill="#991B1B">블록이 많을수록 목차도 많아짐</text>
+  <rect x="10" y="500" width="970" height="46" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.5"/>
+  <text x="495.0" y="527.32" font-size="12" font-weight="700" text-anchor="middle" fill="#92400E">결과: 최근 12시간 조회는 정상, 12시간이 넘는 조회는 전부 실패 — 겉으로 정상이라 220일간 아무도 몰랐다</text>
+</svg>
